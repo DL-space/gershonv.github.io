@@ -1,5 +1,5 @@
 ---
-title: 结合 Element UI 之 Table 和 Pagination 组件实现分页
+title: 封装组件系列 - el 分页表格
 date: 2018-07-07 00:44:38
 comments: true #是否可评论
 tags: 
@@ -7,7 +7,10 @@ tags:
    - 封装组件
 toc: true
 categories: Vue.js
-keywords:  javascript
+keywords:  
+  - element-ui
+  - Pagination
+  - table
 ---
 
 ## 组件参数说明
