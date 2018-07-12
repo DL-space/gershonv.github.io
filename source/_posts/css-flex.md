@@ -21,19 +21,19 @@ toc: true
 > 需要注意的是：当时设置 flex 布局之后，子元素的 float、clear、vertical-align 的属性将会失效。
 有下面六种属性可以设置在容器上，它们分别是：
 
-> 1. **flex-direction**  
+> 1. `flex-direction`  
 >    1. 功能：决定水平方向的排列方向 
 >    2. 参数：row \| row-reverse \| column \| column-reverse
-> 2. **flex-wrap**
+> 2. `flex-wrap`
 >    1. 功能：决定容器内项目是否可以换行
 >    2. 参数：nowrap \| wrap \| wrap-reverse
 > 3. flex-flow
 >    1. 功能：flex-direction、flex-wrap 的简写形式 ---&gt; 没什么卵用
 >    2. 参数：&lt;flex-direction&gt; \| &lt;flex-wrap&gt;
-> 4. **justify-content**
+> 4. `justify-content`
 >    1. 功能：定义在水平方向的对齐方式
 >    2. 参数：flex-start \| flex-end \| center \| space-between \| space-around
-> 5. **align-items**
+> 5. `align-items`
 >    1. 功能：定义了容器内项目的对齐方式
 >    2. 参数：stretch \| flex-start \| flex-end \| center \| baseline 
 > 6. align-content

@@ -25,13 +25,13 @@ keywords: eventLoop
 目前最流行的JS引擎非V8莫属了，Chrome浏览器和Node.js采用的引擎就是V8引擎。引擎的结构可以简单由下图表示：
 ![enter description here](https://user-gold-cdn.xitu.io/2018/1/16/160fcd26feb7b02b?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
 
-就如JVM虚拟机一样，JS引擎中也有**堆(Memory Heap)**和**栈(Call Stack)**的概念。
+就如JVM虚拟机一样，JS引擎中也有`堆(Memory Heap)`和`栈(Call Stack)`的概念。
 - 栈。用来存储方法调用的地方，以及基础数据类型(如var a = 1)也是存储在栈里面的，会随着方法调用结束而自动销毁掉(入栈-->方法调用后-->出栈)。
 - 堆。JS引擎中给对象分配的内存空间是放在堆中的。如var foo = {name: 'foo'} 那么这个foo所指向的对象是存储在堆中的。
 
 此外，JS中存在闭包的概念，**对于基本类型变量如果存在与闭包当中，那么也将存储在堆中**。
 
-关于闭包的情况，就涉及到**Captured Variables**。我们知道**Local Variables**是最简单的情形，是直接存储在栈中的。而**Captured Variables**是对于存在闭包情况和with,try catch情况的变量。
+关于闭包的情况，就涉及到`Captured Variables`。我们知道`Local Variables`是最简单的情形，是直接存储在栈中的。而`Captured Variables`是对于存在闭包情况和with,try catch情况的变量。
 
 ``` javascript
 function foo () {
@@ -46,17 +46,17 @@ function foo () {
   return bar;
 }
 ```
-如上述情况，**变量y**存在于**bar()**的闭包中，因此y是**captured variable**，是存储在堆中的。
+如上述情况，`变量y`存在于`bar()`的闭包中，因此y是`captured variable`，是存储在堆中的。
 
 ## Runtime（运行上下文）
-JS在浏览器中可以调用浏览器提供的API，如window对象，DOM相关API等。这些接口并不是由V8引擎提供的，是存在与浏览器当中的。因此简单来说，对于这些相关的外部接口，可以在运行时供JS调用，以及JS的事件循环(**Event Loop**)和事件队列(**Callback Queue)**，把这些称为RunTime。有些地方也把JS所用到的core lib核心库也看作RunTime的一部分。
+JS在浏览器中可以调用浏览器提供的API，如window对象，DOM相关API等。这些接口并不是由V8引擎提供的，是存在与浏览器当中的。因此简单来说，对于这些相关的外部接口，可以在运行时供JS调用，以及JS的事件循环(`Event Loop`)和事件队列(`Callback Queue)`，把这些称为RunTime。有些地方也把JS所用到的core lib核心库也看作RunTime的一部分。
 
 ![enter description here](https://user-gold-cdn.xitu.io/2018/1/16/160fcd26fb5bb968?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
 
-同样，在Node.js中，可以把Node的各种库提供的API称为RunTime。所以可以这么理解，Chrome和Node.js都采用相同的V8引擎，但拥有不同的运行环境(**RunTime Environments**)
+同样，在Node.js中，可以把Node的各种库提供的API称为RunTime。所以可以这么理解，Chrome和Node.js都采用相同的V8引擎，但拥有不同的运行环境(`RunTime Environments`)
 
 ## Call Stack (调用栈)
-JS被设计为单线程运行的，这是因为JS主要用来实现很多交互相关的操作，如DOM相关操作，如果是多线程会造成复杂的同步问题。因此JS自诞生以来就是单线程的，而且主线程都是用来进行界面相关的渲染操作 **(为什么说是主线程，因为HTML5 提供了Web Worker，独立的一个后台JS，用来处理一些耗时数据操作。因为不会修改相关DOM及页面元素，因此不影响页面性能)**，如果有阻塞产生会导致浏览器卡死。
+JS被设计为单线程运行的，这是因为JS主要用来实现很多交互相关的操作，如DOM相关操作，如果是多线程会造成复杂的同步问题。因此JS自诞生以来就是单线程的，而且主线程都是用来进行界面相关的渲染操作 `(为什么说是主线程，因为HTML5 提供了Web Worker，独立的一个后台JS，用来处理一些耗时数据操作。因为不会修改相关DOM及页面元素，因此不影响页面性能)`，如果有阻塞产生会导致浏览器卡死。
 如果一个递归调用没有终止条件，是一个死循环的话，会导致调用栈内存不够而溢出，如：
 
 ```javascript
@@ -68,7 +68,7 @@ foo();
 例子中foo函数循环调用其本身，且没有终止条件，浏览器控制台输出调用栈达到最大调用次数。
 ![enter description here](https://user-gold-cdn.xitu.io/2018/1/16/160fcd26fae57ded?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
 
-JS线程如果遇到比较耗时操作，如读取文件，AJAX请求操作怎么办？这里JS用到了**Callback**回调函数来处理。
+JS线程如果遇到比较耗时操作，如读取文件，AJAX请求操作怎么办？这里JS用到了`Callback`回调函数来处理。
 
 对于Call Stack中的每个方法调用，都会形成它自己的一个执行上下文Execution Context，关于执行上下文的详细阐述请看[这篇文章](https://juejin.im/post/5a5ee28f6fb9a01cbe655860)
 
@@ -96,9 +96,9 @@ vent Loop只做一件事情，**负责监听Call Stack和Callback Queue**。当C
 一个setTimeout的[例子以及对应的Event Loop动态图](https://blog.sessionstack.com/how-javascript-works-event-loop-and-the-rise-of-async-programming-5-ways-to-better-coding-with-2f077c4438b5)：
 ![enter description here](https://user-gold-cdn.xitu.io/2018/1/16/160fcd26f8023a85?imageslim)
 
-**setTimeout**有个要注意的地方，如上述例子延迟5s执行，不是严格意义上的5s，正确来说是至少5s以后会执行。因为Web API会设定一个5s的定时器，时间到期后将回调函数加到队列中，此时该回调函数还不一定会马上运行，因为队列中可能还有之前加入的其他回调函数，而且还必须等到Call Stack空了之后才会从队列中取一个回调执行。
+`setTimeout`有个要注意的地方，如上述例子延迟5s执行，不是严格意义上的5s，正确来说是至少5s以后会执行。因为Web API会设定一个5s的定时器，时间到期后将回调函数加到队列中，此时该回调函数还不一定会马上运行，因为队列中可能还有之前加入的其他回调函数，而且还必须等到Call Stack空了之后才会从队列中取一个回调执行。
 
-所以常见的**setTimeout(callback, 0)** 的做法就是为了在常规的调用介绍后马上运行回调函数。
+所以常见的`setTimeout(callback, 0)` 的做法就是为了在常规的调用介绍后马上运行回调函数。
 
 ```javascript
 console.log('Hi');
@@ -129,6 +129,6 @@ for (var i = 0; i < 5; i++) {
 - JS是单线程运行，每次都从调用栈出取出代码进行调用。如果当前代码非常耗时，则会阻塞当前线程导致浏览器卡顿。
 - 回调函数是通过加入到事件队列中，等待Event Loop拿出并放到调用栈中进行调用。只有Event Loop监听到调用栈为空时，才会从事件队列中从队头拿出回调函数放进调用栈里。
 
-调用栈先执行 **for(var i = 0; i < 5; i++) {...}**方法，里面的定时器会到时间后会直接把回调函数放到事件队列中，等for循环执行完在依次取出放进调用栈。当for循环执行完时，i的值已经变成5，所以最后输出全都是5。
+调用栈先执行 `for(var i = 0; i < 5; i++) {...}`方法，里面的定时器会到时间后会直接把回调函数放到事件队列中，等for循环执行完在依次取出放进调用栈。当for循环执行完时，i的值已经变成5，所以最后输出全都是5。
 
 文章参考自 https://juejin.im/post/5a5d64fbf265da3e243b831f?utm_medium=fe&utm_source=weixinqun

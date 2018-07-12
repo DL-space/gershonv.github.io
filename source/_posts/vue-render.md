@@ -10,18 +10,18 @@ categories: Vue.js
 
 ## Vue的一些基本概念
 
-使用 Vue 编写可复用组件，那么要对 render 函数有所了解。今天我们学习的目的是了解和学习Vue的render函数。如果想要更好的学习Vue的render函数相关的知识，我们有必要重温一下Vue中的一些基本概念。那么先上一张图，这张图从宏观上展现了Vue整体流程：
+使用 Vue 编写可复用组件，那么要对 render 函数有所了解。今天我们学习的目的是了解和学习Vue的`render`函数。如果想要更好的学习Vue的`render`函数相关的知识，我们有必要重温一下Vue中的一些基本概念。那么先上一张图，这张图从宏观上展现了Vue整体流程：
 ![enter description here](https://www.w3cplus.com/sites/default/files/blogs/2018/1804/vue-render-1.jpg)
-从上图中，不难发现一个Vue的应用程序是如何运行起来的，模板通过编译生成AST，再由AST生成Vue的render函数（渲染函数），渲染函数结合数据生成Virtual DOM树，Diff和Patch后生成新的UI。从这张图中，可以接触到Vue的一些主要概念：
+从上图中，不难发现一个Vue的应用程序是如何运行起来的，模板通过编译生成AST，再由AST生成Vue的render函数（渲染函数），渲染函数结合数据生成`Virtual DOM`树，`Diff`和`Patch`后生成新的UI。从这张图中，可以接触到Vue的一些主要概念：
 
 - **模板**：Vue的模板基于纯HTML，基于Vue的模板语法，我们可以比较方便地声明数据和UI的关系。
-- **AST**：AST是Abstract Syntax   Tree的简称，Vue使用HTML的Parser将HTML模板解析为AST，并且对AST进行一些优化的标记处理，提取最大的静态树，方便Virtual  DOM时直接跳过Diff。 
-- **渲染函数**：渲染函数是用来生成VirtualDOM的。Vue推荐使用模板来构建我们的应用界面，在底层实现中Vue会将模板编译成渲染函数，当然我们也可以不写模板，直接写渲染函数，以获得更好的控制
-- **Virtual DOM**：虚拟DOM树，Vue的Virtual DOM Patching算法是基于Snabbdom的实现，并在些基础上作了很多的调整和改进。
-- **Watcher**：每个Vue组件都有一个对应的watcher，这个watcher将会在组件render的时候收集组件所依赖的数据，并在依赖有更新的时候，触发组件重新渲染。你根本不需要写shouldComponentUpdate，Vue会自动优化并更新要更新的UI。
+- **AST**：AST是`Abstract Syntax Tree`的简称，Vue使用HTML的`Parser`将HTML模板解析为`AST`，并且对`AST`进行一些优化的标记处理，提取最大的静态树，方便`Virtual  DOM`时直接跳过`Diff`。 
+- **渲染函数**：渲染函数是用来生成`VirtualDOM`的。Vue推荐使用模板来构建我们的应用界面，在底层实现中Vue会将模板编译成渲染函数，当然我们也可以不写模板，直接写渲染函数，以获得更好的控制
+- **Virtual DOM**：虚拟`DOM`树，Vue的`Virtual DOM Patching`算法是基于Snabbdom的实现，并在些基础上作了很多的调整和改进。
+- **Watcher**：每个Vue组件都有一个对应的`watcher`，这个`watcher`将会在组件`render`的时候收集组件所依赖的数据，并在依赖有更新的时候，触发组件重新渲染。你根本不需要写`shouldComponentUpdate`，Vue会自动优化并更新要更新的UI。
 
 ## 渲染函数的基础
-Vue推荐在绝大多数情况下使用template来创建你的HTML。然而在一些场景中，需要使用JavaScript的编程能力和创建HTML，这就是render函数，它比template更接近编译器。
+Vue推荐在绝大多数情况下使用template来创建你的HTML。然而在一些场景中，需要使用JavaScript的编程能力和创建HTML，这就是`render`函数，它比`template`更接近编译器。
 
 ```html
 <h1>
@@ -69,8 +69,8 @@ Vue.component('anchored-heading', {
   }
 })
 ```
-在这种场景中使用 template 并不是最好的选择：首先代码冗长，为了在不同级别的标题中插入锚点元素，我们需要重复地使用 <slot></slot>。
-虽然模板在大多数组件中都非常好用，但是在这里它就不是很简洁的了。那么，我们来尝试使用 render 函数重写上面的例子：
+在这种场景中使用 template 并不是最好的选择：首先代码冗长，为了在不同级别的标题中插入锚点元素，我们需要重复地使用 `<slot></slot>`。
+虽然模板在大多数组件中都非常好用，但是在这里它就不是很简洁的了。那么，我们来尝试使用 `render` 函数重写上面的例子：
 
 ``` javascript
 Vue.component('anchored-heading', {
@@ -115,13 +115,13 @@ render: function (createElement) {
   return createElement('h1', this.blogTitle)
 }
 ```
-在这两种情况下，Vue 都会自动保持页面的更新，即便 **blogTitle** 发生了改变。
+在这两种情况下，Vue 都会自动保持页面的更新，即便 `blogTitle` 发生了改变。
 
 ### 虚拟 DOM
 Vue 通过建立一个虚拟 DOM 对真实 DOM 发生的变化保持追踪。
 ![enter description here](https://www.w3cplus.com/sites/default/files/blogs/2018/1804/vue-render-2.png)
 Vue的编译器在编译模板之后，会把这些模板编译成一个渲染函数。而函数被调用的时候就会渲染并且返回一个虚拟DOM的树。
-当我们有了这个虚拟的树之后，再交给一个**Patch函数**，负责把这些虚拟DOM真正施加到真实的DOM上。在这个过程中，Vue有自身的响应式系统来侦测在渲染过程中所依赖到的数据来源。在渲染过程中，侦测到数据来源之后就可以精确感知数据源的变动。到时候就可以根据需要重新进行渲染。当重新进行渲染之后，会生成一个新的树，将新的树与旧的树进行对比，就可以最终得出应施加到真实DOM上的改动。最后再通过Patch函数施加改动。
+当我们有了这个虚拟的树之后，再交给一个`Patch函数`，负责把这些虚拟DOM真正施加到真实的DOM上。在这个过程中，Vue有自身的响应式系统来侦测在渲染过程中所依赖到的数据来源。在渲染过程中，侦测到数据来源之后就可以精确感知数据源的变动。到时候就可以根据需要重新进行渲染。当重新进行渲染之后，会生成一个新的树，将新的树与旧的树进行对比，就可以最终得出应施加到真实DOM上的改动。最后再通过Patch函数施加改动。
 
 简单点讲，在Vue的底层实现上，Vue将模板编译成虚拟DOM渲染函数。结合Vue自带的响应系统，在应该状态改变时，Vue能够智能地计算出重新渲染组件的最小代价并应到DOM操作上。
 ![enter description here](https://www.w3cplus.com/sites/default/files/blogs/2017/1711/vue-r-1.png)
@@ -137,7 +137,7 @@ Vue支持我们通过data参数传递一个JavaScript对象做为组件数据，
  - [Vue中的响应式](https://www.w3cplus.com/vue/vue-reactivity.html)
  - [从JavaScript属性描述器剖析Vue.js响应式视图](https://www.w3cplus.com/vue/reactive.html)
 
-对于虚拟DOM，咱们来看一个简单的实例，就是下图所示的这个，详细的阐述了**模板 → 渲染函数 → 虚拟DOM树 → 真实DOM**的一个过程
+对于虚拟DOM，咱们来看一个简单的实例，就是下图所示的这个，详细的阐述了`模板 → 渲染函数 → 虚拟DOM树 → 真实DOM`的一个过程
 ![enter description here](https://www.w3cplus.com/sites/default/files/blogs/2018/1804/vue-render-3.png)
 
 Vue 通过建立一个虚拟 DOM 对真实 DOM 发生的变化保持追踪。请仔细看这行代码：
@@ -145,7 +145,7 @@ Vue 通过建立一个虚拟 DOM 对真实 DOM 发生的变化保持追踪。请
 ``` javascript
 return createElement('h1', this.blogTitle)
 ```
-**createElement** 到底会返回什么呢？其实不是一个实际的 DOM 元素。它更准确的名字可能是 **createNodeDescription**，因为它所包含的信息会告诉 Vue 页面上需要渲染什么样的节点，及其子节点。我们把这样的节点描述为“虚拟节点 (Virtual Node)”，也常简写它为“VNode”。“虚拟 DOM”是我们对由 Vue 组件树建立起来的整个 VNode 树的称呼。
+`createElement` 到底会返回什么呢？其实不是一个实际的 DOM 元素。它更准确的名字可能是 `createNodeDescription`，因为它所包含的信息会告诉 Vue 页面上需要渲染什么样的节点，及其子节点。我们把这样的节点描述为“虚拟节点 (Virtual Node)”，也常简写它为“VNode”。“虚拟 DOM”是我们对由 Vue 组件树建立起来的整个 VNode 树的称呼。
 
 Vue组件树建立起来的整个VNode树是唯一的。这意味着，下面的render函数是无效的：
 
@@ -158,7 +158,7 @@ render: function (createElement) {
   ])
 }
 ```
-如果你真的需要重复很多次的元素/组件，你可以使用工厂函数来实现。例如，下面这个例子 **render** 函数完美有效地渲染了 20 个重复的段落：
+如果你真的需要重复很多次的元素/组件，你可以使用工厂函数来实现。例如，下面这个例子 `render` 函数完美有效地渲染了 20 个重复的段落：
 
 ``` javascript
 render: function (createElement) {
@@ -226,12 +226,12 @@ let app = new Vue({
   }
 })
 ```
-这三种渲染模式最终都是要得到render函数。只不过用户自定义的render函数省去了程序分析的过程，等同于处理过的render函数，而普通的template或者el只是字符串，需要解析成AST，再将AST转化为render函数。
+这三种渲染模式最终都是要得到`render`函数。只不过用户自定义的`render`函数省去了程序分析的过程，等同于处理过的`render`函数，而普通的`template`或者`el`只是字符串，需要解析成`AST`，再将`AST`转化为`render`函数。
 
-> 记住一点，无论哪种方法，都要得到**render函数**
+> 记住一点，无论哪种方法，都要得到`render`函数
 
 ## 理解createElement 参数
-第一个参数：**{String | Object | Function}**
+第一个参数：`{String | Object | Function}`
 第一个参数对于createElement而言是一个必须的参数，这个参数可以是字符串string、是一个对象object，也可以是一个函数function。
 
 ``` javascript
@@ -281,7 +281,7 @@ Vue.component('custom-element', {
 })
 ```
 最终得到的结果和上图是一样的。这里传了一个eleFun()函数给createElement，而这个函数返回的是一个对象。
-第二个参数: **{Object}**
+第二个参数: `{Object}`
 createElement是一个可选参数，这个参数是一个Object。来看一个小示例：
 
 ``` javascript
@@ -319,7 +319,7 @@ let app = new Vue({
 最终生成的DOM，将会带一些属性和内容的div元素，如下图所示：
 ![enter description here](https://www.w3cplus.com/sites/default/files/blogs/2018/1804/vue-render-8.png)
 
-第三个参数：**{String | Array}**
+第三个参数：`{String | Array}`
 createElement还有第三个参数，这个参数是可选的，可以给其传一个String或Array。比如下面这个小示例：
 
 ``` javascript
@@ -353,9 +353,9 @@ let app = new Vue({ el: '#app' })
 ```
 最终的效果如下：
 ![enter description here](https://www.w3cplus.com/sites/default/files/blogs/2018/1804/vue-render-9.png)
-其实从上面这几个小例来看，不难发现，以往我们使用Vue.component()创建组件的方式，都可以用render函数配合createElement来完成。你也会发现，使用Vue.component()和render各有所长，正如文章开头的一个示例代码，就不适合Vue.component()的template，而使用render更方便。
+其实从上面这几个小例来看，不难发现，以往我们使用Vue.component()创建组件的方式，都可以用render函数配合createElement来完成。你也会发现，使用Vue.component()和`render`各有所长，正如文章开头的一个示例代码，就不适合Vue.component()的`template`，而使用`render`更方便。
 
-接下来看一个小示例，看看template和render方式怎么创建相同效果的一个组件:
+接下来看一个小示例，看看`template`和`render`方式怎么创建相同效果的一个组件:
 
 ``` javascript
 <div>
@@ -378,7 +378,7 @@ Vue.component('custom-element', {
 })
 ```
 
-上面Vue.component()中的代码换成render函数之后，可以这样写：
+上面Vue.component()中的代码换成`render`函数之后，可以这样写：
 
 ``` javascript
 Vue.component('custom-element', {
@@ -412,7 +412,7 @@ let app = new Vue({
 ```
 
 ### createElement解析过程
-简单的来看一下createElement解析的过程，这部分需要对JS有一些功底。不然看起来有点蛋疼：
+简单的来看一下`createElement`解析的过程，这部分需要对JS有一些功底。不然看起来有点蛋疼：
 
 ``` javascript
 const SIMPLE_NORMALIZE = 1
@@ -503,7 +503,7 @@ function createElement(context, tag, data, children, normalizationType, alwaysNo
     <p v-else>No item found.</p>
 </template>
 ```
-换成 **render** 函数可以这么写
+换成 `render` 函数可以这么写
 
 ```html
 <template>
@@ -537,7 +537,7 @@ function createElement(context, tag, data, children, normalizationType, alwaysNo
 </script>
 ```
 ### v-model
-render函数中也没有与v-model相应的API，如果要实现v-model类似的功能，同样需要使用原生JavaScript来实现。
+`render`函数中也没有与v-model相应的API，如果要实现`v-model`类似的功能，同样需要使用原生JavaScript来实现。
 
 ``` javascript
 <template>
@@ -631,13 +631,13 @@ render: function (createElement){
 回过头来看，Vue中的渲染核心关键的几步流程还是非常清晰的：
 
 - new Vue，执行初始化
-- 挂载$mount方法，通过自定义render方法、template、el等生成render函数
+- 挂载`$mount`方法，通过自定义`render`方法、`template`、`el`等生成`render`函数
 - 通过Watcher监听数据的变化
-- 当数据发生变化时，render函数执行生成VNode对象
-- 通过patch方法，对比新旧VNode对象，通过DOM Diff算法，添加、修改、删除真正的DOM元素
+- 当数据发生变化时，`render`函数执行生成VNode对象
+- 通过patch方法，对比新旧`VNode`对象，通过`DOM Diff`算法，添加、修改、删除真正的DOM元素
 
 至此，整个new Vue的渲染过程完毕。
 
-而这篇文章，主要把精力集中在render函数这一部分。学习了怎么用render函数来创建组件，以及了解了其中createElement。
+而这篇文章，主要把精力集中在`render`函数这一部分。学习了怎么用`render`函数来创建组件，以及了解了其中`createElement`。
 
  参考 [大漠 - Vue的render函数](https://www.w3cplus.com/vue/vue-render-function.html)
