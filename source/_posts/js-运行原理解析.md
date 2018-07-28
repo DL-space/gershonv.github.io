@@ -4,7 +4,7 @@ date: 2018-07-10 21:05:05
 categories: Javascript
 tags:
     - Javascript
-    - eventLoop
+    - 浏览器
 toc: true
 comments: true 
 keywords: eventLoop
