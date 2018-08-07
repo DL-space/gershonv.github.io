@@ -9,9 +9,26 @@ tags:
 toc: true
 keywords: 面对对象
 ---
+
+
+#测试页面 待补充
+--- 
 `router` 是hash改变
 `loaction.href`是页面跳转
 
+```js
+let a = 1;
+let b = 2;
+let c = 3;
+function log(x, y) {
+  y = y || 'World';
+  console.log(x, y);
+}
+
+log('Hello') // Hello World
+log('Hello', 'China') // Hello China
+log('Hello', '') // Hello World
+```
 css
 ```css
 animation:mymove 5s infinite;

@@ -21,6 +21,8 @@ toc: true
 [event Loop解析youtobe视频](https://www.youtube.com/watch?v=8aGhZQkoFbQ) - youtube
 [奔三路 面试系列](http://www.bslxx.com/a/mianfeivueke/)
 [面试图谱 ](https://yuchengkai.cn/docs/zh/)
+[react 小书](http://huziketang.mangojuice.top/books/react/)
+
 
 常用网站/工具
 ---
