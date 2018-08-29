@@ -205,7 +205,7 @@ var regex = /^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
 console.log( regex.test("2017-06-10") ); // => true
 ```
 **匹配标签中的id**
-要求从 ``<div id="container" class="main"></div>`
+要求从 `<div id="container" class="main"></div>`
 
 提取出id="container"。
 可能最开始想到的正则是：
