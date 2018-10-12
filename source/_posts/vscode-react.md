@@ -2,6 +2,10 @@
 title: vscode-react 快捷键
 date: 2018-10-10 20:56:32
 tags: vscode
+comments: true #是否可评论
+toc: true
+categories: 开发工具
+keywords:  v-model
 ---
 
 插件 React/Redux/react-router Snippets
