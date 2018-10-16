@@ -2,9 +2,7 @@
 title: ES6-Class
 date: 2018-07-16 22:19:09
 categories: Javascript
-tags: 
-    - Javascript
-    - ES6
+tags: Javascript
 toc: true
 comments: true  
 ---
