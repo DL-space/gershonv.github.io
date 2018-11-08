@@ -147,3 +147,308 @@ this.props.location.state.topicId
   )
 )}/>
 ```
+
+### Redirect(Auth)
+
+```jsx
+import React, { Component } from 'react'
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Redirect,
+  withRouter
+} from 'react-router-dom'
+
+const fakeAuth = {
+  isAuthenticated: false,
+  authenticate(cb) {
+    this.isAuthenticated = true
+    setTimeout(cb, 100) // fake async
+  },
+  signout(cb) {
+    this.isAuthenticated = false
+    setTimeout(cb, 100)
+  }
+}
+
+/**
+ * @class Login - 登录组件
+ * 接受参数 this.props.location.state.from
+ * 如果登录成功 redirectToReferrer = true, 则跳转回之前的页面 <Redirect to={from} />
+ */
+class Login extends Component {
+  state = { redirectToReferrer: false }
+
+  login = () => {
+    fakeAuth.authenticate(() => {
+      this.setState({ redirectToReferrer: true })
+    })
+  }
+
+  render() {
+    let { from } = this.props.location.state || { from: { pathname: '/' } }
+    let { redirectToReferrer } = this.state
+
+    if (redirectToReferrer) return <Redirect to={from} />
+
+    return (
+      <div>
+        <p>You must log in to view the page at {from.pathname}</p>
+        <button onClick={this.login}>Log in</button>
+      </div>
+    )
+  }
+}
+
+/**
+ * @class AuthRoute - 权限高阶路由组件
+ * 通过 fakeAuth.isAuthenticated 控制是否重定向到 /login
+ * 传递参数 { from: props.location }
+ */
+const AuthRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props =>
+      fakeAuth.isAuthenticated ? (
+        <Component {...props} />
+      ) : (
+        <Redirect
+          to={{
+            pathname: '/login',
+            state: { from: props.location }
+          }}
+        />
+      )
+    }
+  />
+)
+
+/**
+ * @func AuthStatus - 显示登录状态的组件
+ * @desc 通过 withRouter 包裹，获得 this.props.history 用于跳转
+ *       登录成功，显示 login succeeds，并显示注销按钮
+ *       未登录，显示 You are not logged in.
+ */
+const AuthStatus = withRouter(
+  ({ history }) =>
+    fakeAuth.isAuthenticated ? (
+      <p>
+        login succeeds
+        <button
+          onClick={() => {
+            fakeAuth.signout(() => history.push('/'))
+          }}>
+          Sign out
+        </button>
+      </p>
+    ) : (
+      <p>You are not logged in.</p>
+    )
+)
+
+class App extends Component {
+  render() {
+    return (
+      <Router>
+        <div>
+          <Link to="/auth">Auth Page</Link>
+          <AuthStatus />
+          <Route path="/login" component={Login} />
+          <AuthRoute path="/auth" component={() => <h2>Auth page</h2>} />
+        </div>
+      </Router>
+    )
+  }
+}
+
+export default App
+```
+
+## NotFound
+
+```jsx
+import React, { Component } from 'react'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+
+class App extends Component {
+  render() {
+    return (
+      <Router>
+        <Switch>
+          <Route exact path="/" component={() => <h2>Home</h2>} />
+          <Route component={() => <h2>404, not found</h2>} />
+        </Switch>
+      </Router>
+    )
+  }
+}
+export default App
+```
+
+## 何时使用 Switch
+
+```jsx
+import React, { Component } from 'react'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+
+// 输入地址 /article 可以发现 两个组件同时都被命中，这是我们不希望出现的
+// 这个时候可以使用Switch，他只会命中第一个命中的路由
+class App extends Component {
+  render() {
+    return (
+      <Router>
+        <div>
+          <Route path="/article" component={() => <p>article</p>} />
+          <Route path="/:name" component={() => <p>:name</p>} />
+        </div>
+      </Router>
+    )
+  }
+}
+export default App
+```
+
+## 实现 sidebar
+
+```jsx
+import React, { Component } from 'react'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+
+// 路由表
+const routes = [
+  {
+    path: '/',
+    exact: true,
+    component: () => <h1>Home</h1>
+  },
+  {
+    path: '/bubblegum',
+    component: () => <h1>bubblegum</h1>
+  },
+  {
+    path: '/shoelaces',
+    component: () => <h1>shoelaces</h1>
+  }
+]
+
+class App extends Component {
+  render() {
+    const sideBarStyle = {
+      padding: '10px',
+      width: '40%',
+      background: '#f0f0f0'
+    }
+    return (
+      <Router>
+        <div style={{ display: 'flex' }}>
+          <div style={sideBarStyle}>
+            <ul>
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li>
+                <Link to="/bubblegum">Bubblegum</Link>
+              </li>
+              <li>
+                <Link to="/shoelaces">Shoelaces</Link>
+              </li>
+            </ul>
+          </div>
+          <div style={{ flex: 1, padding: '10px' }}>
+            {routes.map((route, index) => (
+              <Route key={index} {...route} />
+            ))}
+          </div>
+        </div>
+      </Router>
+    )
+  }
+}
+
+export default App
+```
+
+## route config - 定义路由表，实现子路由
+
+### 官方 demo
+```jsx
+import React, { Component } from 'react'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+
+// 路由表
+const routes = [
+  {
+    path: '/sandwiches',
+    component: () => <h2>Sandwiches</h2>
+  },
+  {
+    path: '/tacos',
+    component: Tacos,
+    routes: [
+      {
+        path: '/tacos/bus',
+        component: () => <h3>sub Bus</h3>
+      },
+      {
+        path: '/tacos/cart',
+        component: () => <h3>sub cart</h3>
+      }
+    ]
+  }
+]
+
+function Tacos({ routes }) {
+  return (
+    <div>
+      <h2>Tacos</h2>
+      <ul>
+        <li>
+          <Link to="/tacos/bus">Bus</Link>
+        </li>
+        <li>
+          <Link to="/tacos/cart">Cart</Link>
+        </li>
+      </ul>
+
+      {routes.map((route, i) => (
+        <RouteWithSubRoutes key={i} {...route} />
+      ))}
+    </div>
+  )
+}
+
+const RouteWithSubRoutes = route => (
+  <Route
+    path={route.path}
+    render={props => <route.component {...props} routes={route.routes} />}
+  />
+)
+
+class App extends Component {
+  render() {
+    return (
+      <Router>
+        <div>
+          <ul>
+            <li>
+              <Link to="/tacos">Tacos</Link>
+            </li>
+            <li>
+              <Link to="/sandwiches">Sandwiches</Link>
+            </li>
+          </ul>
+          <hr />
+          {routes.map((route, i) => (
+            <RouteWithSubRoutes key={i} {...route} />
+          ))}
+        </div>
+      </Router>
+    )
+  }
+}
+
+export default App
+```
+
+## render
