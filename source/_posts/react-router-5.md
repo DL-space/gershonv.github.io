@@ -371,7 +371,6 @@ export default App
 
 ## route config - 定义路由表，实现子路由
 
-### 官方 demo
 ```jsx
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
