@@ -2,9 +2,9 @@
 title: react-router
 date: 2018-07-29 11:38:35
 categories: React
-tags: React
-toc: true
-comments: true 
+tags: 
+  - React
+  - react-router
 ---
 
 `react-router`是做SPA(不是你想的SPA)时，控制不同的url渲染不同的组件的js库。用`react-router`可以方便开发，不需要手动维护url和组件的对应关系。开发时用`react-router-dom`，`react-router-dom`里面的组件是对`react-router`组件的封装。

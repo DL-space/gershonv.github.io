@@ -2,7 +2,9 @@
 title: react-router 实践系列
 date: 2018-11-07 10:37:49
 categories: React
-tags: react-router
+tags: 
+  - React
+  - react-router
 ---
 
 ## 简单使用

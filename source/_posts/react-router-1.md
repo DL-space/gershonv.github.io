@@ -2,7 +2,9 @@
 title: '[译] react-router quickstart'
 date: 2018-11-07 10:30:48
 categories: React
-tags: react-router
+tags: 
+  - React
+  - react-router
 ---
 
 ## Quick start - 快速开始
