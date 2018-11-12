@@ -1,20 +1,26 @@
-function spawn(genF) {
-  return new Promise(function(resolve, reject) {
-    const gen = genF()
-    let next
-    function step(nextF) {
-      let next
-      try {
-        next = nextF()
-      } catch (err) {
-        return reject(err)
-      }
-      if (next.done)  return resolve(next.value)
-      Promise.resolve(next.value).then(
-        v => step(() => gen.next(v)), 
-        e => gen.throw(e)
-      )
-    }
-    step(() => gen.next(undefined))
-  })
+class CreateUser {
+  constructor(name) {
+    this.name = name
+    this.instance = null
+  }
+
+  getName() {
+    return this.name
+  }
 }
+
+// 代理实现单例模式
+var ProxyMode = (function() {
+  var instance = null
+  return function(name) {
+    if (!instance) {
+      instance = new CreateUser(name)
+    }
+    return instance
+  }
+})()
+
+const instanceA = new ProxyMode('instanceA') // { name: 'instanceA', instance: null }
+const instanceB = new ProxyMode('instanceB') // { name: 'instanceA', instance: null }
+
+console.log(instanceA, instanceB)
