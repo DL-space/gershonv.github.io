@@ -1,10 +1,10 @@
 ---
-title: ES6-Class
+title: ES6 - Class
 date: 2018-07-16 22:19:09
 categories: Javascript
-tags: Javascript
-toc: true
-comments: true  
+tags: 
+  - Javascript
+  - ES6
 ---
 ## 简介
 JavaScript 语言中，生成实例对象的传统方法是通过构造函数。下面是一个例子。

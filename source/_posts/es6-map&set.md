@@ -2,9 +2,9 @@
 title: ES6 - Map 和 Set
 date: 2018-10-16 09:07:08
 categories: Javascript
-tags: Javascript
-toc: true
-comments: true
+tags: 
+  - Javascript
+  - ES6
 ---
 
 ## Map 和 Set
