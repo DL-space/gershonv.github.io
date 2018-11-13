@@ -166,6 +166,38 @@ setTimeout(bus.end.bind(bus), 3600)
 setTimeout(bus.start.bind(bus), 6666)
 ```
 
+## 代理模式
+
+常用的虚拟代理形式：某一个花销很大的操作，可以通过虚拟代理的方式延迟到这种需要它的时候才去创建（例：使用虚拟代理实现图片懒加载）
+
+图片懒加载的方式：先通过一张 `loading` 图占位，然后通过异步的方式加载图片，等图片加载好了再把完成的图片加载到 `img` 标签里面。
+
+```js
+var myImage = (function() {
+  var imgNode = document.createElement('img')
+  document.body.appendChild(imgNode)
+  return function(src) {
+    imgNode.src = src
+  }
+})()
+
+var ProxyImage = (function() {
+  var img = new Image()
+
+  img.onload = function() {
+    myImage(this.src)
+  }
+  return function(src) {
+    // 占位图片loading
+    myImage('http://www.baidu.com/img/baidu_jgylogo3.gif')
+    img.src = src
+  }
+})()
+
+// 调用方式
+ProxyImage('https://img.alicdn.com/tps/i4/TB1b_neLXXXXXcoXFXXc8PZ9XXX-130-200.png') // 真实要展示的图片
+```
+
 ## 单例模式
 
 > 单例模式的定义：保证一个类仅有一个实例，并提供一个访问它的全局访问点。实现的方法为先判断实例存在与否，如果存在则直接返回，如果不存在就创建了再返回，这就确保了一个类只有一个实例对象。
