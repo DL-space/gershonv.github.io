@@ -1,23 +1,46 @@
-var myImage = (function() {
-  var imgNode = document.createElement('img')
-  document.body.appendChild(imgNode)
-  return function(src) {
-    imgNode.src = src
+function fun(n, o) {
+  console.log(o)
+  return {
+    fun: function(m) {
+      return fun(m, n)
+    }
   }
-})()
+}
 
-var ProxyImage = (function() {
-  var img = new Image()
+var a = fun(0)
+a.fun(1) 
+a.fun(2) 
+a.fun(3) 
+var b = fun(0)
+  .fun(1)
+  .fun(2)
+  .fun(3) 
+var c = fun(0).fun(1) 
+c.fun(2) 
+c.fun(3) 
 
-  img.onload = function() {
-    myImage(this.src)
+function Foo() {
+  getName = function() {
+    console.log(1)
   }
-  return function(src) {
-    // 占位图片loading
-    myImage('http://img.lanrentuku.com/img/allimg/1212/5-121204193Q9-50.gif')
-    img.src = src
-  }
-})()
+  return this
+}
+Foo.getName = function() {
+  console.log(2)
+}
+Foo.prototype.getName = function() {
+  console.log(3)
+}
+var getName = function() {
+  console.log(4)
+}
+function getName() {
+  console.log(5)
+}
 
-// 调用方式
-ProxyImage('https://img.alicdn.com/tps/i4/TB1b_neLXXXXXcoXFXXc8PZ9XXX-130-200.png') // 真实要展示的图片
+Foo.getName() 
+getName()
+Foo().getName()
+getName()
+new Foo.getName() 
+new Foo().getName() 
