@@ -1,5 +1,5 @@
 ---
-title: js创建对象的几种方式（工厂模式、构造函数模式、原型模式）
+title: js - 创建对象的几种方式（工厂模式、构造函数模式、原型模式）
 date: 2018-10-16 09:11:46
 categories: Javascript
 tags: Javascript

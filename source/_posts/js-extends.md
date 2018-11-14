@@ -1,5 +1,5 @@
 ---
-title: js-继承
+title: js - 继承
 date: 2018-10-16 09:12:50
 categories: Javascript
 tags: Javascript

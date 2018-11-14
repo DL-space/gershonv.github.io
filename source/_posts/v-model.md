@@ -1,10 +1,8 @@
 ---
-title: 封装组件系列 - v-model 解析
+title: v-model 浅析
 date: 2018-07-08 13:45:31
 comments: true #是否可评论
-tags:
-   - Vue.js
-   - 封装组件
+tags: Vue.js
 toc: true
 categories: Vue.js
 keywords:  v-model

@@ -2,65 +2,69 @@
 title: 封装组件系列 - el 分页表格
 date: 2018-07-07 00:44:38
 comments: true #是否可评论
-tags: 
-   - Vue.js
-   - 封装组件
-toc: true
-categories: Vue.js
-keywords:  
+tags:
+  - Vue.js
   - element-ui
-  - Pagination
-  - table
+categories: Vue.js
 ---
+
 ## 前言
-公司开发新的项目，用到表格是之前的人封装，主要是用于展示，但是使用过后才发现限制太多，所以决定自己封装一个，稍微动态一点的。结合 element-table+ pagination 进行了二次封装。下面有参数说明，方便大家使用。
-只需要传入一些必要参数就可以使用了，代码复用也相对高了。效果图如下：
 
-![table](https://user-gold-cdn.xitu.io/2018/7/11/1648913a4714e7fb?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+本次封装基于 `antd` 风格, 实现高度可配置的表格封装配置。本来想通过 `vue.extends` 去封装的，奈何几个月没写过 `vue` ，而且对 `vue` 的 `extends` 不熟悉所以放弃了...
 
-## 组件参数说明
+之前有小伙伴确实引用了我的代码，发现封装出现了一些纰漏，对此十分抱歉，之前封装的太仓促了。几个月前的代码，现在重新封装又有了新的体会。
 
-**Table Attributes**
+更新时间 【2018.11.09】，效果如下：
 
-|  参数  |  说明   |  类型   |  可选值   |  
-| --- | --- | --- | --- | --- |
-|   list  |  表格数据   |  Array   |  必选   |  
-|   columns  |   列数据  | Array    |   必选  |  
-|   operates   |  操作表格数据的信息   |  Object   |  可选   | 
-|   pagination  |   分页信息  |   Object  |  必选   |     
+![](https://user-gold-cdn.xitu.io/2018/11/9/166f7e2fa283341b?w=1896&h=761&f=png&s=84208)
 
+## API 说明
 
-**Table Events**
+- `columns` : **必选**, 列描述数据对象， Array
+- `dataSource` : **必选**, 数据数组
+- `options` : **必选**, 表格参数控制, maxHeight、stripe 等等..
+- `fetch` : 获取数据的 Function
+- `pagination` : 分页信息，不传则不显示分页
+- `row-click` ：当某一行被点击时会触发该事件
+- `selection-change` : 当选择项发生变化时会触发该事件
+- 其他的 api 可以自行添加
 
-|  事件名  |  说明   |  参数   |
-| --- | --- | --- |
-|   handleSelectionChange  |   当选择项发生变化时会触发该事件  |   selection  |
+其他说明我在代码注释中写的很清楚了，请自行查看。
 
-## 表格组件的引入与使用
+根据条件渲染: 只通过 `render` 去判断参数不同而渲染不一样的表格数据。 `render` 函数可以渲染任何你想要的组件
 
-``` html
-<common-table
-    :list="list"
-    :options="options"
-    :pagination="pagination"
-    :columns="columns"
-    :operates="operates"
-    :getList="getList"
-    @handleSelectionChange="handleSelectionChange">
-</common-table>
-```
-``` javascript
+值得注意的是，`this` 对象的绑定不要出错了,如果需要更多增强的功能，各位可以自行添加...
+
+## Home.vue 组件
+
+```html
+<template>
+    <div>
+      <h2>Home</h2>
+      <CommonTable
+        :columns="columns"
+        :dataSource="tableData"
+        :options="options"
+        :fetch="fetchTableData"
+        :pagination="pagination"
+        @row-click="handleRowClick"
+        @selection-change="handleSelectionChange"
+        />
+    </div>
+</template>
+
+<script>
 import axios from 'axios'
-import commonTable from './commonTable'
+import CommonTable from '../components/Table'
 
-export default {
-  components: {commonTable},
-  data() {
+export default{
+  components:{
+    CommonTable
+  },
+  data(){
     return {
-      msg: '',
-      list: [],
       columns: [
-        {
+         {
           prop: 'id',
           label: '编号',
           width: 60
@@ -68,340 +72,256 @@ export default {
         {
           prop: 'title',
           label: '标题',
-          formatter: (row, column, cellValue) => {
-            return `<span style="white-space: nowrap;color: dodgerblue;">${row.title}</span>`
-          }
-        },
-        {
-          prop: 'state',
-          label: '状态',
-          render: (h, params) => {
-            return h('el-tag', {
-              props: {type: params.row.state === 0 ? 'success' : params.row.state === 1 ? 'info' : 'danger'} // 组件的props
-            }, params.row.state === 0 ? '上架' : params.row.state === 1 ? '下架' : '审核中')
-          }
-        },
-        {
-          prop: 'author',
-          label: '作者',
-        },
-        {
-          prop: 'phone',
-          label: '联系方式',
-          render: (h, params) => {
+          // render 可以根据你想要渲染的方式渲染
+          // jsx 不提供 v-model 指令，若你想要使用，，推荐使用插件 babel-plugin-jsx-v-model
+          // jsx https://github.com/vuejs/babel-plugin-transform-vue-jsx
+          render: (row, index) => {
             return (
-              <el-button type="text" nativeOnClick={() => {
-                this.call(params)
-              }}>{params.row.phone}</el-button>
+              <span style="color: blue" onClick={e => this.handleClick(e, row)}>{row.title}</span>
             )
           }
         },
         {
-          prop: 'blog',
-            label: '博客地址',
-            render: (h, params) => {
-              return (
-                <el-button type="text" nativeOnClick={() => {
-                  window.location.href = params.row.blog
-                }}>{params.row.blog}</el-button>
-              )
-            }
+          prop: 'author',
+          label: '作者'
         },
         {
-          prop: 'createDate',
-          label: '发布时间',
-          formatter: (row, column, cellValue) => {
-            return '2018-02-01'
-          }
-        }
-      ], // 需要展示的列
-      operates: {
-        width: 200,
-        fixed: 'right',
-        list: [
-          {
-            label: '编辑',
+          button: true,
+          label: '按钮组',
+          group: [{
+            // you can props => type size icon disabled plain
+            name: '编辑',
             type: 'warning',
             icon: 'el-icon-edit',
             plain: true,
-            disabled: false,
-            method: (row, index) => {
-              this.handleEdit(row, index)
+            onClick: (row, index) => { // 箭头函数写法的 this 代表 Vue 实例
+              console.log(row, index)
             }
-          },
-          {
-            label: '删除',
+          }, {
+            name: '删除',
             type: 'danger',
             icon: 'el-icon-delete',
-            show: true,
-            plain: false,
             disabled: false,
-            method: (row, index) => {
-              this.handleDel(row, index)
+            onClick(row) { // 这种写法的 this 代表 group 里的对象
+              this.disabled = true
+              console.log(this)
             }
-          }
-        ]
-      }, // 操作按钮组
+          }]
+        }
+      ],
+      tableData: [
+        {
+          id: 1,
+          title: '标题1',
+          author: '郭大大'
+        },
+        {
+          id: 2,
+          title: '标题2',
+          author: '郭大大2'
+        }
+      ],
       pagination: {
-        show: true,
         total: 0,
         pageIndex: 1,
         pageSize: 15
-      }, // 分页参数
+      },
       options: {
-        index: true, //序号
-        loading: false, // 表格loading加载动画控制
-      } // table 的参数
+        mutiSelect: true,
+        index: true, // 显示序号， 多选则 mutiSelect
+        loading: false, // 表格动画
+        initTable: true, // 是否一挂载就加载数据
+      }
     }
   },
   methods: {
-    getList() {
-      this.options.loading = true
-      axios.post('https://www.easy-mock.com/mock/5b3f80edfa972016b39fefbf/example/tableData', {
+    handleClick(e, row){
+      //transform-vue-jsx 的nativeOnClick 失效 , 所以采用 event.cancelBubble 控制点击事件的冒泡... 如果点击事件不影响你的点击行事件，可以不传
+      e.cancelBubble = true // 停止冒泡，否则会触发 row-click
+      console.log(row)
+    },
+    fetchTableData() {
+       this.options.loading = true
+       axios.post('https://www.easy-mock.com/mock/5b3f80edfa972016b39fefbf/example/tableData', {
         pageIndex: this.pagination.pageIndex,
         pageSize: this.pagination.pageSize
-      }).then((response) => {
-        this.pagination.total = response.data.data.total
-        this.list = response.data.data.list
+      }).then(res => {
+        const { list, total } = res.data.data
+        this.tableData = list
+        this.pagination.total = total
         this.options.loading = false
       }).catch((error) => {
-        console.log(error);
+        console.log(error)
         this.options.loading = false
       })
     },
-    // 选中行
-    handleSelectionChange(val) {
-      console.log('val:', val)
+    handleRowClick(row, event, column){ // 点击行的事件，同理可以绑定其他事件
+      console.log('click row:',row, event, column)
     },
-    // 编辑
-    handleEdit(row, index) {
-      console.log(' index:', index)
-      console.log(' row:', row)
-    },
-    // 删除
-    handleDel(row, index) {
-      console.log(' index:', index)
-      console.log(' row:', row)
-    },
-    call(params) {
-      this.$message(`click call ${params.row.phone}`)
+    handleSelectionChange(selection){
+      console.log(selection)
     }
   }
 }
+</script>
 ```
 
-#### 参数说明
-- `list` : 表格数据
-- `getList`: 获取表格数据的方法
-  - 注意loading控制 存放在表格参数 `options` 里面 
-- `options`：表格参数
-	- initTable ： 是否默认加载数据 不加载则在  `options` 中添加为false
-	- maxHeight ： 表格最大高度 Number 默认500
-	- stripe ： 是否为斑马纹 默认true
-	- loading ： **请求数据的加载动画**
-	- highlightCurrentRow ： 是否支持当前行高亮显示 默认true
-	- mutiSelect ： 是否支持列表项选中功能 默认false
-  - border: 是否为边框表格 默认true
-- `columns` ：列数据参数
-	- prop ： **对应列内容的字段名 【必选】**
-	- label ： **显示的标题 【必选】**
-	- align ： 对齐方式
-	- width ： 列宽度
-	- fixed ：列固定方式
-	- formatter ： 渲染数据的函数
-	- render ： 渲染表格的组件的函数 **jsx语法 上述有采用请参照**
-- `pagination` ： 分页信息
-	- show ： **控制分页是否显示** 
-	- total ： **表格数据总条数**
-	- pageIndex ： **当前页码**
-	- pageSize ： **每页显示条目个数**
-  - pageSizeArr： **控制表格的每页显示条目个数**
-- `operates` : 操作行
-	- width ： 宽度
-	- fixed ：固定位置
-	- list : 存放按钮信息的数组
-		- label ：按钮标签
-		- type ： 按钮类型
-		- icon ： icon
-		- plain ： 是否为朴素按钮
-		- disabled ： 是否禁用
-		- method ： 回调方法
+## Table.vue 组件
 
-
-
-## 封装 pagination-table 组件
-
-### template
-
-``` html
+```html
 <template>
-  <div class="op-table">
-    <div class="table-wrap">
-      <el-table
-        v-loading="options.loading"
-        :data="list"
-        :max-height="options.maxHeight"
-        :stripe="options.stripe"
-        ref="mutipleTable"
-        @selection-change="handleSelectionChange"
-        header-cell-class-name="table-header"
-        :border="options.border"
-      >
+  <div>
+    <el-table
+      v-loading="options.loading"
+      :data="dataSource"
+      :max-height="options.maxHeight"
+      :stripe="options.stripe"
+      :border="options.border"
+      @row-click="handleRowClick"
+      @selection-change="handleSelectionChange"
+      header-row-class-name="table-header-row">
 
-        <!--selection选择框-->
-        <el-table-column v-if="options.mutiSelect" type="selection" style="width: 50px;">
-        </el-table-column>
+      <!--selection选择框-->
+      <el-table-column v-if="options.mutiSelect" type="selection" style="width:50px" align="center"></el-table-column>
 
-        <!--序号-->
-        <el-table-column v-if="options.index" label="序号" type="index" width="50" align="center"></el-table-column>
+      <!--序号-->
+      <el-table-column v-if="options.index" label="序号" type="index" width="50" align="center"></el-table-column>
 
-        <!--数据列-->
-        <template v-for="(column, index) in columns">
-          <el-table-column :prop="column.prop"
-                           :label="column.label"
-                           :align="column.align || 'center'"
-                           :width="column.width"
-                           :fixed="column.fixed">
-            <template slot-scope="scope">
+      <!--数据列-->
+      <template v-for="(column, index) in columns">
+        <el-table-column
+          :key="index"
+          :prop="column.prop"
+          :label="column.label"
+          :align="column.align||'center'"
+          :width="column.width"
+          :fixed="column.fixed">
+          <template slot-scope="scope">
 
-              <template v-if="!column.render">
-                <template v-if="column.formatter">
-                  <span v-html="column.formatter(scope.row, column)"></span>
-                </template>
-                <template v-else>
-                  <span>{{scope.row[column.prop]}}</span>
-                </template>
-              </template>
+            <template v-if="!column.render">
+              {{scope.row[column.prop]}}
+            </template>
 
-              <!--render-->
-              <template v-else>
-                <expand-dom :column="column" :row="scope.row" :render="column.render" :index="index"></expand-dom>
+             <!-- render -->
+            <template v-else>
+              <RenderDom :row="scope.row" :index="index" :render="column.render" />
+            </template>
+
+            <!-- render button -->
+            <template v-if="column.button">
+              <template v-for="(btn, i) in column.group">
+                <el-button
+                  :key="i"
+                  :type="btn.type" :size="btn.size || 'mini'" :icon="btn.icon" :disabled="btn.disabled" :plain="btn.plain"
+                   @click.stop="btn.onClick(scope.row, scope.$index)"
+                  >{{btn.name}}</el-button>
               </template>
             </template>
-          </el-table-column>
-        </template>
 
-        <!-- 按钮操作组-->
-        <el-table-column v-if="operates" ref="fixedColumn" label="操作" align="center"
-                         :width="operates.width" :fixed="operates.fixed">
-          <template slot-scope="scope">
-            <div class="operate-group">
-              <template v-for="(btn, key) in operates.list">
-                <el-button :type="btn.type" size="mini" :icon="btn.icon" :disabled="btn.disabled"
-                           :plain="btn.plain" @click.native.prevent="btn.method(scope.row, key)">{{ btn.label }}
-                </el-button>
-              </template>
-            </div>
+            <!-- slot 你可以其他常用项 -->
+
           </template>
-        </el-table-column>
-      </el-table>
-    </div>
 
-    <!-- 分页-->
-    <el-pagination v-if="pagination.show"
-                   @size-change="handleSizeChange"
-                   @current-change="handleIndexChange"
-                   :page-size="pagination.pageSize"
-                   :page-sizes="pagination.pageSizeArr && pagination.pageSizeArr.length > 0 ? pagination.pageSizeArr : [20, 50, 100, 500, 5000]"
-                   :current-page="pagination.pageIndex"
-                   layout="total,sizes, prev, pager, next,jumper"
-                   :total="pagination.total"
-                   style="margin-top: 20px;text-align: right"></el-pagination>
+        </el-table-column>
+      </template>
+
+    </el-table>
+
+     <!-- 分页 -->
+    <el-pagination
+        v-if="pagination"
+        :total="pagination.total"
+        :page-sizes="[20, 50, 100, 500, 5000]"
+        layout="total, sizes, prev, pager, next, jumper"
+        @size-change="handleSizeChange"
+        @current-change="handleIndexChange"
+        style="margin-top: 20px;text-align: right"
+    ></el-pagination>
+
   </div>
 </template>
-```
 
-
-### JavaScript
-```javascript
-export default {
-  props: {
-    list: {
-      type: Array,
-      default: () => [] // prop:表头绑定的地段，label：表头名称，align：每列数据展示形式（left, center, right），width:列宽
-    }, // 数据列表
-    columns: {
-      type: Array,
-      default: () => [] // 需要展示的列 === prop：列数据对应的属性，label：列名，align：对齐方式，width：列宽
-    },
-    operates: {
-      type: Object,
-      default: () => {
-        // width:按钮列宽，fixed：是否固定（left,right）,按钮集合 === label: 文本，type :类型（primary / success / warning / danger / info / text
-        // show：是否显示，icon：按钮图标，plain：是否朴素按钮，disabled：是否禁用，method：回调方法
+<script>
+  export default {
+    components: {
+      RenderDom: {
+        functional: true, // 函数式组件 - 无 data 和 this 上下文 => better render
+        props: {
+          row: Object,
+          index: Number,
+          render: Function
+        },
+        /**
+         * @param {Function} createElement - 原生创建dom元素的方法， 弃用，推荐使用 jsx
+         * @param {Object} ctx - 渲染的节点的this对象
+         * @argument 传递参数 row index
+         */
+        render(createElement, ctx){
+          const { row, index } = ctx.props
+          return ctx.props.render(row, index)
+        }
       }
     },
-    pagination: {
-      type: Object,
-      default: {}// 分页参数 === pageSize:每页展示的条数，pageIndex:当前页，pageArray: 每页展示条数的控制集合，默认 _page_array
+    props:{
+      dataSource: Array,
+      options: Object,   // 表格参数控制 maxHeight、stripe 等等...
+      columns: Array,
+      fetch: Function,   // 获取数据的函数
+      pagination: Object // 分页，不传则不显示
     },
-    getList: Function,
-    options: {
-      type: Object,
-      default: {}
-    } // table 表格的控制参数
-  },
-  components: {
-    expandDom: {
-      functional: true,
-      props: {
-        row: Object,
-        render: Function,
-        index: Number,
-        column: {
-          type: Object,
-          default: null
-        }
+    created() {
+      // 传入的options覆盖默认设置
+      this.$parent.options = Object.assign({
+          maxHeight: 500,
+          stripe: true, // 是否为斑马纹
+          border: true
+      }, this.options)
+
+      this.options.initTable && this.fetch()
+    },
+    methods: {
+      handleSizeChange(size) { // 切换每页显示的数量
+        this.pagination.pageSize = size
+        this.fetch()
       },
-      render: (h, ctx) => {
-        const params = {
-          row: ctx.props.row,
-          index: ctx.props.index
-        }
-        if (ctx.props.column) params.column = ctx.props.column
-        return ctx.props.render(h, params)
+      handleIndexChange(current) { // 切换页码
+        this.pagination.pageIndex = current
+        this.fetch()
+      },
+      handleSelectionChange(selection) {
+        this.$emit('selection-change', selection)
+      },
+      handleRowClick(row, event, column) {
+        this.$emit('row-click', row, event, column)
       }
-    }
-  },
-  data() {
-    return {
-      multipleSelection: [], // 多行选中
-    }
-  },
-  created() {
-    // options 处理
-    if (this.options.initTable !== false) {
-      this.getList()
-    }
-    // === 表格参数默认值
-    this.$parent.options = Object.assign({
-      maxHeight: 500, // 表格 max-height
-      initTable: true, // 是否一进来就加载表格数据
-      stripe: true, // 是否为斑马纹 table
-      loading: false, // 是否添加表格loading加载动画
-      highlightCurrentRow: true, // 是否支持当前行高亮显示
-      mutiSelect: false, // 是否支持列表项选中功能
-      border: true
-    }, this.options)
-  },
-  methods: {
-    // 切换每页显示的数量
-    handleSizeChange(size) {
-      this.pagination.pageSize = size
-      this.getList()
-    },
-    // 切换页码
-    handleIndexChange(current) {
-      this.pagination.pageIndex = current
-      this.getList()
-    },
-    // 多行选中
-    handleSelectionChange(val) {
-      this.multipleSelection = val
-      this.$emit('handleSelectionChange', val)
     }
   }
+</script>
+
+<style>
+.el-table th,
+.el-table tr.table-header-row {
+  background: #e5c5d2; /* 示例， 对表格样式上的修饰 */
 }
+</style>
 ```
+
+## 结语
+
+上述代码封装完整性可能不是这么高，但思路在呢，如果需要更多配置，各位可以在进行加强...
+
+吐槽一下，本来是想 `props` 数据来重写 `table` 参数，类似 `react`:
+
+```jsx
+<Home>
+  <ComonTable {...props} >
+</Home>
+
+// ComonTable
+<el-table {...props.options}>
+</el-table>
+```
+
+所以想到继承，自己又不熟悉。 而且发现 `vue` 展开绑定多个属性是不可以的： 可能是我没 `google` 到。如果可以，请大佬告知一声，谢谢
 
 [jsx 语法快速入门](https://github.com/vuejs/babel-plugin-transform-vue-jsx)

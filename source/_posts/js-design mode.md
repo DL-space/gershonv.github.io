@@ -1,8 +1,10 @@
 ---
-title: js-常用的设计模式
+title: js - 常用的设计模式
 date: 2018-11-12 16:33:26
 categories: Javascript
-tags: Javascript
+tags: 
+  - Javascript
+  - 设计模式
 ---
 
 ## 发布订阅模式
