@@ -1,9 +1,10 @@
 ---
-title: js - 原型和原型链
+title: '[转] JavaScirpt深入之从原型到原型链'
 date: 2018-11-14 10:50:07
 categories: Javascript
 tags:
   - Javascript
+  - Javascript 深入系列
   - 原型/原型链
 ---
 
