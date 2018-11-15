@@ -5,7 +5,7 @@ categories: Javascript
 tags:
   - Javascript
   - Javascript 深入系列
-  - 执行上下文栈
+  - 执行上下文
 ---
 
 ## 顺序执行？
