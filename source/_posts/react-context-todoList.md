@@ -2,9 +2,7 @@
 title: react-context 实现 todoList
 date: 2018-11-09 23:56:25
 categories: React
-tags:
-  - React
-  - react-router
+tags: React
 ---
 
 `src/context/TodoContext.js`
