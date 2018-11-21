@@ -90,7 +90,7 @@ ajax('...', function(result) {
 
 JS引擎其实并不提供异步的支持，异步支持主要依赖于运行环境(浏览器或Node.js)。
 
-#### 所以什么是Event Loop?
+### 所以什么是Event Loop?
 vent Loop只做一件事情，**负责监听Call Stack和Callback Queue**。当Call Stack里面的调用栈运行完变成空了，Event Loop就把Callback Queue里面的第一条事件(其实就是回调函数)放到调用栈中并执行它，后续不断循环执行这个操作。
 
 一个setTimeout的[例子以及对应的Event Loop动态图](https://blog.sessionstack.com/how-javascript-works-event-loop-and-the-rise-of-async-programming-5-ways-to-better-coding-with-2f077c4438b5)：
