@@ -1,5 +1,5 @@
 ---
-title: http - 五层网络模型
+title: http - 导学
 date: 2018-11-20 19:31:23
 categories: HTTP
 tags: HTTP
@@ -11,7 +11,7 @@ tags: HTTP
 
 在每一台电脑，每个服务器都有这这几个网络模型层级来维护整个网络数据传输过程。
 
-## 一张图了解 TCP/IP 五层网络模型
+### 一张图了解 TCP/IP 五层网络模型
 
 ![](https://user-gold-cdn.xitu.io/2018/11/20/167316845f6dde61?w=1255&h=629&f=jpeg&s=180804)
 
@@ -64,4 +64,56 @@ tags: HTTP
    > 在 `HTTP/2.0` 中，服务器可以向客户发送请求之外的内容，比如正在请求一个页面时，服务器会把页面相关的 `logo`，`CSS` 等文件直接推送到客户端，而不会等到请求来的时候再发送，因为服务器认为客户端会用到这些东西。这相当于在一个 `HTML` 文档内集合了所有的资源。
 4. ...
 
+## HTTP 的三次握手
 
+[http-tcp 的三次握手四次挥手](https://gershonv.github.io/2018/11/20/http-TCP/)
+
+## URI-URL 和 URN
+
+![](http://ww4.sinaimg.cn/mw690/6941baebgw1evu0o8swewj20go0avq3e.jpg)
+
+- `URI` : `Uniform Resource Identifier`/统一资源标志符
+  - `URL` 和 `URN` 都是 `URI` 的子集
+    > 统一资源标识符（`URI`）提供了一个简单、可扩展的资源标识方式。
+- `URL` : `Uniform Resource Locator`/统一资源定位器
+  - URL 是 Internet 上用来描述信息资源的字符串，主要用在各种 WWW 客户程序和服务器程序上。
+  - 采用 URL 可以用一种统一的格式来描述各种信息资源，包括文件、服务器的地址和目录等。
+  ```js
+  `http://user:pass@host.com:80/path?query=string#hash` // @example url 的组成
+  /**
+   * http:// ===> 协议，类似的还有 ftp、https 等
+   * user:pass@host.com:80 ===> 存有该资源的主机IP地址（有时也包括端口号）
+   * /path ===> 主机资源的具体地址。如目录和文件名等。
+   */ 
+  ```
+- `URN` : 永久统一资源定位符
+  - 在资源移动之后还能被找到
+
+## HTTP 报文
+
+![](https://user-gold-cdn.xitu.io/2018/11/21/16736f14557858b9?w=960&h=287&f=png&s=93357)
+
+请求报文 
+
+- 首行 ：并不属于 `HTTP HEADER`
+  ```js
+  GET /test/hi-there.txt HTTP/1.0
+  // 首行构成为： method 请求方式；请求地址；协议版本
+  ```
+- `header`、`body` 等
+
+响应报文
+
+- 首行：协议版本 + 状态码 + 状态码描述
+- 首部...
+
+## 创建一个简单的 http 服务
+
+```js
+const http = require('http')
+
+http.createServer(function(request, response) {
+  console.log('request come', request.url)
+  response.end('123')
+}).listen(8888)
+```

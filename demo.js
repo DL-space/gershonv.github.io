@@ -1,5 +1,8 @@
-for (var i = 0; i < 5; i++) {
-  setTimeout(() => {
-    console.log(i)
-  }, i * 1000)
-}
+const http = require('http')
+
+http
+  .createServer(function(request, response) {
+    console.log('request come', request.url)
+    response.end('123')
+  })
+  .listen(8888)
