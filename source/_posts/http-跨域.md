@@ -246,7 +246,7 @@ http
     response.writeHead(200, {
       'Access-Control-Allow-Origin': 'http://127.0.0.1:3300', // 只有 http://127.0.0.1:3300 才能访问
       'Access-Control-Allow-Credentials': true, // 允许携带 cookie
-      'Access-Control-Allow-Headers': 'X-Test-Cors', // 预检， 如果请求头中有 X-Test-Cors 才通过
+      'Access-Control-Allow-Headers': 'X-Test-Cors', // 预检
       'Access-Control-Allow-Methods': 'POST, PUT, DELETE', // 支持
       'Access-Control-Max-Age': '1000' // 指定本次预检请求的有效期，单位为秒
     })
@@ -263,3 +263,16 @@ console.log('server listening on 6060')
 - `Access-Control-Max-Age`: 用来指定本次预检请求的有效期，单位为秒。
 
 `CORS` 与 `JSONP` 的使用目的相同，但是比 `JSONP` 更强大。`JSONP` 只支持 `GET` 请求，`CORS` 支持所有类型的 `HTTP` 请求。`JSONP` 的优势在于支持老式浏览器，以及可以向不支持 `CORS` 的网站请求数据。
+
+## postMessage
+
+.... 略
+
+## window.name + iframe
+
+.... 略
+
+
+## 参考
+
+- [正确面对跨域，别慌](https://juejin.im/post/5a2f92c65188253e2470f16d#heading-5)
