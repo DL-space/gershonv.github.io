@@ -1,8 +1,18 @@
-const http = require('http')
+var doms = []
+function getChildren(parent) {
+  // parent.nodeType === 1
 
-http
-  .createServer(function(request, response) {
-    console.log('request come', request.url)
-    response.end('123')
-  })
-  .listen(8888)
+  if (parent.children.length > 0) {
+    for (let i = 0; i < parent.children.length; i++) {
+      getChildren(parent.children[i])
+    }
+  }
+  if (parent.nodeType === 1) {
+    // parent.nodeType === 1：节点是一个元素节点
+    doms.push(parent)
+  }
+}
+
+getChildren(document)
+
+console.log(doms)
