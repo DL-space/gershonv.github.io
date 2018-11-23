@@ -142,7 +142,7 @@ http
     if (etag === '777') {
       response.writeHead(304, {
         'Content-Type': 'text/javascript',
-        'Cache-Control': 'max-age=2000000, no-cache', // 缓存时间 2000s；no-cache: 浏览器不做缓存检查
+        'Cache-Control': 'max-age=120, no-cache', // 缓存时间 120s；no-cache: 浏览器不做缓存检查
         'Last-Modified': '123',
         Etag: '777'
       })
@@ -151,7 +151,7 @@ http
       // etag change
       response.writeHead(200, {
         'Content-Type': 'text/javascript',
-        'Conche-Control': 'max-age=2000, no-cache', // 缓存时间 2000s；no-cache: 浏览器不做缓存检查
+        'Conche-Control': 'max-age=120, no-cache', // 缓存时间 120s；no-cache: 浏览器不做缓存检查
         'Last-Modified': '123',
         Etag: '777'
       })

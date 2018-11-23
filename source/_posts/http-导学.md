@@ -1,5 +1,5 @@
 ---
-title: HTTP - 导学（五层网络模型）
+title: HTTP - 导学
 date: 2018-11-20 19:31:23
 categories: HTTP
 tags: HTTP
@@ -79,41 +79,57 @@ tags: HTTP
   - URL 是 Internet 上用来描述信息资源的字符串，主要用在各种 WWW 客户程序和服务器程序上。
   - 采用 URL 可以用一种统一的格式来描述各种信息资源，包括文件、服务器的地址和目录等。
   ```js
-  `http://user:pass@host.com:80/path?query=string#hash` // @example url 的组成
+  ;`http://user:pass@host.com:80/path?query=string#hash` // @example url 的组成
   /**
    * http:// ===> 协议，类似的还有 ftp、https 等
    * user:pass@host.com:80 ===> 存有该资源的主机IP地址（有时也包括端口号）
    * /path ===> 主机资源的具体地址。如目录和文件名等。
-   */ 
+   */
   ```
 - `URN` : 永久统一资源定位符
   - 在资源移动之后还能被找到
 
 ## HTTP 报文
 
-![](https://user-gold-cdn.xitu.io/2018/11/21/16736f14557858b9?w=960&h=287&f=png&s=93357)
+### 请求行
 
-请求报文 
+> 声明 请求方法 、主机域名、资源路径 & 协议版本
 
-- 首行 ：并不属于 `HTTP HEADER`
-  ```js
-  GET /test/hi-there.txt HTTP/1.0
-  // 首行构成为： method 请求方式；请求地址；协议版本
-  ```
-- `header`、`body` 等
+请求行的组成 = 请求方法 + 请求路径 + 协议版本
 
-响应报文
+```js
+GET /test/hi-there.txt HTTP/1.0
+// 请求行的组成 = 请求方法 + 请求路径 + 协议版本
+```
 
-- 首行：协议版本 + 状态码 + 状态码描述
-- 首部...
+![](https://user-gold-cdn.xitu.io/2018/9/10/165c0f27ea8bff3b?imageslim)
+
+### 请求头
+
+> 声明 客户端、服务器 / 报文的部分信息
+
+1. 请求和响应报文的通用 Header
+   ![](https://user-gold-cdn.xitu.io/2018/9/10/165c0f27eb051d58?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+2. 常见请求 Header
+   ![](https://user-gold-cdn.xitu.io/2018/9/10/165c0f27ebf1b79f?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+
+### 请求体
+
+> 存放 需发送给服务器的数据信息
+
+![](https://user-gold-cdn.xitu.io/2018/9/10/165c0f28437eb63d?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+
+除此外还有响应报文，略
 
 ## 创建一个简单的 http 服务
 
 ```js
 const http = require('http')
 
-http.createServer(function(request, response) {
-  console.log('request come', request.url)
-  response.end('123')
-}).listen(8888)
+http
+  .createServer(function(request, response) {
+    console.log('request come', request.url)
+    response.end('123')
+  })
+  .listen(8888)
 ```
