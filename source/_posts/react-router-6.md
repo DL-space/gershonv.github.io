@@ -1,10 +1,8 @@
 ---
 title: react-router - 动态路由
 date: 2018-11-08 15:59:59
-categories: React
-tags: 
-  - React
-  - react-router
+categories: React-Router
+tags: react-router
 ---
 
 ## 动态组件

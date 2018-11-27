@@ -1,10 +1,8 @@
 ---
 title: 'react-router - [译] Basic Components'
 date: 2018-11-07 10:37:36
-categories: React
-tags: 
-  - React
-  - react-router
+categories: React-Router
+tags: react-router
 ---
 
 ## Routers

@@ -1,10 +1,8 @@
 ---
 title: 'react-router - [译] Code Splitting'
 date: 2018-11-07 10:37:40
-categories: React
-tags: 
-  - React
-  - react-router
+categories: React-Router
+tags: react-router
 ---
 
 > One great feature of the web is that we don’t have to make our visitors download the entire app before they can use it. You can think of code splitting as incrementally downloading the app. To accomplish this we’ll use webpack, @babel/plugin-syntax-dynamic-import, and react-loadable.

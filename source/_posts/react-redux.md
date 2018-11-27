@@ -1,10 +1,8 @@
 ---
 title: react-redux
-date: 2018-07-29 21:20:13
+date: 2018-08-07 22:42:05
 categories: React
 tags: React
-toc: true
-comments: true 
 ---
 
 ## rudux

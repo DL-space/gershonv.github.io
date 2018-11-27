@@ -1,10 +1,8 @@
 ---
 title: react-router - 常用知识
 date: 2018-11-07 10:37:43
-categories: React
-tags: 
-  - React
-  - react-router
+categories: React-Router
+tags: react-router
 ---
 
 ## 组件-Router

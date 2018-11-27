@@ -49,3 +49,62 @@ class App extends Component {
 }
 export default App
 ```
+
+## 实现 lazy-load
+
+```jsx
+import React from 'react'
+import NProgress from 'nprogress'
+
+export default loadComponent =>
+  class AsyncComponent extends React.Component {
+    state = { Component: null }
+
+    async componentDidMount() {
+      if (this.state.Component !== null) return
+      NProgress.start()
+      try {
+        const { default: Component } = await loadComponent()
+        this.setState({ Component })
+      } catch (err) {
+        console.error(`Cannot load component in <AsyncComponent />`)
+        throw err
+      }
+      NProgress.done()
+    }
+
+    render() {
+      const { Component } = this.state
+      return Component ? <Component {...this.props} /> : null
+    }
+  }
+```
+
+## react-loadable （router4 推荐）
+
+[react-router - [译] Code Splitting](https://gershonv.github.io/2018/11/07/react-router-3/)
+
+```jsx
+import React, { Component } from 'react'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import Loadable from 'react-loadable'
+
+const NoFound = Loadable({
+  loader: () => import('./components/NoFound'),
+  loading: <div>loading</div>
+})
+
+class App extends Component {
+  render() {
+    return (
+      <Router>
+        <Switch>
+          <Route exact path="/" component={() => <h2>Home</h2>} />
+          <Route component={NoFound} />
+        </Switch>
+      </Router>
+    )
+  }
+}
+export default App
+```
