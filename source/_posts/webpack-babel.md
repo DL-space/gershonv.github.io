@@ -1,6 +1,6 @@
 ---
 title: webpack - babel篇
-date: 2018-11-28 14:23:24
+date: 2018-10-11 14:23:24
 categories: webpack
 tags: webpack
 ---
