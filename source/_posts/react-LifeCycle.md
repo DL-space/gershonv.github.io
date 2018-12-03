@@ -44,7 +44,7 @@ constructor(props) {
 
 ```js
 static getDerivedStateFromProps(nextProps, prevState){
-  if (nextProps.sum !== this.props.sum) return { sum: nextProps.sum } // 类似于 setState({ sum: nextProps.sum })
+  if (nextProps.sum !== prevState.sum) return { sum: nextProps.sum } // 类似于 setState({ sum: nextProps.sum })
   return null
 }
 ```
