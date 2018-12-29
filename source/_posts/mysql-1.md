@@ -3,6 +3,7 @@ title: mysql - 基础篇
 date: 2018-12-29 10:18:35
 categories: MySQL
 tags: MySQL
+toc: true
 ---
 
 ## 数据库操作
