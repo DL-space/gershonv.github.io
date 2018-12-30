@@ -1,5 +1,5 @@
 ---
-title: mysql - 基础篇
+title: mysql - 数据库操作和数据属性
 date: 2018-12-29 10:18:35
 categories: MySQL
 tags: MySQL
