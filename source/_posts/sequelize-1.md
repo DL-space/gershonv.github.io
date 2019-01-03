@@ -15,6 +15,16 @@ tags: Sequelize
 npm i sequelize mysql2 --registry=https://registry.npm.taobao.org
 ```
 
+记得提前启动 `mysql` 数据库，创建本例中使用的 `demo` 数据库
+
+```js
+mysql.server start // mac (windows net start mysql)
+
+mysql -uroot -p
+
+CREATE DATABASE IF NOT EXISTS demo;
+```
+
 ## 建立连接
 
 `Sequelize` 将在初始化时设置连接池，所以如果从单个进程连接到数据库，你最好每个数据库只创建一个实例。 如果要从多个进程连接到数据库，则必须为每个进程创建一个实例，但每个实例应具有“最大连接池大小除以实例数”的最大连接池大小。
@@ -67,7 +77,7 @@ const User = sequelize.define('user', {
 })
 
 // 通过 sync 可以链接模型到数据库中
-// force: true 如果表已经存在，将会丢弃表 
+// force: true 如果表已经存在，将会丢弃表
 // force 效果： DROP TABLE IF EXISTS `User` => CREATE TABLE IF NOT EXISTS `USER`...
 User.sync({ force: true }).then(function() {
   //...
