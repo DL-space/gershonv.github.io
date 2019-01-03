@@ -18,6 +18,8 @@ keywords: eventLoop
 - Call Stack (调用栈)
 - Event Loop（事件循环）
 - Callback (回调)
+  
+<!--more-->
 
 ## JS Engine（JS引擎）
 简单来说，JS引擎主要是对JS代码进行词法、语法等分析，通过编译器将代码编译成可执行的机器码让计算机去执行。

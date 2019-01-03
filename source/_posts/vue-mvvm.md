@@ -43,6 +43,7 @@ comments: true
    - 添加发布与订阅：`Object.defineProperty` 在`get`钩子中`addSub`,`set`钩子中通知变化`dep.notify()`
    - `dep.notify()`调用的是`Watcher`的`update`方法，也就是说需要在`input`变化时调用更新
    
+<!--more-->
 
 ##  分解 Vue 实例
 如何入手？首先从怎么使用`Vue`开始。让我们一步步解析`Vue`的使用：

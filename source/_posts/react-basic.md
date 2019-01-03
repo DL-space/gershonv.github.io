@@ -26,6 +26,8 @@ ReactDOM.render(
 - react-dom.min.js - 提供与 DOM 相关的功能
 - babel.min.js - Babel 可以将 ES6 代码转为 ES5 代码
 
+<!--more-->
+
 ## 使用 create-react-app 快速构建 React 开发环境
 
 ```

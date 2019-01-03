@@ -26,6 +26,8 @@ tags: HTTP
 - `Expires`: 响应头，代表该资源的过期时间。
 - `Cache-Control`: 请求/响应头，缓存控制字段，精确控制缓存策略。
 
+<!--more-->
+
 `server.js` - demo
 
 ```js

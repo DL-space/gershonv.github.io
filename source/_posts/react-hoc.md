@@ -46,6 +46,7 @@ var add = function(x) {
 console.log(add(1)(5)(5)) //11
 console.log(add(1)(5)) //如果传两个参数，则会把第三个函数返回出来 Function
 ```
+<!--more-->
 
 ### 高阶组件
 

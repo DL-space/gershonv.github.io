@@ -42,6 +42,8 @@ console.log(person.strength) // 60
 person.sayYourName() // I am Kevin
 ```
 
+<!--more-->
+
 从这个例子中，我们可以看到，实例 person 可以：
 
 1. 访问到 Otaku 构造函数里的属性

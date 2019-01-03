@@ -35,6 +35,8 @@ categories: Vue.js
 
 值得注意的是，`this` 对象的绑定不要出错了,如果需要更多增强的功能，各位可以自行添加...
 
+<!--more-->
+
 ## Home.vue 组件
 
 ```html

@@ -24,6 +24,8 @@ v-model 只是个语法糖，用于实现数据的双向绑定，实现的原理
 
 同理我们在封装组件时可以利用这个原理 构造 v-model 语法糖，下例我们封装一个my-input 组件：
 
+<!--more-->
+
 ``` html
 <template>
   <input :value="content" @input="handleChange($event)">

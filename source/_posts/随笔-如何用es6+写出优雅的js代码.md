@@ -30,6 +30,8 @@ console.log(person.age) // 1
 
 详情看 [let 和 const 命令](http://es6.ruanyifeng.com/#docs/let)
 
+<!--more-->
+
 ## 解构赋值
 
 `ES6` 允许按照一定模式，从数组和对象中提取值，对变量进行赋值，这被称为解构（`Destructuring`）。

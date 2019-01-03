@@ -61,6 +61,8 @@ console.log(child2.names) // ["kevin", "daisy", "yayu"]
 
 2.在创建 Child 的实例时，不能向 Parent 传参
 
+<!--more-->
+
 ## 2.借用构造函数(经典继承)
 
 ```js

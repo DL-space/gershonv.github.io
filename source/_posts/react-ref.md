@@ -20,6 +20,8 @@ tags: React
 
 `Refs` 是使用 `React.createRef()` 创建的，并通过 `ref` 属性附加到 `React` 元素。在构造组件时，通常将 `Refs` 分配给实例属性，以便可以在整个组件中引用它们。
 
+<!--more-->
+
 ## 在 DOM 元素中使用
 
 > 当在 `refHTML` 元素上使用该属性时，`ref` 在构造函数中创建的属性将 `React.createRef()`接收底层 `DOM` 元素作为其 `current` 属性。

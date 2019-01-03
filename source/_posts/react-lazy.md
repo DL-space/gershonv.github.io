@@ -25,6 +25,8 @@ import('./math').then(math => {
 
 可以发现动态 `import` 提供了 `Promise` 规范的 API，比如 `.then()`
 
+<!--more-->
+
 ## demo
 
 动态 `import` 主要应用场景是延迟加载方法，对于组件来说，并不是很适用，但是 `React.lazy` 对于组件的加载则是有比较大的帮助。

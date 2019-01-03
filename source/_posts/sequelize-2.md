@@ -27,6 +27,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`)
  ) ENGINE=InnoDB;
 ```
+<!--more-->
 
 ### base demo
 

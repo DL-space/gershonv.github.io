@@ -23,6 +23,7 @@ tags: webpack
   }
 }
 ```
+<!--more-->
 
 ## babel-loader 和 @babel/core
 

@@ -14,6 +14,8 @@ tags: react-router
 
 **一般来说，如果您有响应请求的服务器，则应使用`<BrowserRouter>`;如果使用静态文件服务器，则应使用`<HashRouter>`。**
 
+<!--more-->
+
 `Router` 组件本身只是一个容器，真正的路由要通过 `Route` 组件定义:
 
 ## Route Matching

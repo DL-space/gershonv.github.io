@@ -20,6 +20,8 @@ tags: webpack
 - `hash`：每次会在插入的文件后面加上 hash ，用于处理缓存，如：；
   其他：favicon、meta、title ……；
 
+<!--more-->
+
 ```js
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')

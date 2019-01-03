@@ -45,6 +45,8 @@ toc: true
 ```
 `ctx` : 渲染上下文。绘制都靠他
 
+<!--more-->
+
 ## 绘制
 
 ### 绘制矩形 fillReact、clearRect、strokeRect 

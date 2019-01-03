@@ -25,6 +25,8 @@ webpack 可以看做是模块打包机：他做的事情是，分析你的项目
 
 构建其实是工程化、自动化思想在前端开发中的体现。把一系列流程用代码去实现，让代码自动化地执行这一系列复杂的流程。
 
+<!--more-->
+
 #### webpack 的基本概念
 
 - [入口(entry point)](https://www.webpackjs.com/concepts/entry-points/): 指示 webpack 应该使用哪个模块，来作为构建其内部依赖图的开始，webpack 会找出有哪些模块和 library 是入口起点（直接和间接）依赖的。

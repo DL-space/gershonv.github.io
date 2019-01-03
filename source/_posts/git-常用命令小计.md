@@ -3,26 +3,33 @@ title: git 常用命令小记
 date: 2018-07-10 21:30:04
 categories: 开发工具
 tags: Git
-comments: true 
+comments: true
 toc: true
 keywords: git
 ---
-#### git status
+
+## git status
+
 ![enter description here](https://cdn.liaoxuefeng.com/cdn/files/attachments/001384907702917346729e9afbf4127b6dfbae9207af016000/0)
 
 ![git](http://pbj98r3fm.bkt.clouddn.com/git.png)
 
-``` javascript
+```javascript
 git status // 查看状态 - 红色表示未加入工作区
 ```
+
 M - 被修改，A - 被添加，D - 被删除，R - 重命名，?? - 未被跟踪
 
-根据上面git status命令的提示内容，我们至少可以得到三种命令的使用方式：
->* 暂存文件的命令：**git add <文件名>**
->* 放弃未暂存文件的修改命令：**git checkout -- <文件名>**
->* 将被修改的文件暂存并提交的命令：**git commit -a**
+根据上面 git status 命令的提示内容，我们至少可以得到三种命令的使用方式：
 
-#### 版本回退
+> - 暂存文件的命令：**git add <文件名>**
+> - 放弃未暂存文件的修改命令：**git checkout -- <文件名>**
+> - 将被修改的文件暂存并提交的命令：**git commit -a**
+
+<!--more-->
+
+## 版本回退
+
 ```javascript
 git log //查看版本记录
 
@@ -42,7 +49,7 @@ git reflog
 git reset --hard commit_id
 ```
 
-#### 管理修改
+## 管理修改
 
 ```javascript
 git add xx.xx //添暂存区
@@ -67,9 +74,9 @@ git commit -m "remove readme.md"
 git checkout -- readme.md
 ```
 
-#### 远程仓库
+## 远程仓库
 
-```javascript   
+```javascript
 //创建
 git remote add pb https://github.comYMC-GitHub/ticgit
 
@@ -81,7 +88,8 @@ git remote rename pb paul
 git push origin master
 ```
 
-#### 分支管理
+## 分支管理
+
 ```javascript
 //创建新分支
 git branch dev
@@ -122,7 +130,7 @@ git checkout -b issue-101
 //修改内容
 
 //交版本库
-git add readme.txt 
+git add readme.txt
 git commit -m "fix bug 101"
 //切换分支
 git checkout master

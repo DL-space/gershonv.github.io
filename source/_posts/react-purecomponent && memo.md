@@ -40,6 +40,8 @@ export default App
 
 我们可以使用 `shouldComponentUpdate(nextProps, nextState)` 来决定组件的渲染与否，也可以使用 react 提供的两个 API
 
+<!--more-->
+
 ## React.PureComponent
 
 `pure` 是纯的意思， `PureComponent` 也就是纯组件, 只要把继承类从 `Component` 换成 `PureComponent` 即可，可以减少不必要的 `render` 操作的次数，从而提高性能。

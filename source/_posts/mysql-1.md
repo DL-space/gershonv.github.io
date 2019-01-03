@@ -26,6 +26,7 @@ mysql > \q
 // 切换到 learn 数据库
 mysql > use learn
 ```
+<!--more-->
 
 MySQL 语句规范
 

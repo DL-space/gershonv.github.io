@@ -20,6 +20,8 @@ categories: Vue.js
 - **Virtual DOM**：虚拟`DOM`树，Vue的`Virtual DOM Patching`算法是基于Snabbdom的实现，并在些基础上作了很多的调整和改进。
 - **Watcher**：每个Vue组件都有一个对应的`watcher`，这个`watcher`将会在组件`render`的时候收集组件所依赖的数据，并在依赖有更新的时候，触发组件重新渲染。你根本不需要写`shouldComponentUpdate`，Vue会自动优化并更新要更新的UI。
 
+<!--more-->
+
 ## 渲染函数的基础
 Vue推荐在绝大多数情况下使用template来创建你的HTML。然而在一些场景中，需要使用JavaScript的编程能力和创建HTML，这就是`render`函数，它比`template`更接近编译器。
 

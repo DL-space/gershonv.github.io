@@ -25,6 +25,8 @@ tags:
 
 因为，这一篇，我们会结合着所有内容，讲讲执行上下文的具体处理过程。
 
+<!--more-->
+
 ## 思考题
 
 在[《JavaScript 深入之词法作用域和动态作用域》](https://github.com/mqyqingfeng/Blog/issues/3)中，提出这样一道思考题：

@@ -28,6 +28,8 @@ var scores = [95, 75, 85]
 
 如果用 Map 实现，只需要一个“名字”-“成绩”的对照表，直接根据名字查找成绩，无论这个表有多大，查找速度都不会变慢。用 JavaScript 写一个 Map 如下：
 
+<!--more-->
+
 ```js
 var m = new Map([['Michael', 95], ['Bob', 75], ['Tracy', 85]])
 m.get('Michael') // 95

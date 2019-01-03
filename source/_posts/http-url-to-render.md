@@ -29,6 +29,8 @@ tags: HTTP
 - 文件的修改时间: `Last-Modified`
   - `If-Modified-Since` => 304 未修改
 
+<!--more-->
+
 ## DNS 解析
 
 > 在发送 `http` 之前，需要进行 `DNS` 解析即域名解析。

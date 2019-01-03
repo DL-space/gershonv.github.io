@@ -46,6 +46,7 @@ export class TodoProvider extends Component {
   }
 }
 ```
+<!--more-->
 
 `App.jsx`
 

@@ -23,6 +23,7 @@ tags: react-router
 // Hash history 不支持 location.key 和 location.state。
 // 另外由于该技术只是用来支持旧版浏览器，因此更推荐大家使用 BrowserRouter
 ```
+<!--more-->
 
 ### forceRefresh: bool
 

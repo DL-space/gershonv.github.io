@@ -21,6 +21,8 @@ comments: true
   - getSnapshotBeforeUpdate(prevProps, prevState)
   - componentDidUpdate(prevProps, prevState, snapshot)
 
+<!--more-->
+
 ### constructor(props)
 
 React 组件的构造函数在安装之前被调用。在为 React.Component 子类实现构造函数时，应该在任何其他语句之前调用 `super(props)`。

@@ -9,6 +9,8 @@ tags: react-router
 
 `Code Spliting` 的一个重要特性是我们不必让访问者在使用它之前下载整个应用程序。您可以将代码拆分视为逐步下载应用程序。为此，我们将使用 webpack，[@babel/plugin-syntax-dynamic-import](https://www.npmjs.com/package/@babel/plugin-syntax-dynamic-import) 和 [react-loadable](https://www.npmjs.com/package/react-loadable)。
 
+<!--more-->
+
 ```
 yarn add @babel/plugin-syntax-dynamic-import -D
 yarn add react-loadable

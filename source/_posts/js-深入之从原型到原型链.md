@@ -21,6 +21,8 @@ console.log(person.name) // Kevin
 
 在这个例子中，`Person` 就是一个构造函数，我们使用 `new` 创建了一个实例对象 `person`。
 
+<!--more-->
+
 ## prototype
 
 > 每一个函数都有一个 `prototype` 属性。

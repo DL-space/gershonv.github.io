@@ -61,6 +61,7 @@ class App extends Component {
 }
 export default App
 ```
+<!--more-->
 
 ## 基于 react-loadable 实现代码分割
 

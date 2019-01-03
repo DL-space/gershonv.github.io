@@ -42,6 +42,8 @@ toc: true
 
 说明 ：参数首位为默认值 ；参数中含有 `reverse` 的表示反方向
 
+<!--more-->
+
 ### Justify-content
 #### space-between 两端对齐
     两端对齐，项目之间的间隔相等，即剩余空间等分成间隙

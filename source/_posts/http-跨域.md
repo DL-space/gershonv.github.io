@@ -65,6 +65,8 @@ Access to XMLHttpRequest at '`http://127.0.0.1:6060/`' from origin '`http://127.
 
 后续将讲到如何去解决这个问题。
 
+<!--more-->
+
 ## 常见的跨域场景
 
 > 所谓的同源是指，域名、协议、端口均为相同。

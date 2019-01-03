@@ -20,6 +20,8 @@ tags: React
 ![](https://user-gold-cdn.xitu.io/2018/9/14/165d8c900fb1fcd4?w=280&h=295&f=png&s=14746)
 先来个`demo`
 
+<!--more-->
+
 ```js
 const redux = require('redux')
 const createStore = redux.createStore

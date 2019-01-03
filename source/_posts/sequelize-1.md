@@ -24,6 +24,7 @@ mysql -uroot -p
 
 CREATE DATABASE IF NOT EXISTS demo;
 ```
+<!--more-->
 
 ## 建立连接
 

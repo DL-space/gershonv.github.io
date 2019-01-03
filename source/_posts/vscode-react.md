@@ -19,6 +19,8 @@ keywords:  v-model
 
 - imconnect => import { connect } from 'react-redux'
 
+<!--more-->
+
 ### React
 
 #### rcc => 创建模板组件

@@ -39,6 +39,7 @@ class App extends Component {
 
 export default App
 ```
+<!--more-->
 
 ## 理论知识
 

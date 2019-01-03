@@ -17,6 +17,8 @@ ReactDOM.createPortal(child, container)
   即可渲染的 react 组件
 - `container` : a DOM element
 
+<!--more-->
+
 ## 用法
 
 通常，如果你的组件的 render 方法返回一个元素时，它作为最接近的父节点的子节点挂载到 DOM 中：

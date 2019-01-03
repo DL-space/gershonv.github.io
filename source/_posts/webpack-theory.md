@@ -30,6 +30,7 @@ module.exports = {
   }
 }
 ```
+<!--more-->
 
 ### vendors 第三方库
 

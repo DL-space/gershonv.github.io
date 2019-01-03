@@ -20,6 +20,8 @@ CREATE TABLE IF NOT EXISTS users(
 );
 ```
 
+<!--more-->
+
 ## 插入数据
 
 - INSERT INTO 表名 VALUE

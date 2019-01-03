@@ -49,6 +49,8 @@ foo() // foo2
 
 到底 JavaScript 引擎遇到一段怎样的代码时才会做“准备工作”呢？
 
+<!--more-->
+
 ## 可执行代码
 
 这就要说到 JavaScript 的可执行代码(`executable code`)的类型有哪些了？

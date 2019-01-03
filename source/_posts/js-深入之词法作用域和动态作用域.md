@@ -38,6 +38,7 @@ function bar() {
 
 bar() // 1
 ```
+<!--more-->
 
 假设 JavaScript 采用静态作用域，让我们分析下执行过程：
 

@@ -39,6 +39,7 @@ console.log(arrayLike[0]) // name
 array[0] = 'new name'
 arrayLike[0] = 'new name'
 ```
+<!--more-->
 
 ## 长度
 
