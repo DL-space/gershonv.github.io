@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="郭大大的博客">
 <meta property="og:description" content="匹配出现次数 横向模糊指的是，一个正则可匹配的字符串的长度不是固定的，可以是多种情况的。  {m,n}，表示连续出现最少 m 次，最多 n 次。 123var regx = /ab&amp;#123;2,5&amp;#125;c/var string = &apos;abc abbc abbbc abbbbc abbbbbc abbbbbbc&apos;string.match(regex) // =&amp;gt; [&quot;abbc&quot;, &quot;a">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-03T14:17:53.390Z">
+<meta property="og:updated_time" content="2019-01-03T15:11:03.294Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="正则表达式">
 <meta name="twitter:description" content="匹配出现次数 横向模糊指的是，一个正则可匹配的字符串的长度不是固定的，可以是多种情况的。  {m,n}，表示连续出现最少 m 次，最多 n 次。 123var regx = /ab&amp;#123;2,5&amp;#125;c/var string = &apos;abc abbc abbbc abbbbc abbbbbc abbbbbbc&apos;string.match(regex) // =&amp;gt; [&quot;abbc&quot;, &quot;a">
@@ -399,6 +399,7 @@
 <li><code>[0-9]</code> : 匹配数字范围</li>
 <li><code>/.^/</code> : 不匹配任何东西</li>
 </ul>
+<a id="more"></a>
 <h3 id="贪婪匹配与惰性匹配"><a href="#贪婪匹配与惰性匹配" class="headerlink" title="贪婪匹配与惰性匹配"></a>贪婪匹配与惰性匹配</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> regex = <span class="regexp">/\d&#123;2,5&#125;/g</span></span><br><span class="line"><span class="keyword">var</span> string = <span class="string">'123 1234 12345 123456'</span></span><br><span class="line"><span class="built_in">console</span>.log(string.match(regex)) <span class="comment">// =&gt; ["123", "1234", "12345", "12345"]</span></span><br></pre></td></tr></table></figure>
 <p>其中正则 <code>/\d{2,5}/</code>，表示数字连续出现 2 到 5 次。会匹配 2 位、3 位、4 位、5 位连续数字。</p>
 <p>但是其是贪婪的，它会尽可能多的匹配。你能给我 6 个，我就要 5 个。你能给我 3 个，我就要 3 个。<br>反正只要在能力范围内，越多越好。</p>

@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="郭大大的博客">
 <meta property="og:description" content="高阶函数高阶函数（Higher Order Function）=&amp;gt; 参数或返回值为函数高阶组件：以组件作为参数的组件，结果 return 一个组件。 简单的例子: 1234567function add(a, b, fn) &amp;#123;  return fn(a) + fn(b)&amp;#125;var fn = function(a) &amp;#123;  return a * a&amp;#125;add(">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-03T14:17:53.514Z">
+<meta property="og:updated_time" content="2019-01-03T15:05:37.169Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="react - 高阶组件">
 <meta name="twitter:description" content="高阶函数高阶函数（Higher Order Function）=&amp;gt; 参数或返回值为函数高阶组件：以组件作为参数的组件，结果 return 一个组件。 简单的例子: 1234567function add(a, b, fn) &amp;#123;  return fn(a) + fn(b)&amp;#125;var fn = function(a) &amp;#123;  return a * a&amp;#125;add(">
@@ -387,6 +387,7 @@
 </blockquote>
 <p>简单的例子：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> add = <span class="function"><span class="keyword">function</span>(<span class="params">x</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">y</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params">z</span>) </span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'curr'</span>, x, y, z)</span><br><span class="line">      <span class="keyword">return</span> x + y + z</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(add(<span class="number">1</span>)(<span class="number">5</span>)(<span class="number">5</span>)) <span class="comment">//11</span></span><br><span class="line"><span class="built_in">console</span>.log(add(<span class="number">1</span>)(<span class="number">5</span>)) <span class="comment">//如果传两个参数，则会把第三个函数返回出来 Function</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <h3 id="高阶组件"><a href="#高阶组件" class="headerlink" title="高阶组件"></a>高阶组件</h3><blockquote>
 <p>A higher-order component is a function that takes a component and returns a new component</p>
 </blockquote>

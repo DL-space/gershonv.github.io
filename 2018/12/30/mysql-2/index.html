@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="创建表12345678910mysql.server start // net start mysqlmysql -uroot -p // loginuse test // 进入数据库CREATE TABLE [IF NOT EXISTS] table_name (  column_name data_type,  // ...) demo1创建 tb1 表 123456789CREATE TAB">
+<meta name="description" content="创建表12345678910mysql.server start // net start mysqlmysql -uroot -p // loginuse test // 进入数据库CREATE TABLE [IF NOT EXISTS] table_name (  column_name data_type,  // ...)">
 <meta name="keywords" content="MySQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql - 对 table 的操作">
 <meta property="og:url" content="https://gershonv.github.io/2018/12/30/mysql-2/index.html">
 <meta property="og:site_name" content="郭大大的博客">
-<meta property="og:description" content="创建表12345678910mysql.server start // net start mysqlmysql -uroot -p // loginuse test // 进入数据库CREATE TABLE [IF NOT EXISTS] table_name (  column_name data_type,  // ...) demo1创建 tb1 表 123456789CREATE TAB">
+<meta property="og:description" content="创建表12345678910mysql.server start // net start mysqlmysql -uroot -p // loginuse test // 进入数据库CREATE TABLE [IF NOT EXISTS] table_name (  column_name data_type,  // ...)">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-03T14:17:53.485Z">
+<meta property="og:updated_time" content="2019-01-03T15:00:58.981Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql - 对 table 的操作">
-<meta name="twitter:description" content="创建表12345678910mysql.server start // net start mysqlmysql -uroot -p // loginuse test // 进入数据库CREATE TABLE [IF NOT EXISTS] table_name (  column_name data_type,  // ...) demo1创建 tb1 表 123456789CREATE TAB">
+<meta name="twitter:description" content="创建表12345678910mysql.server start // net start mysqlmysql -uroot -p // loginuse test // 进入数据库CREATE TABLE [IF NOT EXISTS] table_name (  column_name data_type,  // ...)">
 
 
 
@@ -379,6 +379,7 @@
 
       
         <h2 id="创建表"><a href="#创建表" class="headerlink" title="创建表"></a>创建表</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql.server <span class="keyword">start</span> // net <span class="keyword">start</span> mysql</span><br><span class="line"></span><br><span class="line">mysql -uroot -p // login</span><br><span class="line"></span><br><span class="line"><span class="keyword">use</span> <span class="keyword">test</span> // 进入数据库</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> [<span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span>] table_name (</span><br><span class="line">  column_name data_type,</span><br><span class="line">  // ...</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <h3 id="demo1"><a href="#demo1" class="headerlink" title="demo1"></a>demo1</h3><p>创建 <code>tb1</code> 表</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> tb1 (</span><br><span class="line">  username <span class="built_in">VARCHAR</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  age TINYINT <span class="keyword">UNSIGNED</span>,</span><br><span class="line">  salary <span class="built_in">FLOAT</span>(<span class="number">8</span>, <span class="number">2</span>) <span class="keyword">UNSIGNED</span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">SHOIW TABLES; <span class="comment">--查看数据库中的表</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">SHOW</span> <span class="keyword">COLUMNS</span> <span class="keyword">FROM</span> tb1; <span class="comment">--查看数据表中的结构</span></span><br></pre></td></tr></table></figure>
 <table>

@@ -90,7 +90,7 @@
 <meta property="og:description" content="重绘 redraw &amp;amp; 重排 reflow浏览器运行机制图： 浏览器的运行机制 1.构建DOM树（parse）： 渲染引擎解析HTML文档，首先将标签转换成DOM树中的DOM node（包括js生成的标签）生成内容树（Content Tree/DOM Tree）； 2.构建渲染树（construct）：解析对应的CSS样式文件信息（包括js生成的样式和外部css文件），而这些文件信息以及H">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://pbj98r3fm.bkt.clouddn.com/%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6.png">
-<meta property="og:updated_time" content="2019-01-03T14:17:53.662Z">
+<meta property="og:updated_time" content="2019-01-03T15:14:15.780Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="页面重绘和回流以及优化">
 <meta name="twitter:description" content="重绘 redraw &amp;amp; 重排 reflow浏览器运行机制图： 浏览器的运行机制 1.构建DOM树（parse）： 渲染引擎解析HTML文档，首先将标签转换成DOM树中的DOM node（包括js生成的标签）生成内容树（Content Tree/DOM Tree）； 2.构建渲染树（construct）：解析对应的CSS样式文件信息（包括js生成的样式和外部css文件），而这些文件信息以及H">
@@ -382,6 +382,7 @@
       
         <h2 id="重绘-redraw-amp-重排-reflow"><a href="#重绘-redraw-amp-重排-reflow" class="headerlink" title="重绘 redraw &amp; 重排 reflow"></a>重绘 redraw &amp; 重排 reflow</h2><p>浏览器运行机制图：<br><img src="http://pbj98r3fm.bkt.clouddn.com/%E6%B5%8F%E8%A7%88%E5%99%A8%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6.png" alt="enter description here"></p>
 <h3 id="浏览器的运行机制"><a href="#浏览器的运行机制" class="headerlink" title="浏览器的运行机制"></a>浏览器的运行机制</h3><p> 1.<strong>构建DOM树（parse）</strong>： 渲染引擎解析HTML文档，首先将标签转换成DOM树中的DOM node（包括js生成的标签）生成内容树（Content Tree/DOM Tree）；<br> 2.<strong>构建渲染树（construct）</strong>：解析对应的CSS样式文件信息（包括js生成的样式和外部css文件），而这些文件信息以及HTML中可见的指令（如<b></b>），构建渲染树（Rendering Tree/Frame Tree）；<br> 3.<strong>布局渲染树（reflow/layout）</strong>：从根节点递归调用，计算每一个元素的大小、位置等，给出每个节点所应该在屏幕上出现的精确坐标；<br> 4.<strong>绘制渲染树（paint/repaint）</strong>：遍历渲染树，使用UI后端层来绘制每个节点。</p>
+<a id="more"></a>
 <h3 id="重绘（repaint或redraw）"><a href="#重绘（repaint或redraw）" class="headerlink" title="重绘（repaint或redraw）"></a>重绘（repaint或redraw）</h3><p>当盒子的位置、大小以及其他属性，例如颜色、字体大小等都确定下来之后，浏览器便把这些原色都按照各自的特性绘制一遍，将内容呈现在页面上。<br>重绘是指一个元素外观的改变所触发的浏览器行为，浏览器会根据元素的新属性重新绘制，使元素呈现新的外观。<br>触发重绘的条件：改变元素外观属性。如：color，background-color等。</p>
 <blockquote>
 <p>注意：table及其内部元素可能需要多次计算才能确定好其在渲染树中节点的属性值，比同等元素要多花两倍时间，这就是我们尽量避免使用table布局页面的原因之一。</p>

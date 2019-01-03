@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="郭大大的博客">
 <meta property="og:description" content="什么时候使用 Refs下面是几个使用 Refs 的示例：  管理焦点状态(focus)、文本选择(text selection)、或者是媒体播放(media) 强制触发动画 与第三方的 DOM 库集成  在任何能够通过直接声明完成的事情中应当避免使用 Refs。例如，对于一个 Dialog 组件，应当提供一个 isOpen 的 prop 来控制它，而不是暴露open()和 close()两个方法去">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-03T14:17:53.544Z">
+<meta property="og:updated_time" content="2019-01-03T15:07:07.248Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="react - Ref">
 <meta name="twitter:description" content="什么时候使用 Refs下面是几个使用 Refs 的示例：  管理焦点状态(focus)、文本选择(text selection)、或者是媒体播放(media) 强制触发动画 与第三方的 DOM 库集成  在任何能够通过直接声明完成的事情中应当避免使用 Refs。例如，对于一个 Dialog 组件，应当提供一个 isOpen 的 prop 来控制它，而不是暴露open()和 close()两个方法去">
@@ -387,6 +387,7 @@
 <p>在任何能够通过直接声明完成的事情中应当避免使用 <code>Refs</code>。<br>例如，对于一个 <code>Dialog</code> 组件，应当提供一个 <code>isOpen</code> 的 <code>prop</code> 来控制它，而不是暴露<code>open()</code>和 <code>close()</code>两个方法去操作。</p>
 <p>使用方法：</p>
 <p><code>Refs</code> 是使用 <code>React.createRef()</code> 创建的，并通过 <code>ref</code> 属性附加到 <code>React</code> 元素。在构造组件时，通常将 <code>Refs</code> 分配给实例属性，以便可以在整个组件中引用它们。</p>
+<a id="more"></a>
 <h2 id="在-DOM-元素中使用"><a href="#在-DOM-元素中使用" class="headerlink" title="在 DOM 元素中使用"></a>在 DOM 元素中使用</h2><blockquote>
 <p>当在 <code>refHTML</code> 元素上使用该属性时，<code>ref</code> 在构造函数中创建的属性将 <code>React.createRef()</code>接收底层 <code>DOM</code> 元素作为其 <code>current</code> 属性。</p>
 </blockquote>

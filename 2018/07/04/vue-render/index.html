@@ -101,7 +101,7 @@
 <meta property="og:image" content="https://www.w3cplus.com/sites/default/files/blogs/2018/1804/vue-render-7.png">
 <meta property="og:image" content="https://www.w3cplus.com/sites/default/files/blogs/2018/1804/vue-render-8.png">
 <meta property="og:image" content="https://www.w3cplus.com/sites/default/files/blogs/2018/1804/vue-render-9.png">
-<meta property="og:updated_time" content="2019-01-03T14:17:53.633Z">
+<meta property="og:updated_time" content="2019-01-03T15:13:35.224Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Vue render 函数解析">
 <meta name="twitter:description" content="Vue的一些基本概念使用 Vue 编写可复用组件，那么要对 render 函数有所了解。今天我们学习的目的是了解和学习Vue的render函数。如果想要更好的学习Vue的render函数相关的知识，我们有必要重温一下Vue中的一些基本概念。那么先上一张图，这张图从宏观上展现了Vue整体流程：从上图中，不难发现一个Vue的应用程序是如何运行起来的，模板通过编译生成AST，再由AST生成Vue的ren">
@@ -399,6 +399,7 @@
 <li><strong>Virtual DOM</strong>：虚拟<code>DOM</code>树，Vue的<code>Virtual DOM Patching</code>算法是基于Snabbdom的实现，并在些基础上作了很多的调整和改进。</li>
 <li><strong>Watcher</strong>：每个Vue组件都有一个对应的<code>watcher</code>，这个<code>watcher</code>将会在组件<code>render</code>的时候收集组件所依赖的数据，并在依赖有更新的时候，触发组件重新渲染。你根本不需要写<code>shouldComponentUpdate</code>，Vue会自动优化并更新要更新的UI。</li>
 </ul>
+<a id="more"></a>
 <h2 id="渲染函数的基础"><a href="#渲染函数的基础" class="headerlink" title="渲染函数的基础"></a>渲染函数的基础</h2><p>Vue推荐在绝大多数情况下使用template来创建你的HTML。然而在一些场景中，需要使用JavaScript的编程能力和创建HTML，这就是<code>render</code>函数，它比<code>template</code>更接近编译器。</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">a</span> <span class="attr">name</span>=<span class="string">"hello-world"</span> <span class="attr">href</span>=<span class="string">"#hello-world"</span>&gt;</span></span><br><span class="line">    Hello world!</span><br><span class="line">  <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>在 HTML 层，我们决定这样定义组件接口：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">anchored-heading</span> <span class="attr">:level</span>=<span class="string">"1"</span>&gt;</span>Hello world!<span class="tag">&lt;/<span class="name">anchored-heading</span>&gt;</span></span><br></pre></td></tr></table></figure></p>

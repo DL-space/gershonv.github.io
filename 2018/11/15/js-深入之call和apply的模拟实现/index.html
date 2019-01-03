@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="郭大大的博客">
 <meta property="og:description" content="call一句话介绍 call：  call() 方法在使用一个指定的 this 值和若干个指定的参数值的前提下调用某个函数或方法。  举个例子： 123456789var foo = &amp;#123;  value: 1&amp;#125;function bar() &amp;#123;  console.log(this.value)&amp;#125;bar.call(foo) // 1 注意两点：  call 改变了">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-03T14:17:53.403Z">
+<meta property="og:updated_time" content="2019-01-03T15:10:48.661Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[转] JavaScript深入之call和apply的模拟实现">
 <meta name="twitter:description" content="call一句话介绍 call：  call() 方法在使用一个指定的 this 值和若干个指定的参数值的前提下调用某个函数或方法。  举个例子： 123456789var foo = &amp;#123;  value: 1&amp;#125;function bar() &amp;#123;  console.log(this.value)&amp;#125;bar.call(foo) // 1 注意两点：  call 改变了">
@@ -389,6 +389,7 @@
 <li>call 改变了 this 的指向，指向到 <code>foo</code></li>
 <li><code>bar</code> 函数执行了</li>
 </ol>
+<a id="more"></a>
 <h2 id="模拟实现第一步"><a href="#模拟实现第一步" class="headerlink" title="模拟实现第一步"></a>模拟实现第一步</h2><p>那么我们该怎么模拟实现这两个效果呢？</p>
 <p>试想当调用 call 的时候，把 <code>foo</code> 对象改造成如下：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = &#123;</span><br><span class="line">  value: <span class="number">1</span>,</span><br><span class="line">  bar: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.value)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo.bar() <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>

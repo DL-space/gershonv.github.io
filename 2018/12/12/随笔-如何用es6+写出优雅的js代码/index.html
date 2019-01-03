@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="郭大大的博客">
 <meta property="og:description" content="兼容 IE ？不存在的好吗。 其实使用新语法配合 babel 的转码，已经可以解决这一些问题了。既然如此，那就多使用新语法去探索一下怎么更好的去写代码吧。 下面分享个人开发中常用的 js 写法技巧，希望对各位有所帮助。 使用 let / constvar 命令会发生”变量提升“现象，即变量可以在声明之前使用，值为 undefined。这种现象多多少少是有些奇怪的。 个人认为，对声明的变量确定后面不">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-03T14:17:53.658Z">
+<meta property="og:updated_time" content="2019-01-03T15:05:02.621Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="随笔 - 如何用es6+写出优雅的js代码">
 <meta name="twitter:description" content="兼容 IE ？不存在的好吗。 其实使用新语法配合 babel 的转码，已经可以解决这一些问题了。既然如此，那就多使用新语法去探索一下怎么更好的去写代码吧。 下面分享个人开发中常用的 js 写法技巧，希望对各位有所帮助。 使用 let / constvar 命令会发生”变量提升“现象，即变量可以在声明之前使用，值为 undefined。这种现象多多少少是有些奇怪的。 个人认为，对声明的变量确定后面不">
@@ -390,6 +390,7 @@
 <p>补充 <code>const</code> 定义的变量不是数据不可变，而是保存的引用地址不能发生改变。例子如下：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> person = &#123; <span class="attr">age</span>: <span class="number">22</span> &#125;</span><br><span class="line">person.age = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(person.age) <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
 <p>详情看 <a href="http://es6.ruanyifeng.com/#docs/let" target="_blank" rel="noopener">let 和 const 命令</a></p>
+<a id="more"></a>
 <h2 id="解构赋值"><a href="#解构赋值" class="headerlink" title="解构赋值"></a>解构赋值</h2><p><code>ES6</code> 允许按照一定模式，从数组和对象中提取值，对变量进行赋值，这被称为解构（<code>Destructuring</code>）。</p>
 <p>好处就是：解决了访问多层嵌套的对象或数组的命名，减少代码量</p>
 <p>声明多个变量:</p>

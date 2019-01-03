@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="郭大大的博客">
 <meta property="og:description" content="Portals 指定挂载组件到某个节点，适用于 modal、toolTip… 我们不希望 modal 组件的节点出现在 root 根节点中。。。。 1ReactDOM.createPortal(child, container)  child : The first argument (child) is any renderable React child，such as an element,">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-03T14:17:53.497Z">
+<meta property="og:updated_time" content="2019-01-03T15:06:20.228Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="react - Portals">
 <meta name="twitter:description" content="Portals 指定挂载组件到某个节点，适用于 modal、toolTip… 我们不希望 modal 组件的节点出现在 root 根节点中。。。。 1ReactDOM.createPortal(child, container)  child : The first argument (child) is any renderable React child，such as an element,">
@@ -385,6 +385,7 @@
 <li><code>child</code> : The first argument (child) is any renderable React child，such as an element, string, or fragment<br>即可渲染的 react 组件</li>
 <li><code>container</code> : a DOM element</li>
 </ul>
+<a id="more"></a>
 <h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><p>通常，如果你的组件的 render 方法返回一个元素时，它作为最接近的父节点的子节点挂载到 DOM 中：</p>
 <figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">render() &#123;</span><br><span class="line">  <span class="comment">// React mounts a new div and renders the children into it</span></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &#123;<span class="keyword">this</span>.props.children&#125;</span><br><span class="line">    &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">  )</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
 <p>但是，有时候要把子节点插入 DOM 中的不同位置时，是有用的：</p>

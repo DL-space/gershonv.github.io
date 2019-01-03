@@ -91,7 +91,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/18/164ac9a02d21c8cb?w=700&h=374&f=jpeg&s=31670">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/18/164ac90097e68912?w=639&h=388&f=png&s=49631">
-<meta property="og:updated_time" content="2019-01-03T14:17:53.627Z">
+<meta property="og:updated_time" content="2019-01-03T15:13:23.318Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="实现简易的 VUE-MVVM">
 <meta name="twitter:description" content="前言这是本人的学习的记录，因为最近在准备面试，很多情况下会被提问到：请简述 mvvm ?一般情况下我可能这么答：mvvm 是视图和逻辑的一个分离，是model view view-model 的缩写，通过虚拟dom的方式实现双向数据绑定（我随便答得） 那么问题来了，你知道 mvvm 是怎么实现的？回答: mvvm 主要通过 Object 的 defineProperty 属性，重写 data 的">
@@ -417,6 +417,7 @@
 </ul>
 </li>
 </ol>
+<a id="more"></a>
 <h2 id="分解-Vue-实例"><a href="#分解-Vue-实例" class="headerlink" title="分解 Vue 实例"></a>分解 Vue 实例</h2><p>如何入手？首先从怎么使用<code>Vue</code>开始。让我们一步步解析<code>Vue</code>的使用：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> vm = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    el: <span class="string">'#app'</span></span><br><span class="line">    data: &#123;</span><br><span class="line">        message: <span class="string">'hello world'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <p>上面代码可以看出使用<code>Vue</code>,我们是先<code>new</code> 一个<code>Vue</code> 实例，传一个对象参数，包含 <code>el</code> 和 <code>data</code>。</p>
@@ -542,8 +543,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/16/es6-class/" rel="next" title="ES6 - Class">
-                <i class="fa fa-chevron-left"></i> ES6 - Class
+              <a href="/2018/07/16/随笔-面试/" rel="next" title="面试题积累">
+                <i class="fa fa-chevron-left"></i> 面试题积累
               </a>
             
           </div>
@@ -552,8 +553,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/07/28/react-basic/" rel="prev" title="react 入门">
-                react 入门 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/07/16/es6-class/" rel="prev" title="ES6 - Class">
+                ES6 - Class <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>

@@ -94,7 +94,7 @@
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/23/1673e75620b00e06?w=848&h=520&f=png&s=224745">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/23/1673e7991fe685a1?w=935&h=484&f=png&s=245226">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/8/13/16531214dfa218be?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
-<meta property="og:updated_time" content="2019-01-03T14:17:53.359Z">
+<meta property="og:updated_time" content="2019-01-03T15:12:14.367Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HTTP - 缓存机制">
 <meta name="twitter:description" content="缓存实现的步骤 首先是当用户请求资源时，会判断是否有缓存，如果没有，则会向原服务器请求资源。 如果有缓存，则会进入强缓存的范畴，判断缓存是否新鲜 如果缓存新鲜，则会直接返回缓存副本给客户端。 如果缓存不新鲜了，则表示强缓存失败，将会进入到协商缓存。   协商缓存将判断是否存在 Etag 和 Last-Modified 首部 如果未发生变化，则表示命中了协商缓存，会重定向到缓存副本，将资源返回给客户">
@@ -406,6 +406,7 @@
 <li><code>Expires</code>: 响应头，代表该资源的过期时间。</li>
 <li><code>Cache-Control</code>: 请求/响应头，缓存控制字段，精确控制缓存策略。</li>
 </ul>
+<a id="more"></a>
 <p><code>server.js</code> - demo</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>)</span><br><span class="line"></span><br><span class="line">http</span><br><span class="line">  .createServer(<span class="function"><span class="keyword">function</span>(<span class="params">request, response</span>) </span>&#123;</span><br><span class="line">    response.writeHead(<span class="number">200</span>, &#123;</span><br><span class="line">      <span class="string">'Content-Type'</span>: <span class="string">'text/javascript'</span>,</span><br><span class="line">      <span class="string">'Conche-Control'</span>: <span class="string">'max-age=2000, public'</span> <span class="comment">// 缓存时间 2000s；public: 资源允许被中间服务器缓存</span></span><br><span class="line">    &#125;)</span><br><span class="line">    response.end(<span class="string">"console.log('script loaded')"</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .listen(<span class="number">3301</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'http://127.0.0.1:3301'</span>)</span><br></pre></td></tr></table></figure>
 <h3 id="Expires-HTTP-1-0"><a href="#Expires-HTTP-1-0" class="headerlink" title="Expires(HTTP/1.0)"></a>Expires(HTTP/1.0)</h3><p><code>Expires</code> 和 <code>Cache-Control: max-age</code> 都是用来标识资源的过期时间的首部。</p>

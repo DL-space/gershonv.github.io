@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="郭大大的博客">
 <meta property="og:description" content="动态 import在 Code-Splitting 部分，提出拆分组件的最佳方式（best way） 是使用动态的 import 方式。 比如下面两种使用方式的对比： 123456789// 之前import &amp;#123; add &amp;#125; from &apos;./math&apos;console.log(add(16, 26))// 之后import(&apos;./math&apos;).then(math =&amp;gt; &amp;#">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-03T14:17:53.523Z">
+<meta property="og:updated_time" content="2019-01-03T15:05:50.648Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="react - lazy(v16.6)">
 <meta name="twitter:description" content="动态 import在 Code-Splitting 部分，提出拆分组件的最佳方式（best way） 是使用动态的 import 方式。 比如下面两种使用方式的对比： 123456789// 之前import &amp;#123; add &amp;#125; from &apos;./math&apos;console.log(add(16, 26))// 之后import(&apos;./math&apos;).then(math =&amp;gt; &amp;#">
@@ -382,6 +382,7 @@
 <p>比如下面两种使用方式的对比：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 之前</span></span><br><span class="line"><span class="keyword">import</span> &#123; add &#125; <span class="keyword">from</span> <span class="string">'./math'</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(add(<span class="number">16</span>, <span class="number">26</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">// 之后</span></span><br><span class="line"><span class="keyword">import</span>(<span class="string">'./math'</span>).then(<span class="function"><span class="params">math</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(math.add(<span class="number">16</span>, <span class="number">26</span>))</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <p>可以发现动态 <code>import</code> 提供了 <code>Promise</code> 规范的 API，比如 <code>.then()</code></p>
+<a id="more"></a>
 <h2 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h2><p>动态 <code>import</code> 主要应用场景是延迟加载方法，对于组件来说，并不是很适用，但是 <code>React.lazy</code> 对于组件的加载则是有比较大的帮助。</p>
 <blockquote>
 <p><code>React.lazy</code> 和 <code>suspense</code> 并不适用于服务端渲染</p>

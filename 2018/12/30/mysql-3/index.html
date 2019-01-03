@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="郭大大的博客">
 <meta property="og:description" content="创建数据 12345678910-- DROP TABLE users; 创建过 users 表可以使用这个语句删除-- 创建表CREATE TABLE IF NOT EXISTS users(  id SMALLINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,  username VARCHAR(20) NOT NULL,  password VARCHAR(32">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-03T14:17:53.490Z">
+<meta property="og:updated_time" content="2019-01-03T15:00:29.431Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql - column 的增删改查">
 <meta name="twitter:description" content="创建数据 12345678910-- DROP TABLE users; 创建过 users 表可以使用这个语句删除-- 创建表CREATE TABLE IF NOT EXISTS users(  id SMALLINT UNSIGNED PRIMARY KEY AUTO_INCREMENT,  username VARCHAR(20) NOT NULL,  password VARCHAR(32">
@@ -380,6 +380,7 @@
       
         <p>创建数据</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- DROP TABLE users; 创建过 users 表可以使用这个语句删除</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- 创建表</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> <span class="keyword">users</span>(</span><br><span class="line">  <span class="keyword">id</span> <span class="built_in">SMALLINT</span> <span class="keyword">UNSIGNED</span> PRIMARY <span class="keyword">KEY</span> AUTO_INCREMENT,</span><br><span class="line">  username <span class="built_in">VARCHAR</span>(<span class="number">20</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="keyword">password</span> <span class="built_in">VARCHAR</span>(<span class="number">32</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  age TINYINT <span class="keyword">UNSIGNED</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">10</span>,</span><br><span class="line">  sex TINYINT</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <h2 id="插入数据"><a href="#插入数据" class="headerlink" title="插入数据"></a>插入数据</h2><ul>
 <li>INSERT INTO 表名 VALUE</li>
 <li>INSERT INTO 表名 set 列名 = xxx (可以进行子查询)</li>

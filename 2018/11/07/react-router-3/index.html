@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="郭大大的博客">
 <meta property="og:description" content="One great feature of the web is that we don’t have to make our visitors download the entire app before they can use it. You can think of code splitting as incrementally downloading the app. To accomp">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-03T14:17:53.564Z">
+<meta property="og:updated_time" content="2019-01-03T15:07:33.844Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="react-router - [译] Code Splitting">
 <meta name="twitter:description" content="One great feature of the web is that we don’t have to make our visitors download the entire app before they can use it. You can think of code splitting as incrementally downloading the app. To accomp">
@@ -382,6 +382,7 @@
 <p>One great feature of the web is that we don’t have to make our visitors download the entire app before they can use it. You can think of code splitting as incrementally downloading the app. To accomplish this we’ll use webpack, @babel/plugin-syntax-dynamic-import, and react-loadable.</p>
 </blockquote>
 <p><code>Code Spliting</code> 的一个重要特性是我们不必让访问者在使用它之前下载整个应用程序。您可以将代码拆分视为逐步下载应用程序。为此，我们将使用 webpack，<a href="https://www.npmjs.com/package/@babel/plugin-syntax-dynamic-import" target="_blank" rel="noopener">@babel/plugin-syntax-dynamic-import</a> 和 <a href="https://www.npmjs.com/package/react-loadable" target="_blank" rel="noopener">react-loadable</a>。</p>
+<a id="more"></a>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yarn add @babel/plugin-syntax-dynamic-import -D</span><br><span class="line">yarn add react-loadable</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>webpack has built-in support for dynamic imports; however, if you are using Babel (e.g., to compile JSX to JavaScript) then you will need to use the @babel/plugin-syntax-dynamic-import plugin. This is a syntax-only plugin, meaning Babel won’t do any additional transformations. The plugin simply allows Babel to parse dynamic imports so webpack can bundle them as a code split. Your .babelrc should look something like this:</p>

@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="郭大大的博客">
 <meta property="og:description" content="在上篇《JavaScript 深入之执行上下文栈》中讲到，当 JavaScript 代码执行一段可执行代码(executable code)时，会创建对应的执行上下文(execution context)。 对于每个执行上下文，都有三个重要属性：  变量对象(Variable object，VO) 作用域链(Scope chain) this  今天重点讲讲创建变量对象的过程。 变量对象变量对象是">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-03T14:17:53.438Z">
+<meta property="og:updated_time" content="2019-01-03T15:09:49.300Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[转] JavaScript深入之变量对象">
 <meta name="twitter:description" content="在上篇《JavaScript 深入之执行上下文栈》中讲到，当 JavaScript 代码执行一段可执行代码(executable code)时，会创建对应的执行上下文(execution context)。 对于每个执行上下文，都有三个重要属性：  变量对象(Variable object，VO) 作用域链(Scope chain) this  今天重点讲讲创建变量对象的过程。 变量对象变量对象是">
@@ -388,6 +388,7 @@
 <p>今天重点讲讲创建变量对象的过程。</p>
 <h2 id="变量对象"><a href="#变量对象" class="headerlink" title="变量对象"></a>变量对象</h2><p>变量对象是与执行上下文相关的数据作用域，存储了在上下文中定义的变量和函数声明。</p>
 <p>因为不同执行上下文下的变量对象稍有不同，所以我们来聊聊全局上下文下的变量对象和函数上下文下的变量对象。</p>
+<a id="more"></a>
 <h2 id="全局上下文"><a href="#全局上下文" class="headerlink" title="全局上下文"></a>全局上下文</h2><p>全局对象是预定义的对象，作为 JavaScript 的全局函数和全局属性的占位符。通过使用全局对象，可以访问所有其他所有预定义的对象、函数和属性。</p>
 <blockquote>
 <p>全局对象是预定义的对象，作为 JavaScript 的全局函数和全局属性的占位符。通过使用全局对象，可以访问所有其他所有预定义的对象、函数和属性。</p>

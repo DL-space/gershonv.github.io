@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="郭大大的博客">
 <meta property="og:description" content="v16.3+ Mounting constructor(props) static getDerivedStateFromProps(props, state) render() componentDidMount()   Updating static getDerivedStateFromProps() shouldComponentUpdate(nextProps, nextState) r">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-03T14:17:53.493Z">
+<meta property="og:updated_time" content="2019-01-03T15:05:58.421Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="react - 生命周期">
 <meta name="twitter:description" content="v16.3+ Mounting constructor(props) static getDerivedStateFromProps(props, state) render() componentDidMount()   Updating static getDerivedStateFromProps() shouldComponentUpdate(nextProps, nextState) r">
@@ -395,6 +395,7 @@
 </ul>
 </li>
 </ul>
+<a id="more"></a>
 <h3 id="constructor-props"><a href="#constructor-props" class="headerlink" title="constructor(props)"></a>constructor(props)</h3><p>React 组件的构造函数在安装之前被调用。在为 React.Component 子类实现构造函数时，应该在任何其他语句之前调用 <code>super(props)</code>。<br>否则，<code>this.props</code> 将在构造函数中未定义，这可能导致错误。</p>
 <p>Avoid copying props into state! This is a common mistake:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">constructor</span>(props) &#123;</span><br><span class="line"> <span class="keyword">super</span>(props)</span><br><span class="line"> <span class="comment">// Don't do this!</span></span><br><span class="line"> <span class="keyword">this</span>.state = &#123; <span class="attr">color</span>: props.color &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>

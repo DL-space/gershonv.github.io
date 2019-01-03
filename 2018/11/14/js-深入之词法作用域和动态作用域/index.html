@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="郭大大的博客">
 <meta property="og:description" content="作用域 作用域是指程序源代码中定义变量的区域。  作用域规定了如何查找变量，也就是确定当前执行代码对变量的访问权限。 JavaScript 采用词法作用域(lexical scoping)，也就是静态作用域。 静态作用域与动态作用域因为 JavaScript 采用的是词法作用域，函数的作用域在函数定义的时候就决定了。 而与词法作用域相对的是动态作用域，函数的作用域是在函数调用的时候才决定的。 让我">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-03T14:17:53.462Z">
+<meta property="og:updated_time" content="2019-01-03T15:09:02.744Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[转] JavaScript深入之词法作用域和动态作用域">
 <meta name="twitter:description" content="作用域 作用域是指程序源代码中定义变量的区域。  作用域规定了如何查找变量，也就是确定当前执行代码对变量的访问权限。 JavaScript 采用词法作用域(lexical scoping)，也就是静态作用域。 静态作用域与动态作用域因为 JavaScript 采用的是词法作用域，函数的作用域在函数定义的时候就决定了。 而与词法作用域相对的是动态作用域，函数的作用域是在函数调用的时候才决定的。 让我">
@@ -387,6 +387,7 @@
 <p>而与词法作用域相对的是动态作用域，函数的作用域是在函数调用的时候才决定的。</p>
 <p>让我们认真看个例子就能明白之间的区别：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> value = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(value)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> value = <span class="number">2</span></span><br><span class="line">  foo()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">bar() <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <p>假设 JavaScript 采用静态作用域，让我们分析下执行过程：</p>
 <ol>
 <li>执行 <code>foo</code> 函数，先从 <code>foo</code> 函数内部查找是否有局部变量 <code>value</code></li>

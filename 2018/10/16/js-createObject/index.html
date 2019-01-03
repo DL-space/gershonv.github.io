@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="郭大大的博客">
 <meta property="og:description" content="创建对象的模式 工厂模式 做法：内部创建一个对象，并未对象属性赋值并且返回 缺点：解决创建多个相识对象的问题，但不能识别创建的对象的类型   构造函数模式 做法：直接将属性和方法赋值给 this 对象，没有 return 语句 缺点：对象不是共用方法和属性，每 new 一次对象就要创建一个内存，超出性能消耗   原型模式 做法：通过 prototype 为对象添加属性 缺点：每个实例都共享属性方法">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-03T14:17:53.378Z">
+<meta property="og:updated_time" content="2019-01-03T15:11:21.322Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="js - 创建对象的几种方式（工厂模式、构造函数模式、原型模式）">
 <meta name="twitter:description" content="创建对象的模式 工厂模式 做法：内部创建一个对象，并未对象属性赋值并且返回 缺点：解决创建多个相识对象的问题，但不能识别创建的对象的类型   构造函数模式 做法：直接将属性和方法赋值给 this 对象，没有 return 语句 缺点：对象不是共用方法和属性，每 new 一次对象就要创建一个内存，超出性能消耗   原型模式 做法：通过 prototype 为对象添加属性 缺点：每个实例都共享属性方法">
@@ -405,6 +405,7 @@
 </li>
 <li>寄生构造函数模式…</li>
 </ul>
+<a id="more"></a>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>js 面向对象第一步是什么？答：创建对象。创建对象有很多中方式，我们最常用的是对象字面量来创建对象，<code>var obj = {}</code>，你看我这不就创建了一个对象了吗，我还干嘛要继续了解那些奇葩的方法呢？这么想的人活该单身，多掌握些找对象只有好处没有坏处哈。正经的，高阶上有这么一句话，使用对象字面量创建单个对象，有个明显的缺点，<strong>使用同一个接口创建很多对象，会产生大量重复的代码。</strong>为了解决这个问题，我们需要了解下面?这些方式。</p>
 <h2 id="工厂模式"><a href="#工厂模式" class="headerlink" title="工厂模式"></a>工厂模式</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createPerson</span>(<span class="params">name, age, job</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> o = <span class="keyword">new</span> <span class="built_in">Object</span>()</span><br><span class="line">  o.name = name</span><br><span class="line">  o.age = age</span><br><span class="line">  o.job = job</span><br><span class="line">  o.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    alert(<span class="keyword">this</span>.name)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> o</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> person1 = createPerson(<span class="string">'Nicholas'</span>, <span class="number">29</span>, <span class="string">'Software Engineer'</span>)</span><br><span class="line"><span class="keyword">var</span> person2 = createPerson(<span class="string">'Greg'</span>, <span class="number">27</span>, <span class="string">'Doctor'</span>)</span><br></pre></td></tr></table></figure>
 <p>工厂模式虽然解决了创建多个相似对象的问题，但却没有解决对象识别的问题法识别创建的对象的类型。因为全部都是 Object，没有区分度，不像 Date、Array 等，因此出现了构造函数模式</p>

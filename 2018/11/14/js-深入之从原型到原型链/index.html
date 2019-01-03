@@ -81,23 +81,23 @@
 
 
 
-<meta name="description" content="构造函数创建对象我们先使用构造函数创建一个对象： 1234function Person() &amp;#123;&amp;#125;var person = new Person()person.name = &apos;Kevin&apos;console.log(person.name) // Kevin 在这个例子中，Person 就是一个构造函数，我们使用 new 创建了一个实例对象 person。 prototype 每">
+<meta name="description" content="构造函数创建对象我们先使用构造函数创建一个对象： 1234function Person() &amp;#123;&amp;#125;var person = new Person()person.name = &apos;Kevin&apos;console.log(person.name) // Kevin 在这个例子中，Person 就是一个构造函数，我们使用 new 创建了一个实例对象 person。">
 <meta name="keywords" content="Javascript,Javascript 深入系列,原型&#x2F;原型链">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[转] JavaScirpt深入之从原型到原型链">
 <meta property="og:url" content="https://gershonv.github.io/2018/11/14/js-深入之从原型到原型链/index.html">
 <meta property="og:site_name" content="郭大大的博客">
-<meta property="og:description" content="构造函数创建对象我们先使用构造函数创建一个对象： 1234function Person() &amp;#123;&amp;#125;var person = new Person()person.name = &apos;Kevin&apos;console.log(person.name) // Kevin 在这个例子中，Person 就是一个构造函数，我们使用 new 创建了一个实例对象 person。 prototype 每">
+<meta property="og:description" content="构造函数创建对象我们先使用构造函数创建一个对象： 1234function Person() &amp;#123;&amp;#125;var person = new Person()person.name = &apos;Kevin&apos;console.log(person.name) // Kevin 在这个例子中，Person 就是一个构造函数，我们使用 new 创建了一个实例对象 person。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://github.com/mqyqingfeng/Blog/raw/master/Images/prototype1.png">
 <meta property="og:image" content="https://github.com/mqyqingfeng/Blog/raw/master/Images/prototype2.png">
 <meta property="og:image" content="https://github.com/mqyqingfeng/Blog/raw/master/Images/prototype3.png">
 <meta property="og:image" content="https://github.com/mqyqingfeng/Blog/raw/master/Images/prototype4.png">
 <meta property="og:image" content="https://github.com/mqyqingfeng/Blog/raw/master/Images/prototype5.png">
-<meta property="og:updated_time" content="2019-01-03T14:17:53.421Z">
+<meta property="og:updated_time" content="2019-01-03T15:10:28.672Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[转] JavaScirpt深入之从原型到原型链">
-<meta name="twitter:description" content="构造函数创建对象我们先使用构造函数创建一个对象： 1234function Person() &amp;#123;&amp;#125;var person = new Person()person.name = &apos;Kevin&apos;console.log(person.name) // Kevin 在这个例子中，Person 就是一个构造函数，我们使用 new 创建了一个实例对象 person。 prototype 每">
+<meta name="twitter:description" content="构造函数创建对象我们先使用构造函数创建一个对象： 1234function Person() &amp;#123;&amp;#125;var person = new Person()person.name = &apos;Kevin&apos;console.log(person.name) // Kevin 在这个例子中，Person 就是一个构造函数，我们使用 new 创建了一个实例对象 person。">
 <meta name="twitter:image" content="https://github.com/mqyqingfeng/Blog/raw/master/Images/prototype1.png">
 
 
@@ -387,6 +387,7 @@
         <h2 id="构造函数创建对象"><a href="#构造函数创建对象" class="headerlink" title="构造函数创建对象"></a>构造函数创建对象</h2><p>我们先使用构造函数创建一个对象：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"><span class="keyword">var</span> person = <span class="keyword">new</span> Person()</span><br><span class="line">person.name = <span class="string">'Kevin'</span></span><br><span class="line"><span class="built_in">console</span>.log(person.name) <span class="comment">// Kevin</span></span><br></pre></td></tr></table></figure>
 <p>在这个例子中，<code>Person</code> 就是一个构造函数，我们使用 <code>new</code> 创建了一个实例对象 <code>person</code>。</p>
+<a id="more"></a>
 <h2 id="prototype"><a href="#prototype" class="headerlink" title="prototype"></a>prototype</h2><blockquote>
 <p>每一个函数都有一个 <code>prototype</code> 属性。</p>
 </blockquote>

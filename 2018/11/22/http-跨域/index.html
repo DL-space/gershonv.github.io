@@ -89,7 +89,7 @@
 <meta property="og:site_name" content="郭大大的博客">
 <meta property="og:description" content="什么是跨域 跨域，是指浏览器不能执行其他网站的脚本。它是由浏览器的同源策略造成的，是浏览器对 JavaScript 实施的安全限制。  我们可以简单的重现浏览器的跨域问题：  server.js 模拟客户端：  12345678910111213const http = require(&apos;http&apos;)const fs = require(&apos;fs&apos;)http  .createServer(funct">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-03T14:17:53.370Z">
+<meta property="og:updated_time" content="2019-01-03T15:11:41.699Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HTTP - 跨域">
 <meta name="twitter:description" content="什么是跨域 跨域，是指浏览器不能执行其他网站的脚本。它是由浏览器的同源策略造成的，是浏览器对 JavaScript 实施的安全限制。  我们可以简单的重现浏览器的跨域问题：  server.js 模拟客户端：  12345678910111213const http = require(&apos;http&apos;)const fs = require(&apos;fs&apos;)http  .createServer(funct">
@@ -397,6 +397,7 @@
 <p>打开 <code>http://127.0.0.1:3300</code> 即可看到</p>
 <p>Access to XMLHttpRequest at ‘<code>http://127.0.0.1:6060/</code>‘ from origin ‘<code>http://127.0.0.1:3300</code>‘ has been blocked by CORS policy: No ‘Access-Control-Allow-Origin’ header is present on the requested resource.</p>
 <p>后续将讲到如何去解决这个问题。</p>
+<a id="more"></a>
 <h2 id="常见的跨域场景"><a href="#常见的跨域场景" class="headerlink" title="常见的跨域场景"></a>常见的跨域场景</h2><blockquote>
 <p>所谓的同源是指，域名、协议、端口均为相同。</p>
 </blockquote>

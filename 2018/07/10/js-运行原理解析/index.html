@@ -81,22 +81,22 @@
 
 
 
-<meta name="description" content="说到JavaScript的运行原理，自然绕不开JS引擎，运行上下文，单线程，事件循环，事件驱动，回调函数等概念。 为了更好的理解JavaScript如何工作的，首先要理解以下几个概念。  JS Engine（JS引擎） Runtime（运行上下文） Call Stack (调用栈) Event Loop（事件循环） Callback (回调)  JS Engine（JS引擎）简单来说，JS引擎主要">
+<meta name="description" content="说到JavaScript的运行原理，自然绕不开JS引擎，运行上下文，单线程，事件循环，事件驱动，回调函数等概念。 为了更好的理解JavaScript如何工作的，首先要理解以下几个概念。  JS Engine（JS引擎） Runtime（运行上下文） Call Stack (调用栈) Event Loop（事件循环） Callback (回调)">
 <meta name="keywords" content="eventLoop">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaScript 运行原理解析 - eventLoop 机制">
 <meta property="og:url" content="https://gershonv.github.io/2018/07/10/js-运行原理解析/index.html">
 <meta property="og:site_name" content="郭大大的博客">
-<meta property="og:description" content="说到JavaScript的运行原理，自然绕不开JS引擎，运行上下文，单线程，事件循环，事件驱动，回调函数等概念。 为了更好的理解JavaScript如何工作的，首先要理解以下几个概念。  JS Engine（JS引擎） Runtime（运行上下文） Call Stack (调用栈) Event Loop（事件循环） Callback (回调)  JS Engine（JS引擎）简单来说，JS引擎主要">
+<meta property="og:description" content="说到JavaScript的运行原理，自然绕不开JS引擎，运行上下文，单线程，事件循环，事件驱动，回调函数等概念。 为了更好的理解JavaScript如何工作的，首先要理解以下几个概念。  JS Engine（JS引擎） Runtime（运行上下文） Call Stack (调用栈) Event Loop（事件循环） Callback (回调)">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/1/16/160fcd26feb7b02b?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/1/16/160fcd26fb5bb968?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/1/16/160fcd26fae57ded?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
 <meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/1/16/160fcd26f8023a85?imageslim">
-<meta property="og:updated_time" content="2019-01-03T14:17:53.471Z">
+<meta property="og:updated_time" content="2019-01-03T15:08:35.723Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript 运行原理解析 - eventLoop 机制">
-<meta name="twitter:description" content="说到JavaScript的运行原理，自然绕不开JS引擎，运行上下文，单线程，事件循环，事件驱动，回调函数等概念。 为了更好的理解JavaScript如何工作的，首先要理解以下几个概念。  JS Engine（JS引擎） Runtime（运行上下文） Call Stack (调用栈) Event Loop（事件循环） Callback (回调)  JS Engine（JS引擎）简单来说，JS引擎主要">
+<meta name="twitter:description" content="说到JavaScript的运行原理，自然绕不开JS引擎，运行上下文，单线程，事件循环，事件驱动，回调函数等概念。 为了更好的理解JavaScript如何工作的，首先要理解以下几个概念。  JS Engine（JS引擎） Runtime（运行上下文） Call Stack (调用栈) Event Loop（事件循环） Callback (回调)">
 <meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/1/16/160fcd26feb7b02b?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
 
 
@@ -392,6 +392,7 @@
 <li>Event Loop（事件循环）</li>
 <li>Callback (回调)</li>
 </ul>
+<a id="more"></a>
 <h2 id="JS-Engine（JS引擎）"><a href="#JS-Engine（JS引擎）" class="headerlink" title="JS Engine（JS引擎）"></a>JS Engine（JS引擎）</h2><p>简单来说，JS引擎主要是对JS代码进行词法、语法等分析，通过编译器将代码编译成可执行的机器码让计算机去执行。</p>
 <p>目前最流行的JS引擎非V8莫属了，Chrome浏览器和Node.js采用的引擎就是V8引擎。引擎的结构可以简单由下图表示：<br><img src="https://user-gold-cdn.xitu.io/2018/1/16/160fcd26feb7b02b?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="enter description here"></p>
 <p>就如JVM虚拟机一样，JS引擎中也有<code>堆(Memory Heap)</code>和<code>栈(Call Stack)</code>的概念。</p>

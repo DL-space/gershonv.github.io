@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="bind一句话介绍 bind:  bind() 方法会创建一个新函数。当这个新函数被调用时，bind() 的第一个参数将作为它运行时的 this，之后的一序列参数将会在传递的实参前传入作为它的参数。(来自于 MDN )  由此我们可以首先得出 bind 函数的两个特点：  返回一个函数 可以传入参数  返回函数的模拟实现从第一个特点开始，我们举个例子： 123456789101112var foo">
+<meta name="description" content="bind一句话介绍 bind:  bind() 方法会创建一个新函数。当这个新函数被调用时，bind() 的第一个参数将作为它运行时的 this，之后的一序列参数将会在传递的实参前传入作为它的参数。(来自于 MDN )  由此我们可以首先得出 bind 函数的两个特点：  返回一个函数 可以传入参数">
 <meta name="keywords" content="Javascript,Javascript 深入系列">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[转] Javascript深入之bind的模拟实现">
 <meta property="og:url" content="https://gershonv.github.io/2018/11/15/js-深入之bind的模拟实现/index.html">
 <meta property="og:site_name" content="郭大大的博客">
-<meta property="og:description" content="bind一句话介绍 bind:  bind() 方法会创建一个新函数。当这个新函数被调用时，bind() 的第一个参数将作为它运行时的 this，之后的一序列参数将会在传递的实参前传入作为它的参数。(来自于 MDN )  由此我们可以首先得出 bind 函数的两个特点：  返回一个函数 可以传入参数  返回函数的模拟实现从第一个特点开始，我们举个例子： 123456789101112var foo">
+<meta property="og:description" content="bind一句话介绍 bind:  bind() 方法会创建一个新函数。当这个新函数被调用时，bind() 的第一个参数将作为它运行时的 this，之后的一序列参数将会在传递的实参前传入作为它的参数。(来自于 MDN )  由此我们可以首先得出 bind 函数的两个特点：  返回一个函数 可以传入参数">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-03T14:17:53.399Z">
+<meta property="og:updated_time" content="2019-01-03T15:10:54.849Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[转] Javascript深入之bind的模拟实现">
-<meta name="twitter:description" content="bind一句话介绍 bind:  bind() 方法会创建一个新函数。当这个新函数被调用时，bind() 的第一个参数将作为它运行时的 this，之后的一序列参数将会在传递的实参前传入作为它的参数。(来自于 MDN )  由此我们可以首先得出 bind 函数的两个特点：  返回一个函数 可以传入参数  返回函数的模拟实现从第一个特点开始，我们举个例子： 123456789101112var foo">
+<meta name="twitter:description" content="bind一句话介绍 bind:  bind() 方法会创建一个新函数。当这个新函数被调用时，bind() 的第一个参数将作为它运行时的 this，之后的一序列参数将会在传递的实参前传入作为它的参数。(来自于 MDN )  由此我们可以首先得出 bind 函数的两个特点：  返回一个函数 可以传入参数">
 
 
 
@@ -387,6 +387,7 @@
 <li>返回一个函数</li>
 <li>可以传入参数</li>
 </ol>
+<a id="more"></a>
 <h2 id="返回函数的模拟实现"><a href="#返回函数的模拟实现" class="headerlink" title="返回函数的模拟实现"></a>返回函数的模拟实现</h2><p>从第一个特点开始，我们举个例子：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> foo = &#123;</span><br><span class="line">  value: <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.value)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 返回了一个函数</span></span><br><span class="line"><span class="keyword">var</span> bindFoo = bar.bind(foo)</span><br><span class="line"></span><br><span class="line">bindFoo() <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
 <p>关于指定 this 的指向，我们可以使用 call 或者 apply 实现，关于 call 和 apply 的模拟实现，可以查看<a href="https://github.com/mqyqingfeng/Blog/issues/11" target="_blank" rel="noopener">《JavaScript 深入之 call 和 apply 的模拟实现》</a>。我们来写第一版的代码：</p>
