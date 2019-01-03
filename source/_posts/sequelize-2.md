@@ -18,7 +18,9 @@ User.sync({ force: true })
 上式代码在数据库中的执行命令为：
 
 ```sql
-CREATE TABLE IF NOT EXISTS `bars` (
+DROP TABLE IF EXISTS `users`;
+
+CREATE TABLE IF NOT EXISTS `users` (
   `id` INTEGER NOT NULL auto_increment ,
   `createdAt` DATETIME NOT NULL,
   `updatedAt` DATETIME NOT NULL,
@@ -581,6 +583,151 @@ sequelize.[sync|drop]().then(() => {
 ```js
 // 只有当数据库名称以'_test'结尾时，才会运行.sync（）
 sequelize.sync({ force: true, match: /_test$/ });
+```
+
+## sequelize.import
+
+您还可以使用 `import` 方法将模型定义存储在单个文件中。 返回的对象与导入文件的功能中定义的完全相同。
+
+例如 `models/author.js`:
+
+```js
+module.exports = (sequelize, DataTypes) => {
+  return sequelize.define('author', {
+    username: DataTypes.STRING(50)
+  })
+}
+```
+
+`app.js`
+
+```js
+const AuthorModel = sequelize.import('./models/author.js')
+
+AuthorModel.sync({ force: true }).then(async () => {
+  try {
+    const author = AuthorModel.findById(1)
+    console.log(author)
+  } catch (err) {
+    console.log(err)
+  }
+})
+```
+
+### 同时导入多个 model
+
+再建立多一个 model `models/article.js`
+
+```js
+module.exports = (sequelize, DataTypes) => {
+  return sequelize.define('article', {
+    title: DataTypes.STRING(50),
+    content: DataTypes.STRING,
+    from: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'authors',
+        key: 'id'
+      }
+    }
+  })
+}
+```
+
+`app.js`:
+
+```js
+const fs = require('fs')
+const path = require('path')
+const Sequelize = require('sequelize')
+
+const MODELS_PATH = path.join(__dirname, 'models')
+
+fs.readdirSync(MODELS_PATH).forEach(file => {
+  sequelize.import(path.join(MODELS_PATH, file))
+})
+
+sequelize.sync().then(() => {
+  const { author: AuthorModel, article } = sequelize.models
+  AuthorModel.create({ username: 'guodada' }).then(author => {
+    console.log(author.username) // guodada
+  })
+})
+```
+
+## 扩展模型
+
+`Sequelize` 模型是ES6类。 您可以轻松添加自定义实例或类级别的方法。
+
+```js
+const User = sequelize.define('user', { firstname: Sequelize.STRING })
+
+// 添加一个类级别的方法
+User.classLevelMethod = function() {
+  return 'foo'
+}
+
+// 添加实例级别方法
+User.prototype.instanceLevelMethod = function() {
+  return 'bar'
+}
+```
+
+当然，您还可以访问实例的数据并生成虚拟的 getter:
+
+```js
+const User = sequelize.define('user', { firstname: Sequelize.STRING, lastname: Sequelize.STRING })
+
+User.prototype.getFullname = function() {
+  return [this.firstname, this.lastname].join(' ')
+}
+
+// 例子:
+User.build({ firstname: 'foo', lastname: 'bar' }).getFullname() // 'foo bar'
+```
+
+## 索引
+
+`Sequelize` 支持在 `Model.sync()` 或 `sequelize.sync` 中创建的模型定义中添加索引。
+
+```js
+sequelize.define(
+  'user',
+  {},
+  {
+    indexes: [
+      // 在 email 上创建一个唯一索引
+      {
+        unique: true,
+        fields: ['email']
+      },
+
+      // 在使用 jsonb_path_ops 的 operator 数据上创建一个 gin 索引
+      {
+        fields: ['data'],
+        using: 'gin',
+        operator: 'jsonb_path_ops'
+      },
+
+      // 默认的索引名将是 [table]_[fields]
+      // 创建多列局部索引
+      {
+        name: 'public_by_author',
+        fields: ['author', 'status'],
+        where: {
+          status: 'public'
+        }
+      },
+
+      // 具有有序字段的BTREE索引
+      {
+        name: 'title_index',
+        method: 'BTREE',
+        fields: ['author', { attribute: 'title', collate: 'en_US', order: 'DESC', length: 5 }]
+      }
+    ]
+  }
+)
 ```
 
 ## 相关
