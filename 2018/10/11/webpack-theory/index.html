@@ -1,0 +1,1184 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="webpack," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="郭大大的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="entry123456789101112131415161718192021/** * @param &amp;#123;String&amp;#125; - String 时 打包为一个文件，默认包名 main.js * @param &amp;#123;Array&amp;#125; - Array 时 webpack会把数组里所有文件打包成一个js文件 * @param &amp;#123;Object&amp;#125; - Objec">
+<meta name="keywords" content="webpack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="webpack - 理论篇">
+<meta property="og:url" content="https://gershonv.github.io/2018/10/11/webpack-theory/index.html">
+<meta property="og:site_name" content="郭大大的博客">
+<meta property="og:description" content="entry123456789101112131415161718192021/** * @param &amp;#123;String&amp;#125; - String 时 打包为一个文件，默认包名 main.js * @param &amp;#123;Array&amp;#125; - Array 时 webpack会把数组里所有文件打包成一个js文件 * @param &amp;#123;Object&amp;#125; - Objec">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-01-03T14:17:53.648Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="webpack - 理论篇">
+<meta name="twitter:description" content="entry123456789101112131415161718192021/** * @param &amp;#123;String&amp;#125; - String 时 打包为一个文件，默认包名 main.js * @param &amp;#123;Array&amp;#125; - Array 时 webpack会把数组里所有文件打包成一个js文件 * @param &amp;#123;Object&amp;#125; - Objec">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://gershonv.github.io/2018/10/11/webpack-theory/"/>
+
+
+
+
+
+  <title>webpack - 理论篇 | 郭大大的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">郭大大的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">生活就像海洋，只有意志坚强的人才能到达彼岸</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2018/10/11/webpack-theory/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gershonv">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郭大大的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">webpack - 理论篇</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-11T11:15:56+08:00">
+                2018-10-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/webpack/" itemprop="url" rel="index">
+                    <span itemprop="name">webpack</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="entry"><a href="#entry" class="headerlink" title="entry"></a>entry</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param &#123;String&#125; - String 时 打包为一个文件，默认包名 main.js</span></span><br><span class="line"><span class="comment"> * @param &#123;Array&#125; - Array 时 webpack会把数组里所有文件打包成一个js文件</span></span><br><span class="line"><span class="comment"> * @param &#123;Object&#125; - Object 时 webpack会把对象里的文件分别打包成多个文件</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  entry: <span class="string">'./index.js'</span>,</span><br><span class="line"></span><br><span class="line">  entry: [<span class="string">'./index.js'</span>, <span class="string">'./about.js'</span>],</span><br><span class="line"></span><br><span class="line">  entry: &#123;</span><br><span class="line">    app: <span class="string">'./index.js'</span>,</span><br><span class="line">    about: <span class="string">'./about.js'</span></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  entry: &#123;</span><br><span class="line">    app: <span class="string">'./index.js'</span>,</span><br><span class="line">    vendors: [<span class="string">'jquery'</span>] <span class="comment">// 分离第三方库</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="vendors-第三方库"><a href="#vendors-第三方库" class="headerlink" title="vendors 第三方库"></a>vendors 第三方库</h3><p>// 待补充</p>
+<h2 id="output"><a href="#output" class="headerlink" title="output"></a>output</h2><blockquote>
+<p>指示 webpack 如何去输出、以及在哪里输出、输出的格式等</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  output: &#123;</span><br><span class="line">    path: path.resolve(__dirname, <span class="string">'dist'</span>), <span class="comment">// 输出文件的目录</span></span><br><span class="line">    filename: <span class="string">'js/[name].[chunkhash:8].js'</span>, <span class="comment">// 打包路径及名称</span></span><br><span class="line">    chunkFilename: <span class="string">'js/[name].[chunkhash:8].js'</span> <span class="comment">// 按需加载</span></span><br><span class="line">    <span class="comment">// publicPath：文件输出的公共路径，</span></span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="resolve"><a href="#resolve" class="headerlink" title="resolve"></a>resolve</h2><blockquote>
+<p>配置模块如何解析</p>
+</blockquote>
+<ul>
+<li><code>extensions</code>：自动解析确定的扩展,省去你引入组件时写后缀的麻烦，</li>
+<li><code>alias</code>：非常重要的一个配置，它可以配置一些短路径，</li>
+<li><code>modules</code>：webpack 解析模块时应该搜索的目录，</li>
+<li>…</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  resolve: &#123;</span><br><span class="line">    extensions: [<span class="string">'.js'</span>, <span class="string">'.jsx'</span>, <span class="string">'.ts'</span>, <span class="string">'.tsx'</span>, <span class="string">'.scss'</span>, <span class="string">'.json'</span>, <span class="string">'.css'</span>],</span><br><span class="line">    alias: &#123;</span><br><span class="line">      <span class="string">'@'</span>: path.resolve(__dirname, <span class="string">'src'</span>)</span><br><span class="line">    &#125;,</span><br><span class="line">    modules: [path.resolve(__dirname, <span class="string">'src'</span>), <span class="string">'node_modules'</span>]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="module-rules"><a href="#module-rules" class="headerlink" title="module.rules"></a>module.rules</h2><ul>
+<li><code>rules</code>：也就是之前的 loaders，</li>
+<li><code>test</code> ： 正则表达式，匹配编译的文件，</li>
+<li><code>exclude</code>：排除特定条件，如通常会写 <code>node_modules</code>，即把某些目录/文件过滤掉，</li>
+<li><code>include</code>：它正好与 <code>exclude</code> 相反，</li>
+<li><code>use -loader</code> ：必须要有它，它相当于是一个 <code>test</code> 匹配到的文件对应的解析器，<code>babel-loader</code>、<code>style-loader</code>、<code>sass-loader</code>、<code>url-loader</code> 等等，</li>
+<li><code>use - options</code>：它与 <code>loader</code> 配合使用，可以是一个字符串或对象，它的配置可以直接简写在 <code>loader</code> 内一起，它下面还有 <code>presets</code>、<code>plugins</code> 等属性；</li>
+</ul>
+<h2 id="plugins"><a href="#plugins" class="headerlink" title="plugins"></a>plugins</h2><p>// 另一篇文章 webpack - plugins 篇 敬请期待</p>
+<h2 id="devtool"><a href="#devtool" class="headerlink" title="devtool"></a>devtool</h2><ul>
+<li>控制是否生成，以及如何生成 source map 文件，开发环境下更有利于定位问题，默认 false,</li>
+<li>当然它的开启，也会影响编译的速度，所以生产环境一定一定记得关闭；</li>
+<li>常用的值：<code>cheap-eval-source-map</code>、<code>eval-source-map</code>、<code>cheap-module-eval-source-map</code>、<code>inline-cheap-module-source-map</code> 等等</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">devtool: <span class="string">'eval-source-map'</span> <span class="comment">// 原始源代码</span></span><br></pre></td></tr></table></figure>
+<h2 id="webpack-dev-server"><a href="#webpack-dev-server" class="headerlink" title="webpack-dev-server"></a>webpack-dev-server</h2><ul>
+<li><code>contentBase</code> ：告诉服务(dev server)在哪里查找文件，默认不指定会在是当期项目根目录，</li>
+<li><code>historyApiFallback</code>:可以是 boolean、 object，默认响应的入口文件，包括 404 都会指向这里，object 见下面示例：</li>
+<li><code>compress</code>：启用 gzip 压缩，</li>
+<li><code>publicPath</code>：它其实就是 output.publicPath，当你改变了它，即会覆盖了 output 的配置，</li>
+<li><code>stats</code>： 可以自定控制要显示的编译细节信息，</li>
+<li><code>proxy</code>：它其实就是 http-proxy-middleware，可以进行处理一些代理的请求。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> webpack = <span class="built_in">require</span>(<span class="string">'webpack'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  devServer: &#123;</span><br><span class="line">    contentBase:<span class="string">'./assets'</span>,</span><br><span class="line">    port: <span class="number">1234</span>,</span><br><span class="line">    open: <span class="literal">true</span>, <span class="comment">// 自动打开浏览器</span></span><br><span class="line">    compress: <span class="literal">true</span> <span class="comment">// 服务器压缩</span></span><br><span class="line">    hot: <span class="literal">true</span> <span class="comment">// 配合 HotModuleReplacementPlugin 使用</span></span><br><span class="line">    <span class="comment">//... proxy、hot</span></span><br><span class="line">  &#125;,</span><br><span class="line">  plugins: [</span><br><span class="line">    <span class="keyword">new</span> webpack.HotModuleReplacementPlugin()</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="optimization"><a href="#optimization" class="headerlink" title="optimization"></a>optimization</h2><ul>
+<li><code>optimization</code> 是 <code>webpack4</code> 新增的，主要是用来让开发者根据需要自定义一些优化构建打包的策略配置，</li>
+<li><code>minimize</code>：true/false,告诉 webpack 是否开启代码最小化压缩，</li>
+<li><code>minimizer</code>：自定 js 优化配置，会覆盖默认的配置，结合 <code>UglifyJsPlugin</code> 插件使用，</li>
+<li><code>removeEmptyChunks</code>: bool 值，它检测并删除空的块。将设置为 false 将禁用此优化，</li>
+<li><code>nodeEnv</code>：它并不是 node 里的环境变量，设置后可以在代码里使用 process.env.NODE_ENV === ‘development’来判断一些逻辑，生产环境 <code>UglifyJsPlugin</code> 会自动删除无用代码，</li>
+<li><code>splitChunks</code> ：取代了 CommonsChunkPlugin，自动分包拆分、代码拆分，详细默认配置：</li>
+<li>默认配置，只会作用于异步加载的代码块 —— chunks: ‘async’，它有三个值：all,async,initial</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="comment">// 优化构建打包的策略配置</span></span><br><span class="line">  optimization: &#123;</span><br><span class="line">    minimize: <span class="literal">true</span>, <span class="comment">// 是否开启代码最小化压缩 默认 false</span></span><br><span class="line">    <span class="comment">//splitChunks 默认配置</span></span><br><span class="line">    splitChunks: &#123;</span><br><span class="line">      chunks: <span class="string">'async'</span>,</span><br><span class="line">      minSize: <span class="number">30000</span>,</span><br><span class="line">      maxSize: <span class="number">0</span>,</span><br><span class="line">      minChunks: <span class="number">1</span>,</span><br><span class="line">      maxAsyncRequests: <span class="number">5</span>,</span><br><span class="line">      maxInitialRequests: <span class="number">3</span>,</span><br><span class="line">      automaticNameDelimiter: <span class="string">'~'</span>,</span><br><span class="line">      name: <span class="literal">true</span>,</span><br><span class="line">      cacheGroups: &#123;</span><br><span class="line">        vendors: &#123;</span><br><span class="line">          test: <span class="regexp">/[\\/]node_modules[\\/]/</span>,</span><br><span class="line">          priority: <span class="number">-10</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="keyword">default</span>: &#123;</span><br><span class="line">          minChunks: <span class="number">2</span>,</span><br><span class="line">          priority: <span class="number">-20</span>,</span><br><span class="line">          reuseExistingChunk: <span class="literal">true</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="配合-UglifyJsPlugin"><a href="#配合-UglifyJsPlugin" class="headerlink" title="配合 UglifyJsPlugin"></a>配合 UglifyJsPlugin</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> UglifyJsPlugin = <span class="built_in">require</span>(<span class="string">'uglifyjs-webpack-plugin'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="comment">// 优化构建打包的策略配置</span></span><br><span class="line">  optimization: &#123;</span><br><span class="line">    minimizer: [</span><br><span class="line">      <span class="keyword">new</span> UglifyJsPlugin(&#123;</span><br><span class="line">        cache: <span class="literal">true</span>, <span class="comment">// 开启缓存</span></span><br><span class="line">        parallel: <span class="literal">true</span>, <span class="comment">// 开启多线程编译</span></span><br><span class="line">        sourceMap: <span class="literal">true</span>, <span class="comment">// 是否sourceMap</span></span><br><span class="line">        uglifyOptions: &#123;</span><br><span class="line">          <span class="comment">// 丑化参数</span></span><br><span class="line">          comments: <span class="literal">false</span>,</span><br><span class="line">          warnings: <span class="literal">false</span>,</span><br><span class="line">          compress: &#123;</span><br><span class="line">            unused: <span class="literal">true</span>,</span><br><span class="line">            dead_code: <span class="literal">true</span>,</span><br><span class="line">            collapse_vars: <span class="literal">true</span>,</span><br><span class="line">            reduce_vars: <span class="literal">true</span></span><br><span class="line">          &#125;,</span><br><span class="line">          output: &#123;</span><br><span class="line">            comments: <span class="literal">false</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://juejin.im/post/5be64a7bf265da615304493e#heading-9" target="_blank" rel="noopener">webpack4 配置详解之慢嚼细咽</a></li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/webpack/" rel="tag"># webpack</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/10/webpack-入门/" rel="next" title="webpack - 入门篇">
+                <i class="fa fa-chevron-left"></i> webpack - 入门篇
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/11/webpack-babel/" rel="prev" title="webpack - babel篇">
+                webpack - babel篇 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div id="gitalk-container"></div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="gershonv" />
+            
+              <p class="site-author-name" itemprop="name">gershonv</p>
+              <p class="site-description motion-element" itemprop="description">前端开发爱好者</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/gershonv" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/5acac6c4f265da2378408f92/posts" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Juejin</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#entry"><span class="nav-number">1.</span> <span class="nav-text">entry</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vendors-第三方库"><span class="nav-number">1.1.</span> <span class="nav-text">vendors 第三方库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#output"><span class="nav-number">2.</span> <span class="nav-text">output</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#resolve"><span class="nav-number">3.</span> <span class="nav-text">resolve</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#module-rules"><span class="nav-number">4.</span> <span class="nav-text">module.rules</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#plugins"><span class="nav-number">5.</span> <span class="nav-text">plugins</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#devtool"><span class="nav-number">6.</span> <span class="nav-text">devtool</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack-dev-server"><span class="nav-number">7.</span> <span class="nav-text">webpack-dev-server</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#optimization"><span class="nav-number">8.</span> <span class="nav-text">optimization</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配合-UglifyJsPlugin"><span class="nav-number">8.1.</span> <span class="nav-text">配合 UglifyJsPlugin</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">9.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gershonv</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'ece10fea60fa925783ab',
+          clientSecret: 'c28aa931a2204c3ae59ab2e17aaa3ddd6b5ce8e6',
+          repo: 'gershonv.github.io',
+          owner: 'gershonv',
+          admin: ['gershonv'],
+          id: location.pathname,
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')           
+       </script>
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

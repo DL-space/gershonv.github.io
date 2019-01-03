@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="HTTP," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="郭大大的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="经典五层网络模型 在每一台电脑，每个服务器都有这这几个网络模型层级来维护整个网络数据传输过程。 一张图了解 TCP/IP 五层网络模型  物理层：将信息编码成电流脉冲或其它信号用于网上传输；（电线、光缆等） 数据链路层：数据链路层通过物理网络链路供数据传输。可以简单的理解为：规定了 0 和 1 的分包形式，确定了网络数据包的形式。 网络层：网络层负责在源和终点之间建立连接;（路由器等） 传输层：">
+<meta name="keywords" content="HTTP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP - 导学">
+<meta property="og:url" content="https://gershonv.github.io/2018/11/20/http-导学/index.html">
+<meta property="og:site_name" content="郭大大的博客">
+<meta property="og:description" content="经典五层网络模型 在每一台电脑，每个服务器都有这这几个网络模型层级来维护整个网络数据传输过程。 一张图了解 TCP/IP 五层网络模型  物理层：将信息编码成电流脉冲或其它信号用于网上传输；（电线、光缆等） 数据链路层：数据链路层通过物理网络链路供数据传输。可以简单的理解为：规定了 0 和 1 的分包形式，确定了网络数据包的形式。 网络层：网络层负责在源和终点之间建立连接;（路由器等） 传输层：">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/20/16730e533ec09d3a?w=1360&h=947&f=png&s=282764">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/11/20/167316845f6dde61?w=1255&h=629&f=jpeg&s=180804">
+<meta property="og:image" content="http://ww4.sinaimg.cn/mw690/6941baebgw1evu0o8swewj20go0avq3e.jpg">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/9/10/165c0f27ea8bff3b?imageslim">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/9/10/165c0f27eb051d58?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/9/10/165c0f27ebf1b79f?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/9/10/165c0f28437eb63d?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:updated_time" content="2019-01-03T14:17:53.366Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HTTP - 导学">
+<meta name="twitter:description" content="经典五层网络模型 在每一台电脑，每个服务器都有这这几个网络模型层级来维护整个网络数据传输过程。 一张图了解 TCP/IP 五层网络模型  物理层：将信息编码成电流脉冲或其它信号用于网上传输；（电线、光缆等） 数据链路层：数据链路层通过物理网络链路供数据传输。可以简单的理解为：规定了 0 和 1 的分包形式，确定了网络数据包的形式。 网络层：网络层负责在源和终点之间建立连接;（路由器等） 传输层：">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/11/20/16730e533ec09d3a?w=1360&h=947&f=png&s=282764">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://gershonv.github.io/2018/11/20/http-导学/"/>
+
+
+
+
+
+  <title>HTTP - 导学 | 郭大大的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">郭大大的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">生活就像海洋，只有意志坚强的人才能到达彼岸</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2018/11/20/http-导学/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gershonv">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郭大大的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">HTTP - 导学</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-20T19:31:23+08:00">
+                2018-11-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/HTTP/" itemprop="url" rel="index">
+                    <span itemprop="name">HTTP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="经典五层网络模型"><a href="#经典五层网络模型" class="headerlink" title="经典五层网络模型"></a>经典五层网络模型</h2><p><img src="https://user-gold-cdn.xitu.io/2018/11/20/16730e533ec09d3a?w=1360&amp;h=947&amp;f=png&amp;s=282764" alt=""></p>
+<p>在每一台电脑，每个服务器都有这这几个网络模型层级来维护整个网络数据传输过程。</p>
+<h3 id="一张图了解-TCP-IP-五层网络模型"><a href="#一张图了解-TCP-IP-五层网络模型" class="headerlink" title="一张图了解 TCP/IP 五层网络模型"></a>一张图了解 TCP/IP 五层网络模型</h3><p><img src="https://user-gold-cdn.xitu.io/2018/11/20/167316845f6dde61?w=1255&amp;h=629&amp;f=jpeg&amp;s=180804" alt=""></p>
+<ul>
+<li><strong>物理层</strong>：将信息编码成电流脉冲或其它信号用于网上传输；（电线、光缆等）</li>
+<li><strong>数据链路层</strong>：数据链路层通过物理网络链路供数据传输。可以简单的理解为：规定了 0 和 1 的分包形式，确定了网络数据包的形式。</li>
+<li><strong>网络层</strong>：网络层负责在源和终点之间建立连接;（路由器等）</li>
+<li><strong>传输层</strong>： 敲重点！<blockquote>
+<p>传输层向用户提供可靠的端对端(<code>End-to-End</code>)服务。 常用的（<code>TCP／IP</code>）协议 、<code>UDP</code> 协议；</p>
+</blockquote>
+</li>
+<li><strong>应用层</strong>：敲重点！<blockquote>
+<p>为应用软件提供了很多服务，帮我们实现了 <code>HTTP</code> 协议，我们只要按照规则去使用 <code>HTTP</code> 协议；它构建于 <code>TCP</code> 协议之上；屏蔽了网络传输相关细节。</p>
+</blockquote>
+</li>
+</ul>
+<p>重点在 <strong>应用层</strong> 和 <strong>传输层</strong> 上：<code>http</code> 是在应用层上去实现的，而 <code>http</code> 协议基于传输层的 <code>TCP</code> <code>UDP</code> 协议。</p>
+<h2 id="HTTP-发展历史"><a href="#HTTP-发展历史" class="headerlink" title="HTTP 发展历史"></a>HTTP 发展历史</h2><h3 id="HTTP-0-9"><a href="#HTTP-0-9" class="headerlink" title="HTTP/0.9"></a>HTTP/0.9</h3><blockquote>
+<ol>
+<li><code>HTTP/0.9</code> 只支持一种方法—— <code>Get</code>，请求只有一行</li>
+<li>没有 <code>header</code> 等描述数据的信息</li>
+<li>服务器发送完毕，就关闭 <code>TCP</code> 连接</li>
+</ol>
+</blockquote>
+<h3 id="HTTP-1-0"><a href="#HTTP-1-0" class="headerlink" title="HTTP/1.0"></a>HTTP/1.0</h3><blockquote>
+<ol>
+<li>请求与响应支持 <code>header</code>，增加了<code>状态码</code>，响应对象的一开始是一个响应状态行</li>
+<li>协议版本信息需要随着请求一起发送，支持 <code>HEAD</code>，<code>POST</code> 方法</li>
+</ol>
+</blockquote>
+<h3 id="HTTP-1-1"><a href="#HTTP-1-1" class="headerlink" title="HTTP/1.1"></a>HTTP/1.1</h3><p>在 <code>HTTP/1.0</code> 上增加了一些功能来优化网络链接的过程：</p>
+<ol>
+<li><strong>持久连接</strong><blockquote>
+<p><code>HTTP/1.0</code> 版本里一个 HTTP 请求就要在客户端和服务端之间创建一次 <code>TCP</code> 连接，在服务器返回完内容后就关闭了。相对来说消耗比较高。</p>
+</blockquote>
+</li>
+<li><strong>pipeline</strong><blockquote>
+<p>我们可以在同个连接里发送多个请求，但是服务端要对这些请求都是要按照顺序进行内容的返回。<br>前一个请求等待时间较长，后一个请求处理较快，后一个请求也不能进行内容响应，需要等前一个请求完成后才可响应下次请求，这也是<strong>串行/并行</strong>的概念，而这个在 <code>HTTP/2.0</code> 中做了优化</p>
+</blockquote>
+</li>
+<li><strong>host 和其他一些命令</strong><blockquote>
+<p>有了 <code>host</code> 之后可以在同一台服务器（物理服务器）同时跑多个不同的 web 服务 ，比如说 <code>node.js</code> 的服务、<code>java</code> 的服务。</p>
+</blockquote>
+</li>
+<li><strong>引入更多缓存控制机制</strong>：如 <code>etag</code>，<code>cache-control</code></li>
+<li>…</li>
+</ol>
+<h3 id="HTTP-2-0"><a href="#HTTP-2-0" class="headerlink" title="HTTP/2.0"></a>HTTP/2.0</h3><ol>
+<li>使用二进制分帧层<blockquote>
+<p>在 <code>HTTP/1.1</code> 中大部分的数据传输都是以字符串方式进行的，<code>HTTP/2.0</code> 则在应用层与传输层之间增加一个二进制分帧层。<br>同样因为这个好处，<code>pipeline</code> 在同个连接里发送多个请求不再需要按照顺序来返回处理。</p>
+</blockquote>
+</li>
+<li>头部压缩<blockquote>
+<p>头信息压缩：在 <code>HTTP/1.1</code> 里面，我们每次发送和返回请求 <code>http header</code> 都是必须要进行完整的发送和返回的，占用带宽。<br>使用首部表来跟踪和存储之前发送的键值对，对于相同的内容，不会再每次请求和响应时发送。</p>
+</blockquote>
+</li>
+<li>服务端推送<blockquote>
+<p>在 <code>HTTP/2.0</code> 中，服务器可以向客户发送请求之外的内容，比如正在请求一个页面时，服务器会把页面相关的 <code>logo</code>，<code>CSS</code> 等文件直接推送到客户端，而不会等到请求来的时候再发送，因为服务器认为客户端会用到这些东西。这相当于在一个 <code>HTML</code> 文档内集合了所有的资源。</p>
+</blockquote>
+</li>
+<li>…</li>
+</ol>
+<h2 id="HTTP-的三次握手"><a href="#HTTP-的三次握手" class="headerlink" title="HTTP 的三次握手"></a>HTTP 的三次握手</h2><p><a href="https://gershonv.github.io/2018/11/20/http-TCP/">http-tcp 的三次握手四次挥手</a></p>
+<h2 id="URI-URL-和-URN"><a href="#URI-URL-和-URN" class="headerlink" title="URI-URL 和 URN"></a>URI-URL 和 URN</h2><p><img src="http://ww4.sinaimg.cn/mw690/6941baebgw1evu0o8swewj20go0avq3e.jpg" alt=""></p>
+<ul>
+<li><code>URI</code> : <code>Uniform Resource Identifier</code>/统一资源标志符<ul>
+<li><code>URL</code> 和 <code>URN</code> 都是 <code>URI</code> 的子集<blockquote>
+<p>统一资源标识符（<code>URI</code>）提供了一个简单、可扩展的资源标识方式。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p><code>URL</code> : <code>Uniform Resource Locator</code>/统一资源定位器</p>
+<ul>
+<li>URL 是 Internet 上用来描述信息资源的字符串，主要用在各种 WWW 客户程序和服务器程序上。</li>
+<li>采用 URL 可以用一种统一的格式来描述各种信息资源，包括文件、服务器的地址和目录等。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">;<span class="string">`http://user:pass@host.com:80/path?query=string#hash`</span> <span class="comment">// @example url 的组成</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * http:// ===&gt; 协议，类似的还有 ftp、https 等</span></span><br><span class="line"><span class="comment"> * user:pass@host.com:80 ===&gt; 存有该资源的主机IP地址（有时也包括端口号）</span></span><br><span class="line"><span class="comment"> * /path ===&gt; 主机资源的具体地址。如目录和文件名等。</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>URN</code> : 永久统一资源定位符</p>
+<ul>
+<li>在资源移动之后还能被找到</li>
+</ul>
+</li>
+</ul>
+<h2 id="HTTP-报文"><a href="#HTTP-报文" class="headerlink" title="HTTP 报文"></a>HTTP 报文</h2><h3 id="请求行"><a href="#请求行" class="headerlink" title="请求行"></a>请求行</h3><blockquote>
+<p>声明 请求方法 、主机域名、资源路径 &amp; 协议版本</p>
+</blockquote>
+<p>请求行的组成 = 请求方法 + 请求路径 + 协议版本</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GET /test/hi-there.txt HTTP/<span class="number">1.0</span></span><br><span class="line"><span class="comment">// 请求行的组成 = 请求方法 + 请求路径 + 协议版本</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://user-gold-cdn.xitu.io/2018/9/10/165c0f27ea8bff3b?imageslim" alt=""></p>
+<h3 id="请求头"><a href="#请求头" class="headerlink" title="请求头"></a>请求头</h3><blockquote>
+<p>声明 客户端、服务器 / 报文的部分信息</p>
+</blockquote>
+<ol>
+<li>请求和响应报文的通用 Header<br><img src="https://user-gold-cdn.xitu.io/2018/9/10/165c0f27eb051d58?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></li>
+<li>常见请求 Header<br><img src="https://user-gold-cdn.xitu.io/2018/9/10/165c0f27ebf1b79f?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></li>
+</ol>
+<h3 id="请求体"><a href="#请求体" class="headerlink" title="请求体"></a>请求体</h3><blockquote>
+<p>存放 需发送给服务器的数据信息</p>
+</blockquote>
+<p><img src="https://user-gold-cdn.xitu.io/2018/9/10/165c0f28437eb63d?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt=""></p>
+<p>除此外还有响应报文，略</p>
+<h2 id="创建一个简单的-http-服务"><a href="#创建一个简单的-http-服务" class="headerlink" title="创建一个简单的 http 服务"></a>创建一个简单的 http 服务</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>)</span><br><span class="line"></span><br><span class="line">http</span><br><span class="line">  .createServer(<span class="function"><span class="keyword">function</span>(<span class="params">request, response</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'request come'</span>, request.url)</span><br><span class="line">    response.end(<span class="string">'123'</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .listen(<span class="number">8888</span>)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HTTP/" rel="tag"># HTTP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/11/15/js-深入之继承的多种方式和优缺点/" rel="next" title="[转] JavaScript深入之继承的多种方式和优缺点">
+                <i class="fa fa-chevron-left"></i> [转] JavaScript深入之继承的多种方式和优缺点
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/21/http-TCP/" rel="prev" title="HTTP - TCP 三次握手四次挥手">
+                HTTP - TCP 三次握手四次挥手 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div id="gitalk-container"></div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="gershonv" />
+            
+              <p class="site-author-name" itemprop="name">gershonv</p>
+              <p class="site-description motion-element" itemprop="description">前端开发爱好者</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/gershonv" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/5acac6c4f265da2378408f92/posts" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Juejin</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#经典五层网络模型"><span class="nav-number">1.</span> <span class="nav-text">经典五层网络模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一张图了解-TCP-IP-五层网络模型"><span class="nav-number">1.1.</span> <span class="nav-text">一张图了解 TCP/IP 五层网络模型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-发展历史"><span class="nav-number">2.</span> <span class="nav-text">HTTP 发展历史</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-0-9"><span class="nav-number">2.1.</span> <span class="nav-text">HTTP/0.9</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-1-0"><span class="nav-number">2.2.</span> <span class="nav-text">HTTP/1.0</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-1-1"><span class="nav-number">2.3.</span> <span class="nav-text">HTTP/1.1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP-2-0"><span class="nav-number">2.4.</span> <span class="nav-text">HTTP/2.0</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-的三次握手"><span class="nav-number">3.</span> <span class="nav-text">HTTP 的三次握手</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#URI-URL-和-URN"><span class="nav-number">4.</span> <span class="nav-text">URI-URL 和 URN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP-报文"><span class="nav-number">5.</span> <span class="nav-text">HTTP 报文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#请求行"><span class="nav-number">5.1.</span> <span class="nav-text">请求行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#请求头"><span class="nav-number">5.2.</span> <span class="nav-text">请求头</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#请求体"><span class="nav-number">5.3.</span> <span class="nav-text">请求体</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建一个简单的-http-服务"><span class="nav-number">6.</span> <span class="nav-text">创建一个简单的 http 服务</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gershonv</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'ece10fea60fa925783ab',
+          clientSecret: 'c28aa931a2204c3ae59ab2e17aaa3ddd6b5ce8e6',
+          repo: 'gershonv.github.io',
+          owner: 'gershonv',
+          admin: ['gershonv'],
+          id: location.pathname,
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')           
+       </script>
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

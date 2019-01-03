@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="CSS,flex," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="郭大大的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="Flex 基本概念 Flex 容器相关属性123.container&amp;#123;    display: flex | inline-flex;       //可以有两种取值&amp;#125;  需要注意的是：当时设置 flex 布局之后，子元素的 float、clear、vertical-align 的属性将会失效。有下面六种属性可以设置在容器上，它们分别是：    flex-direction">
+<meta name="keywords" content="CSS,flex">
+<meta property="og:type" content="article">
+<meta property="og:title" content="flex 布局">
+<meta property="og:url" content="https://gershonv.github.io/2018/07/11/css-flex/index.html">
+<meta property="og:site_name" content="郭大大的博客">
+<meta property="og:description" content="Flex 基本概念 Flex 容器相关属性123.container&amp;#123;    display: flex | inline-flex;       //可以有两种取值&amp;#125;  需要注意的是：当时设置 flex 布局之后，子元素的 float、clear、vertical-align 的属性将会失效。有下面六种属性可以设置在容器上，它们分别是：    flex-direction">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://pbj98r3fm.bkt.clouddn.com/flex.jpg">
+<meta property="og:image" content="http://pbj98r3fm.bkt.clouddn.com/space-between.png">
+<meta property="og:image" content="http://pbj98r3fm.bkt.clouddn.com/space-around.png">
+<meta property="og:image" content="http://pbj98r3fm.bkt.clouddn.com/align-items01.jpg">
+<meta property="og:image" content="http://pbj98r3fm.bkt.clouddn.com/align-items02.jpg">
+<meta property="og:image" content="http://pbj98r3fm.bkt.clouddn.com/align-items03.jpg">
+<meta property="og:image" content="http://pbj98r3fm.bkt.clouddn.com/align-items04.jpg">
+<meta property="og:image" content="http://pbj98r3fm.bkt.clouddn.com/align-items05.jpg">
+<meta property="og:image" content="http://pbj98r3fm.bkt.clouddn.com/flex-grow.jpg">
+<meta property="og:image" content="http://pbj98r3fm.bkt.clouddn.com/flex-shrink.jpg">
+<meta property="og:updated_time" content="2019-01-03T14:17:53.326Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="flex 布局">
+<meta name="twitter:description" content="Flex 基本概念 Flex 容器相关属性123.container&amp;#123;    display: flex | inline-flex;       //可以有两种取值&amp;#125;  需要注意的是：当时设置 flex 布局之后，子元素的 float、clear、vertical-align 的属性将会失效。有下面六种属性可以设置在容器上，它们分别是：    flex-direction">
+<meta name="twitter:image" content="http://pbj98r3fm.bkt.clouddn.com/flex.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://gershonv.github.io/2018/07/11/css-flex/"/>
+
+
+
+
+
+  <title>flex 布局 | 郭大大的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">郭大大的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">生活就像海洋，只有意志坚强的人才能到达彼岸</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2018/07/11/css-flex/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gershonv">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郭大大的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">flex 布局</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-11T20:49:40+08:00">
+                2018-07-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/HTML-CSS/" itemprop="url" rel="index">
+                    <span itemprop="name">HTML-CSS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Flex-基本概念"><a href="#Flex-基本概念" class="headerlink" title="Flex 基本概念"></a>Flex 基本概念</h2><p><img src="http://pbj98r3fm.bkt.clouddn.com/flex.jpg" alt=""></p>
+<h2 id="Flex-容器相关属性"><a href="#Flex-容器相关属性" class="headerlink" title="Flex 容器相关属性"></a>Flex 容器相关属性</h2><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.container</span>&#123;</span><br><span class="line">    display: flex | inline-flex;       //可以有两种取值</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>需要注意的是：当时设置 flex 布局之后，子元素的 float、clear、vertical-align 的属性将会失效。<br>有下面六种属性可以设置在容器上，它们分别是：</p>
+</blockquote>
+<blockquote>
+<ol>
+<li><code>flex-direction</code>  <ol>
+<li>功能：决定水平方向的排列方向 </li>
+<li>参数：row | row-reverse | column | column-reverse</li>
+</ol>
+</li>
+<li><code>flex-wrap</code><ol>
+<li>功能：决定容器内项目是否可以换行</li>
+<li>参数：nowrap | wrap | wrap-reverse</li>
+</ol>
+</li>
+<li>flex-flow<ol>
+<li>功能：flex-direction、flex-wrap 的简写形式 —&gt; 没什么卵用</li>
+<li>参数：&lt;flex-direction&gt; | &lt;flex-wrap&gt;</li>
+</ol>
+</li>
+<li><code>justify-content</code><ol>
+<li>功能：定义在水平方向的对齐方式</li>
+<li>参数：flex-start | flex-end | center | space-between | space-around</li>
+</ol>
+</li>
+<li><code>align-items</code><ol>
+<li>功能：定义了容器内项目的对齐方式</li>
+<li>参数：stretch | flex-start | flex-end | center | baseline </li>
+</ol>
+</li>
+<li>align-content<ol>
+<li>功能：定义了多根轴线的对齐方式，如果项目只有一根轴线，则该属性将不起作用</li>
+<li>参数：stretch | flex-start | flex-end | center | space-between | space-around</li>
+</ol>
+</li>
+</ol>
+</blockquote>
+<p>说明 ：参数首位为默认值 ；参数中含有 <code>reverse</code> 的表示反方向</p>
+<h3 id="Justify-content"><a href="#Justify-content" class="headerlink" title="Justify-content"></a>Justify-content</h3><h4 id="space-between-两端对齐"><a href="#space-between-两端对齐" class="headerlink" title="space-between 两端对齐"></a>space-between 两端对齐</h4><pre><code>两端对齐，项目之间的间隔相等，即剩余空间等分成间隙
+</code></pre><p><img src="http://pbj98r3fm.bkt.clouddn.com/space-between.png" alt=""></p>
+<h4 id="space-around-项目之间间隔相等"><a href="#space-around-项目之间间隔相等" class="headerlink" title="space-around 项目之间间隔相等"></a>space-around 项目之间间隔相等</h4><pre><code>每个项目两侧的间隔相等，所以项目之间的间隔比项目与边缘的间隔大一倍。
+</code></pre><p><img src="http://pbj98r3fm.bkt.clouddn.com/space-around.png" alt=""></p>
+<h3 id="align-items"><a href="#align-items" class="headerlink" title="align-items"></a>align-items</h3><p>建立在主轴为水平方向时测试，即 flex-direction: row ( 默认值 )</p>
+<h4 id="stretch-默认值-占满整个容器的高度"><a href="#stretch-默认值-占满整个容器的高度" class="headerlink" title="stretch 默认值 占满整个容器的高度"></a>stretch 默认值 占满整个容器的高度</h4><pre><code>即如果项目未设置高度或者设为 auto，将占满整个容器的高度。
+</code></pre><p>假设容器高度设置为 100px，而项目都没有设置高度的情况下，则项目的高度也为 100px。<br><img src="http://pbj98r3fm.bkt.clouddn.com/align-items01.jpg" alt="">   </p>
+<h4 id="flex-start-交叉轴的起点对齐"><a href="#flex-start-交叉轴的起点对齐" class="headerlink" title="flex-start 交叉轴的起点对齐"></a>flex-start 交叉轴的起点对齐</h4><p>假设容器高度设置为 100px，而项目分别为 20px, 40px, 60px, 80px, 100px, 则如下图显示<br><img src="http://pbj98r3fm.bkt.clouddn.com/align-items02.jpg" alt="">  </p>
+<h4 id="flex-end-交叉轴的终点对齐"><a href="#flex-end-交叉轴的终点对齐" class="headerlink" title="flex-end 交叉轴的终点对齐"></a>flex-end 交叉轴的终点对齐</h4><p><img src="http://pbj98r3fm.bkt.clouddn.com/align-items03.jpg" alt=""></p>
+<h4 id="center-交叉轴的中点对齐"><a href="#center-交叉轴的中点对齐" class="headerlink" title="center 交叉轴的中点对齐"></a>center 交叉轴的中点对齐</h4><p><img src="http://pbj98r3fm.bkt.clouddn.com/align-items04.jpg" alt=""></p>
+<h4 id="baseline-项目的第一行文字的基线对齐"><a href="#baseline-项目的第一行文字的基线对齐" class="headerlink" title="baseline 项目的第一行文字的基线对齐"></a>baseline 项目的第一行文字的基线对齐</h4><p><img src="http://pbj98r3fm.bkt.clouddn.com/align-items05.jpg" alt=""></p>
+<h2 id="Flex-项目属性"><a href="#Flex-项目属性" class="headerlink" title="Flex 项目属性"></a>Flex 项目属性</h2><blockquote>
+<ol>
+<li>order<ol>
+<li>功能：定义项在容器中的排列顺序</li>
+<li>参数：Number 即数字</li>
+</ol>
+</li>
+<li>flex-basis<ol>
+<li>参数: length | auto;</li>
+</ol>
+</li>
+<li>flex-grow<ol>
+<li>功能：定义项目的放大比例   </li>
+<li>参数：Number</li>
+</ol>
+</li>
+<li>flex-shrink<ol>
+<li>功能：定义了项目的缩小比例</li>
+<li>参数：Number</li>
+</ol>
+</li>
+<li>flex<ol>
+<li>功能：flex-grow, flex-shrink 和 flex-basis的简写</li>
+<li>none | [ &lt;’flex-grow’&gt; &lt;’flex-shrink’&gt;? || &lt;’flex-basis’&gt; ]</li>
+</ol>
+</li>
+<li>align-self<ol>
+<li>功能：允许单个项目有与其他项目不一样的对齐方式</li>
+<li>auto | flex-start | flex-end | center | baseline | stretch</li>
+</ol>
+</li>
+</ol>
+</blockquote>
+<h3 id="order-定义项目在容器中的排列顺序"><a href="#order-定义项目在容器中的排列顺序" class="headerlink" title="order 定义项目在容器中的排列顺序"></a>order 定义项目在容器中的排列顺序</h3><p>定义项目在容器中的排列顺序，数值越小，排列越靠前，默认值为 0<br>在 HTML 结构中，虽然 -2，-1 的 item 排在后面，但是由于分别设置了 order，使之能够排到最前面。 </p>
+<h3 id="flex-basis-算主轴是否有多余空间"><a href="#flex-basis-算主轴是否有多余空间" class="headerlink" title="flex-basis 算主轴是否有多余空间"></a>flex-basis 算主轴是否有多余空间</h3><p>定义了在分配多余空间之前，项目占据的主轴空间，浏览器根据这个属性，计算主轴是否有多余空间</p>
+<blockquote>
+<p>当主轴为水平方向的时候，当设置了 flex-basis，项目的宽度设置值会失效，flex-basis 需要跟 flex-grow 和 flex-shrink 配合使用才能发挥效果。</p>
+</blockquote>
+<h3 id="flex-grow-定义项目的放大比例"><a href="#flex-grow-定义项目的放大比例" class="headerlink" title="flex-grow 定义项目的放大比例"></a>flex-grow 定义项目的放大比例</h3><p>默认值为 0，即如果存在剩余空间，也不放大<br><img src="http://pbj98r3fm.bkt.clouddn.com/flex-grow.jpg" alt=""></p>
+<p>当所有的项目都以 flex-basis 的值进行排列后，仍有剩余空间，那么这时候 flex-grow 就会发挥作用了。 如果所有项目的 flex-grow 属性都为 1，则它们将等分剩余空间。(如果有的话)</p>
+<p>如果一个项目的 flex-grow 属性为 2，其他项目都为 1，则前者占据的剩余空间将比其他项多一倍。</p>
+<p>当然如果当所有项目以 flex-basis 的值排列完后发现空间不够了，且 flex-wrap：nowrap 时，此时 flex-grow 则不起作用了，这时候就需要接下来的这个属性。</p>
+<h3 id="flex-shrink-定义了项目的缩小比例"><a href="#flex-shrink-定义了项目的缩小比例" class="headerlink" title="flex-shrink 定义了项目的缩小比例"></a>flex-shrink 定义了项目的缩小比例</h3><p>默认值: 1，即如果空间不足，该项目将缩小，负值对该属性无效。<br><img src="http://pbj98r3fm.bkt.clouddn.com/flex-shrink.jpg" alt=""></p>
+<p>这里可以看出，虽然每个项目都设置了宽度为 50px，但是由于自身容器宽度只有 200px，这时候每个项目会被同比例进行缩小，因为默认值为 1。 同理可得：</p>
+<p>如果所有项目的 flex-shrink 属性都为 1，当空间不足时，都将等比例缩小。</p>
+<p>如果一个项目的 flex-shrink 属性为 0，其他项目都为 1，则空间不足时，前者不缩小</p>
+<h3 id="flex-flex-grow-flex-shrink-和-flex-basis的简写"><a href="#flex-flex-grow-flex-shrink-和-flex-basis的简写" class="headerlink" title="flex  flex-grow, flex-shrink 和 flex-basis的简写"></a>flex  flex-grow, flex-shrink 和 flex-basis的简写</h3><p>flex 的默认值是以上三个属性值的组合。假设以上三个属性同样取默认值，则 flex 的默认值是 0 1 auto。同理，如下是等同的：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.item</span> &#123;<span class="attribute">flex</span>: <span class="number">2333</span> <span class="number">3222</span> <span class="number">234px</span>;&#125;</span><br><span class="line"><span class="selector-class">.item</span> &#123;</span><br><span class="line">    <span class="attribute">flex-grow</span>: <span class="number">2333</span>;</span><br><span class="line">    <span class="attribute">flex-shrink</span>: <span class="number">3222</span>;</span><br><span class="line">    <span class="attribute">flex-basis</span>: <span class="number">234px</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当 flex 取值为 none，则计算值为 0 0 auto，如下是等同的：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.item</span> &#123;<span class="attribute">flex</span>: none;&#125;</span><br><span class="line"><span class="selector-class">.item</span> &#123;</span><br><span class="line">    <span class="attribute">flex-grow</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">flex-shrink</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">flex-basis</span>: auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当 flex 取值为 auto，则计算值为 1 1 auto，如下是等同的：<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.item</span> &#123;<span class="attribute">flex</span>: auto;&#125;</span><br><span class="line"><span class="selector-class">.item</span> &#123;</span><br><span class="line">    <span class="attribute">flex-grow</span>: <span class="number">1</span>;</span><br><span class="line">    <span class="attribute">flex-shrink</span>: <span class="number">1</span>;</span><br><span class="line">    <span class="attribute">flex-basis</span>: auto;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>当 flex 取值为一个非负数字，则该数字为 flex-grow 值，flex-shrink 取 1，flex-basis 取 0%，如下是等同的：</p>
+<blockquote>
+<p>flex:1相当于width:100%，就是撑开<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.item</span> &#123;<span class="attribute">flex</span>: <span class="number">1</span>;&#125;</span><br><span class="line"><span class="selector-class">.item</span> &#123;</span><br><span class="line">    <span class="attribute">flex-grow</span>: <span class="number">1</span>;</span><br><span class="line">    <span class="attribute">flex-shrink</span>: <span class="number">1</span>;</span><br><span class="line">    <span class="attribute">flex-basis</span>: <span class="number">0%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h3 id="align-self-允许单个项目有与其他项目不一样的对齐方式"><a href="#align-self-允许单个项目有与其他项目不一样的对齐方式" class="headerlink" title="align-self: 允许单个项目有与其他项目不一样的对齐方式"></a>align-self: 允许单个项目有与其他项目不一样的对齐方式</h3>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CSS/" rel="tag"># CSS</a>
+          
+            <a href="/tags/flex/" rel="tag"># flex</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/11/随笔-面试2/" rel="next" title="js - 笔试题收集">
+                <i class="fa fa-chevron-left"></i> js - 笔试题收集
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/16/随笔-面试/" rel="prev" title="面试题积累">
+                面试题积累 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div id="gitalk-container"></div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="gershonv" />
+            
+              <p class="site-author-name" itemprop="name">gershonv</p>
+              <p class="site-description motion-element" itemprop="description">前端开发爱好者</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/gershonv" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/5acac6c4f265da2378408f92/posts" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Juejin</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Flex-基本概念"><span class="nav-number">1.</span> <span class="nav-text">Flex 基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Flex-容器相关属性"><span class="nav-number">2.</span> <span class="nav-text">Flex 容器相关属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Justify-content"><span class="nav-number">2.1.</span> <span class="nav-text">Justify-content</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#space-between-两端对齐"><span class="nav-number">2.1.1.</span> <span class="nav-text">space-between 两端对齐</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#space-around-项目之间间隔相等"><span class="nav-number">2.1.2.</span> <span class="nav-text">space-around 项目之间间隔相等</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#align-items"><span class="nav-number">2.2.</span> <span class="nav-text">align-items</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#stretch-默认值-占满整个容器的高度"><span class="nav-number">2.2.1.</span> <span class="nav-text">stretch 默认值 占满整个容器的高度</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#flex-start-交叉轴的起点对齐"><span class="nav-number">2.2.2.</span> <span class="nav-text">flex-start 交叉轴的起点对齐</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#flex-end-交叉轴的终点对齐"><span class="nav-number">2.2.3.</span> <span class="nav-text">flex-end 交叉轴的终点对齐</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#center-交叉轴的中点对齐"><span class="nav-number">2.2.4.</span> <span class="nav-text">center 交叉轴的中点对齐</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#baseline-项目的第一行文字的基线对齐"><span class="nav-number">2.2.5.</span> <span class="nav-text">baseline 项目的第一行文字的基线对齐</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Flex-项目属性"><span class="nav-number">3.</span> <span class="nav-text">Flex 项目属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#order-定义项目在容器中的排列顺序"><span class="nav-number">3.1.</span> <span class="nav-text">order 定义项目在容器中的排列顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flex-basis-算主轴是否有多余空间"><span class="nav-number">3.2.</span> <span class="nav-text">flex-basis 算主轴是否有多余空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flex-grow-定义项目的放大比例"><span class="nav-number">3.3.</span> <span class="nav-text">flex-grow 定义项目的放大比例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flex-shrink-定义了项目的缩小比例"><span class="nav-number">3.4.</span> <span class="nav-text">flex-shrink 定义了项目的缩小比例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flex-flex-grow-flex-shrink-和-flex-basis的简写"><span class="nav-number">3.5.</span> <span class="nav-text">flex  flex-grow, flex-shrink 和 flex-basis的简写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#align-self-允许单个项目有与其他项目不一样的对齐方式"><span class="nav-number">3.6.</span> <span class="nav-text">align-self: 允许单个项目有与其他项目不一样的对齐方式</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gershonv</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'ece10fea60fa925783ab',
+          clientSecret: 'c28aa931a2204c3ae59ab2e17aaa3ddd6b5ce8e6',
+          repo: 'gershonv.github.io',
+          owner: 'gershonv',
+          admin: ['gershonv'],
+          id: location.pathname,
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')           
+       </script>
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

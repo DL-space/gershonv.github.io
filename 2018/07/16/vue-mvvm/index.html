@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Vue.js,MVVM," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="郭大大的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="前言这是本人的学习的记录，因为最近在准备面试，很多情况下会被提问到：请简述 mvvm ?一般情况下我可能这么答：mvvm 是视图和逻辑的一个分离，是model view view-model 的缩写，通过虚拟dom的方式实现双向数据绑定（我随便答得） 那么问题来了，你知道 mvvm 是怎么实现的？回答: mvvm 主要通过 Object 的 defineProperty 属性，重写 data 的">
+<meta name="keywords" content="Vue.js,MVVM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="实现简易的 VUE-MVVM">
+<meta property="og:url" content="https://gershonv.github.io/2018/07/16/vue-mvvm/index.html">
+<meta property="og:site_name" content="郭大大的博客">
+<meta property="og:description" content="前言这是本人的学习的记录，因为最近在准备面试，很多情况下会被提问到：请简述 mvvm ?一般情况下我可能这么答：mvvm 是视图和逻辑的一个分离，是model view view-model 的缩写，通过虚拟dom的方式实现双向数据绑定（我随便答得） 那么问题来了，你知道 mvvm 是怎么实现的？回答: mvvm 主要通过 Object 的 defineProperty 属性，重写 data 的">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/18/164ac9a02d21c8cb?w=700&h=374&f=jpeg&s=31670">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/7/18/164ac90097e68912?w=639&h=388&f=png&s=49631">
+<meta property="og:updated_time" content="2019-01-03T14:17:53.627Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="实现简易的 VUE-MVVM">
+<meta name="twitter:description" content="前言这是本人的学习的记录，因为最近在准备面试，很多情况下会被提问到：请简述 mvvm ?一般情况下我可能这么答：mvvm 是视图和逻辑的一个分离，是model view view-model 的缩写，通过虚拟dom的方式实现双向数据绑定（我随便答得） 那么问题来了，你知道 mvvm 是怎么实现的？回答: mvvm 主要通过 Object 的 defineProperty 属性，重写 data 的">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/7/18/164ac9a02d21c8cb?w=700&h=374&f=jpeg&s=31670">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://gershonv.github.io/2018/07/16/vue-mvvm/"/>
+
+
+
+
+
+  <title>实现简易的 VUE-MVVM | 郭大大的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">郭大大的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">生活就像海洋，只有意志坚强的人才能到达彼岸</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2018/07/16/vue-mvvm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gershonv">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郭大大的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">实现简易的 VUE-MVVM</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-16T22:19:09+08:00">
+                2018-07-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue-js/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue.js</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这是本人的学习的记录，因为最近在准备面试，很多情况下会被提问到：请简述 <code>mvvm</code> ?<br>一般情况下我可能这么答：<code>mvvm</code> 是视图和逻辑的一个分离，是<code>model view view-model</code> 的缩写，通过虚拟dom的方式实现双向数据绑定（我随便答得）</p>
+<p>那么问题来了，你知道 <code>mvvm</code> 是怎么实现的？<br>回答: <code>mvvm</code> 主要通过 <code>Object</code> 的 <code>defineProperty</code> 属性，重写 <code>data</code> 的 <code>set</code> 和<code>get</code> 函数来实现。 ok，回答得60分，那么你知道具体实现过程么？想想看，就算他没问到而你答了出来是不是更好？前提下，一定要手撸一下简单的<code>mvvm</code>才会对它有印象~</p>
+<p>话不多说，接下来是参考自张仁阳老师的教学视频而作，采用的是<a href="http://es6.ruanyifeng.com/#docs/class" target="_blank" rel="noopener">ES6</a>语法，其中也包含了我个人的理解，如果能帮助到您，我将十分高兴。如有错误之处，请各位大佬指正出来，不胜感激~~~</p>
+<p>在实现之前，请先了解基本的<code>mvvm</code>的编译过程以及使用</p>
+<ul>
+<li><p>编译的流程图<br><img src="https://user-gold-cdn.xitu.io/2018/7/18/164ac9a02d21c8cb?w=700&amp;h=374&amp;f=jpeg&amp;s=31670" alt=""></p>
+</li>
+<li><p>整体分析<br><img src="https://user-gold-cdn.xitu.io/2018/7/18/164ac90097e68912?w=639&amp;h=388&amp;f=png&amp;s=49631" alt=""></p>
+</li>
+</ul>
+<p>可以发现<code>new MVVM()</code>后的编译过程主体分为两个部分：</p>
+<ol>
+<li>一部分是模板的编译 <code>Compile</code><ul>
+<li>编译元素和文本，最终渲染到页面中</li>
+<li>其中标签中有模板指令的标签才执行编译 例如<code>&lt;div&gt;我很帅&lt;/div&gt;</code> 不执行编译</li>
+</ul>
+</li>
+<li>一部分是数据劫持 <code>Observer</code><ul>
+<li><code>Dep</code> 发布订阅，将所有需要通知变化的<code>data</code>添加到一个数组中</li>
+<li><code>Watcher</code> 如果数据发生改变，在<code>Object</code>的<code>defineProperty</code>的<code>set</code>函数中调用<code>Watcher</code>的<code>update</code>方法</li>
+</ul>
+</li>
+</ol>
+<h4 id="明确本文需要实现的目标"><a href="#明确本文需要实现的目标" class="headerlink" title="明确本文需要实现的目标"></a>明确本文需要实现的目标</h4><ol>
+<li><strong>实现模板编译的过程 完成<code>Vue</code>实例中的属性可以正确绑定在标签中，并且渲染在页面中</strong><ul>
+<li>工作：指令的解析，正则替换双大括号</li>
+<li>将节点的内容<code>node.textContent</code>或者<code>input</code>的<code>value</code>编译出来</li>
+</ul>
+</li>
+<li><strong>完成数据的双向绑定</strong><ul>
+<li>工作：通过<code>observe</code>类劫持数据变化</li>
+<li>添加发布与订阅：<code>Object.defineProperty</code> 在<code>get</code>钩子中<code>addSub</code>,<code>set</code>钩子中通知变化<code>dep.notify()</code></li>
+<li><code>dep.notify()</code>调用的是<code>Watcher</code>的<code>update</code>方法，也就是说需要在<code>input</code>变化时调用更新</li>
+</ul>
+</li>
+</ol>
+<h2 id="分解-Vue-实例"><a href="#分解-Vue-实例" class="headerlink" title="分解 Vue 实例"></a>分解 Vue 实例</h2><p>如何入手？首先从怎么使用<code>Vue</code>开始。让我们一步步解析<code>Vue</code>的使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> vm = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">    el: <span class="string">'#app'</span></span><br><span class="line">    data: &#123;</span><br><span class="line">        message: <span class="string">'hello world'</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>上面代码可以看出使用<code>Vue</code>,我们是先<code>new</code> 一个<code>Vue</code> 实例，传一个对象参数，包含 <code>el</code> 和 <code>data</code>。</p>
+<p>ok，以上得到了信息，接下来让我们实现<strong>目标1</strong>：将<code>Vue</code>实例的<code>data</code>编译到页面中</p>
+<h2 id="实现-Complie-编译模板的过程"><a href="#实现-Complie-编译模板的过程" class="headerlink" title="实现 Complie 编译模板的过程"></a>实现 Complie 编译模板的过程</h2><p>先看看页面的使用：<code>index.html</code><br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"app"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">v-model</span>=<span class="string">"jsonText.text"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;&#123;message&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    &#123;&#123;jsonText.text&#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"./watcher.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"./observer.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"./compile.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"./vue.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">let</span> vm = <span class="keyword">new</span> Vue(&#123;</span></span><br><span class="line"><span class="javascript">        el: <span class="string">'#app'</span>,</span></span><br><span class="line"><span class="undefined">        data: &#123;</span></span><br><span class="line"><span class="javascript">            message: <span class="string">'gershonv'</span>,</span></span><br><span class="line"><span class="undefined">            jsonText:&#123;</span></span><br><span class="line"><span class="javascript">                text: <span class="string">'hello Vue'</span></span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined">        &#125;</span></span><br><span class="line"><span class="undefined">    &#125;)</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>第一步当然是添加<code>Vue</code>类作为一个入口文件。</p>
+</blockquote>
+<h3 id="vue-类-入口文件的添加"><a href="#vue-类-入口文件的添加" class="headerlink" title="vue 类-入口文件的添加"></a>vue 类-入口文件的添加</h3><p>新建一个<code>vue.js</code>文件，其代码如下<br>构造函数中定义<code>$el</code>和<code>$data</code>，因为后面的编译要使用到</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Vue</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(options) &#123;</span><br><span class="line">        <span class="keyword">this</span>.$el = options.el; <span class="comment">// 挂载</span></span><br><span class="line">        <span class="keyword">this</span>.$data = options.data;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果有要编译的模板就开始编译</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.$el) &#123;</span><br><span class="line">            <span class="comment">// 用数据和元素进行编译</span></span><br><span class="line">            <span class="keyword">new</span> Compile(<span class="keyword">this</span>.$el, <span class="keyword">this</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>这里暂时未添加数据劫持<code>obeserve</code>，实现目标1暂时未用到，后续再添加</li>
+<li>编译需要 <code>el</code> 和相关数据，上面代码执行后会有编译，所以我们新建一个执行编译的类的文件</li>
+</ul>
+<blockquote>
+<p>这里在入口文件<code>vue.js</code>中<code>new</code>了一个<code>Compile</code>实例，所以接下来新建<code>compile.js</code></p>
+</blockquote>
+<h3 id="Compile-类-模板编译的添加"><a href="#Compile-类-模板编译的添加" class="headerlink" title="Compile 类-模板编译的添加"></a>Compile 类-模板编译的添加</h3><p><code>Compile</code> 需要做什么？<br>我们知道页面中操作<code>dom</code>会消耗性能，所以可以把<code>dom</code>移入内存处理：</p>
+<ol>
+<li>先把真实的 <code>dom</code> 移入到内存中 （在内存中操作<code>dom</code>速度比较快）<ul>
+<li>怎么放在内存中？可以利用文档碎片 <code>fragment</code></li>
+</ul>
+</li>
+<li>编译 <code>compile(fragment){}</code><ul>
+<li>提取想要的元素节点和文本节点 <code>v-model</code> 双大括号，然后进行相关操作。</li>
+</ul>
+</li>
+<li>把编译好的<code>fragment</code>塞回页面里去<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Compile</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(el, vm) &#123;</span><br><span class="line">        <span class="keyword">this</span>.el = <span class="keyword">this</span>.isElementNode(el) ? el : <span class="built_in">document</span>.querySelector(el);</span><br><span class="line">        <span class="keyword">this</span>.vm = vm;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.el) &#123;<span class="comment">// 如果这个元素能获取到 我们才开始编译</span></span><br><span class="line">            <span class="comment">// 1.先把这些真实的DOM移入到内存中 fragment[文档碎片]</span></span><br><span class="line">            <span class="keyword">let</span> fragment = <span class="keyword">this</span>.node2fragment(<span class="keyword">this</span>.el)</span><br><span class="line">            <span class="comment">// 2.编译 =&gt; 提取想要的元素节点 v-model 和文本节点 &#123;&#123;&#125;&#125;</span></span><br><span class="line">            <span class="keyword">this</span>.compile(fragment)</span><br><span class="line">            <span class="comment">// 3.编译好的fragment在塞回页面里去</span></span><br><span class="line">            <span class="keyword">this</span>.el.appendChild(fragment)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 专门写一些辅助的方法 */</span></span><br><span class="line">    isElementNode(node) &#123; <span class="comment">// 判断是否为元素及节点，用于递归遍历节点条件</span></span><br><span class="line">        <span class="keyword">return</span> node.nodeType === <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 核心方法 */</span></span><br><span class="line">    node2fragment(el) &#123; <span class="comment">// 将el的内容全部放入内存中</span></span><br><span class="line">        <span class="comment">// 文档碎片</span></span><br><span class="line">        <span class="keyword">let</span> fragment = <span class="built_in">document</span>.createDocumentFragment();</span><br><span class="line">        <span class="keyword">let</span> firstChild;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (firstChild = el.firstChild) &#123; <span class="comment">// 移动DOM到文档碎片中</span></span><br><span class="line">            fragment.appendChild(firstChild)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> fragment;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    compile(fragment) &#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<blockquote>
+<p>编译的过程就是把我们的数据渲染好，表现在视图中</p>
+</blockquote>
+<h4 id="编译过程-compile-fragment"><a href="#编译过程-compile-fragment" class="headerlink" title="编译过程 compile(fragment)"></a>编译过程 compile(fragment)</h4><ul>
+<li>第一步：获取元素的节点，提取其中的指令或者模板双大括号<ul>
+<li>首先需要遍历节点，用到了<strong>递归方法</strong>，因为有节点嵌套的关系，<code>isElementNode</code> 代表是节点元素，也是递归的终止的判断条件。</li>
+</ul>
+</li>
+<li>第二步：分类编译指令的方法<code>compileElement</code> 和 编译文本双大括号的方法<ul>
+<li><code>compileElement</code> 对<code>v-model</code>、<code>v-text</code>等指令的解析</li>
+<li><code>compileText</code> 编译文本节点 双大括号<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Compile</span></span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    compile(fragment) &#123;</span><br><span class="line">        <span class="comment">// 遍历节点 可能节点套着又一层节点 所以需要递归</span></span><br><span class="line">        <span class="keyword">let</span> childNodes = fragment.childNodes</span><br><span class="line">        <span class="built_in">Array</span>.from(childNodes).forEach(<span class="function"><span class="params">node</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.isElementNode(node)) &#123;</span><br><span class="line">                <span class="comment">// 是元素节点 继续递归</span></span><br><span class="line">                <span class="comment">// 这里需要编译元素</span></span><br><span class="line">                <span class="keyword">this</span>.compileElement(node);</span><br><span class="line">                <span class="keyword">this</span>.compile(node)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 文本节点</span></span><br><span class="line">                <span class="comment">// 这里需要编译文本</span></span><br><span class="line">                <span class="keyword">this</span>.compileText(node)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="compileElement-amp-amp-compileText"><a href="#compileElement-amp-amp-compileText" class="headerlink" title="compileElement &amp;&amp; compileText"></a>compileElement &amp;&amp; compileText</h5><ol>
+<li>取出元素的属性 <code>node.attributes</code> 先判断是否包含指令</li>
+<li>判断指令类型(<code>v-html v-text v-model...</code>) 调用不一样的数据更新方法<ul>
+<li>这里提取了编译的工具对象 <code>CompileUtil</code></li>
+<li>调用方法: <code>CompileUtil[type](node, this.vm, expr)</code><ul>
+<li><code>CompileUtil.类型(节点，实例，v-XX 绑定的属性值)</code>  </li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Compile</span></span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 判断是否是指令 ==&gt; compileElement 中递归标签属性中使用</span></span><br><span class="line">    isDirective(name) &#123;</span><br><span class="line">        <span class="keyword">return</span> name.includes(<span class="string">'v-'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    compileElement(node) &#123;</span><br><span class="line">        <span class="comment">// v-model 编译</span></span><br><span class="line">        <span class="keyword">let</span> attrs = node.attributes; <span class="comment">// 取出当前节点的属性</span></span><br><span class="line">        <span class="built_in">Array</span>.from(attrs).forEach(<span class="function"><span class="params">attr</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="keyword">let</span> attrName = attr.name;</span><br><span class="line">            <span class="comment">// 判断属性名是否包含 v-</span></span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.isDirective(attrName)) &#123;</span><br><span class="line">                <span class="comment">// 取到对应的值，放到节点中</span></span><br><span class="line">                <span class="keyword">let</span> expr = attr.value;</span><br><span class="line">                <span class="comment">// v-model v-html v-text...</span></span><br><span class="line">                <span class="keyword">let</span> [, type] = attrName.split(<span class="string">'-'</span>)</span><br><span class="line">                CompileUtil[type](node, <span class="keyword">this</span>.vm, expr);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    compileText(node) &#123;</span><br><span class="line">        <span class="comment">// 编译 &#123;&#123;&#125;&#125;</span></span><br><span class="line">        <span class="keyword">let</span> expr = node.textContent; <span class="comment">//取文本中的内容</span></span><br><span class="line">        <span class="keyword">let</span> reg = <span class="regexp">/\&#123;\&#123;([^&#125;]+)\&#125;\&#125;/g</span>;</span><br><span class="line">        <span class="keyword">if</span> (reg.test(expr)) &#123;</span><br><span class="line">            CompileUtil[<span class="string">'text'</span>](node, <span class="keyword">this</span>.vm, expr)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// compile(fragment)&#123;...&#125;</span></span><br><span class="line">&#125;</span><br><span class="line">CompileUtil = &#123;</span><br><span class="line">    getVal(vm, expr) &#123; <span class="comment">// 获取实例上对应的数据</span></span><br><span class="line">        expr = expr.split(<span class="string">'.'</span>); <span class="comment">// 处理 jsonText.text 的情况</span></span><br><span class="line">        <span class="keyword">return</span> expr.reduce(<span class="function">(<span class="params">prev, next</span>) =&gt;</span> &#123; </span><br><span class="line">            <span class="keyword">return</span> prev[next] <span class="comment">// 譬如 vm.$data.jsonText.text、vm.$data.message</span></span><br><span class="line">        &#125;, vm.$data)</span><br><span class="line">    &#125;,</span><br><span class="line">    getTextVal(vm, expr) &#123; <span class="comment">// 获取文本编译后的结果</span></span><br><span class="line">        <span class="keyword">return</span> expr.replace(<span class="regexp">/\&#123;\&#123;([^&#125;]+)\&#125;\&#125;/g</span>, (...arguments) =&gt; &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>.getVal(vm, <span class="built_in">arguments</span>[<span class="number">1</span>])</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">    text(node, vm, expr) &#123; <span class="comment">// 文本处理 参数 [节点, vm 实例, 指令的属性值]</span></span><br><span class="line">        <span class="keyword">let</span> updateFn = <span class="keyword">this</span>.updater[<span class="string">'textUpdater'</span>];</span><br><span class="line">        <span class="keyword">let</span> value = <span class="keyword">this</span>.getTextVal(vm, expr)</span><br><span class="line">        updateFn &amp;&amp; updateFn(node, value)</span><br><span class="line">    &#125;,</span><br><span class="line">    model(node, vm, expr) &#123; <span class="comment">// 输入框处理</span></span><br><span class="line">        <span class="keyword">let</span> updateFn = <span class="keyword">this</span>.updater[<span class="string">'modelUpdater'</span>];</span><br><span class="line">        updateFn &amp;&amp; updateFn(node, <span class="keyword">this</span>.getVal(vm, expr))</span><br><span class="line">    &#125;,</span><br><span class="line">    updater: &#123;</span><br><span class="line">        <span class="comment">// 文本更新</span></span><br><span class="line">        textUpdater(node, value) &#123;</span><br><span class="line">            node.textContent = value</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="comment">// 输入框更新</span></span><br><span class="line">        modelUpdater(node, value) &#123;</span><br><span class="line">            node.value = value;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>到现在为止 就完成了数据的绑定，也就是说<code>new Vue</code> 实例中的 <code>data</code> 已经可以正确显示在页面中了，现在要解决的就是<strong>如何实现双向绑定</strong></p>
+<p>结合开篇的<code>vue</code>编译过程的图可以知道我们还少一个<code>observe</code> 数据劫持，<code>Dep</code>通知变化,添加<code>Watcher</code>监听变化, 以及最终重写<code>data</code>属性</p>
+<h2 id="实现双向绑定"><a href="#实现双向绑定" class="headerlink" title="实现双向绑定"></a>实现双向绑定</h2><h3 id="Observer-类-观察者的添加"><a href="#Observer-类-观察者的添加" class="headerlink" title="Observer 类-观察者的添加"></a>Observer 类-观察者的添加</h3><ol>
+<li><p>在<code>vue.js</code> 中劫持数据</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Vue</span></span>&#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">this</span>.$el)&#123;</span><br><span class="line">       <span class="keyword">new</span> Observer(<span class="keyword">this</span>.$data); <span class="comment">// 数据劫持</span></span><br><span class="line">       <span class="keyword">new</span> Compile(<span class="keyword">this</span>.$el, <span class="keyword">this</span>); <span class="comment">// 用数据和元素进行编译</span></span><br><span class="line">    &#125;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>新建 <code>observer.js</code> 文件</p>
+</li>
+</ol>
+<p>代码步骤：</p>
+<ul>
+<li>构造器中添加直接进行 <code>observe</code><ul>
+<li>判断<code>data</code> 是否存在, 是否是个对象（new Vue 时可能不写<code>data</code>属性）</li>
+<li>将数据一一劫持，获取<code>data</code>中的<code>key</code>和<code>value</code><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Observer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(data) &#123;</span><br><span class="line">        <span class="keyword">this</span>.observe(data)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    observe(data) &#123;</span><br><span class="line">        <span class="comment">// 要对这个数据将原有的属性改成 set 和 get 的形式</span></span><br><span class="line">        <span class="keyword">if</span> (!data || <span class="keyword">typeof</span> data !== <span class="string">'object'</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 将数据一一劫持</span></span><br><span class="line">        <span class="built_in">Object</span>.keys(data).forEach(<span class="function"><span class="params">key</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="comment">// 劫持</span></span><br><span class="line">            <span class="keyword">this</span>.defineReactive(data, key, data[key])</span><br><span class="line">            <span class="keyword">this</span>.observe(data[key]) <span class="comment">//递归深度劫持</span></span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    defineReactive(obj, key, value) &#123;</span><br><span class="line">        <span class="keyword">let</span> that = <span class="keyword">this</span></span><br><span class="line">        <span class="built_in">Object</span>.defineProperty(obj, key, &#123;</span><br><span class="line">            enumerable: <span class="literal">true</span>,</span><br><span class="line">            configurable: <span class="literal">true</span>,</span><br><span class="line">            get() &#123; <span class="comment">// 取值时调用的方法</span></span><br><span class="line">                <span class="keyword">return</span> value</span><br><span class="line">            &#125;,</span><br><span class="line">            set(newValue) &#123; <span class="comment">// 当给data属性中设置的时候，更改属性的值</span></span><br><span class="line">                <span class="keyword">if</span> (newValue !== value) &#123;</span><br><span class="line">                    <span class="comment">// 这里的this不是实例</span></span><br><span class="line">                    that.observe(newValue) <span class="comment">// 如果是对象继续劫持</span></span><br><span class="line">                    value = newValue</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>虽然有了<code>observer</code>，但是并未关联,以及通知变化。下面就添加<code>Watcher</code>类</p>
+</blockquote>
+<h3 id="Watcher-类的添加"><a href="#Watcher-类的添加" class="headerlink" title="Watcher 类的添加"></a>Watcher 类的添加</h3><p>新建<code>watcher.js</code>文件</p>
+<ul>
+<li>观察者的目的就是给需要变化的那个元素增加一个观察者，当数据变化后执行对应的方法</li>
+<li></li>
+</ul>
+<p>先回忆下<code>watch</code>的用法：<code>this.$watch(vm, &#39;a&#39;, function(){...})</code><br>我们在添加发布订阅者时需要传入参数有: <strong>vm实例，v-XX绑定的属性, cb回调函数</strong><br>（<code>getVal</code> 方法拷贝了之前 <code>CompileUtil</code> 的方法，其实可以提取出来的…）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Watcher</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 观察者的目的就是给需要变化的那个元素增加一个观察者，当数据变化后执行对应的方法</span></span><br><span class="line">    <span class="comment">// this.$watch(vm, 'a', function()&#123;...&#125;)</span></span><br><span class="line">    <span class="keyword">constructor</span>(vm, expr, cb) &#123;</span><br><span class="line">        <span class="keyword">this</span>.vm = vm;</span><br><span class="line">        <span class="keyword">this</span>.expr = expr;</span><br><span class="line">        <span class="keyword">this</span>.cb = cb;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 先获取下老的值</span></span><br><span class="line">        <span class="keyword">this</span>.value = <span class="keyword">this</span>.get();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    getVal(vm, expr) &#123; <span class="comment">// 获取实例上对应的数据</span></span><br><span class="line">        expr = expr.split(<span class="string">'.'</span>);</span><br><span class="line">        <span class="keyword">return</span> expr.reduce(<span class="function">(<span class="params">prev, next</span>) =&gt;</span> &#123; <span class="comment">//vm.$data.a</span></span><br><span class="line">            <span class="keyword">return</span> prev[next]</span><br><span class="line">        &#125;, vm.$data)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    get() &#123;</span><br><span class="line">        <span class="keyword">let</span> value = <span class="keyword">this</span>.getVal(<span class="keyword">this</span>.vm, <span class="keyword">this</span>.expr);</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 对外暴露的方法</span></span><br><span class="line">    update()&#123;</span><br><span class="line">        <span class="keyword">let</span> newValue = <span class="keyword">this</span>.getVal(<span class="keyword">this</span>.vm, <span class="keyword">this</span>.expr);</span><br><span class="line">        <span class="keyword">let</span> oldValue = <span class="keyword">this</span>.value</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(newValue !== oldValue)&#123;</span><br><span class="line">            <span class="keyword">this</span>.cb(newValue); <span class="comment">// 对应 watch 的callback</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>Watcher</code> 定义了但是还没有调用，模板编译的时候，需要调观察的时候观察一下<br><code>Compile</code><br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Compile</span></span>&#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br><span class="line">CompileUtil = &#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    text(node, vm, expr) &#123; <span class="comment">// 文本处理 参数 [节点, vm 实例, 指令的属性值]</span></span><br><span class="line">        <span class="keyword">let</span> updateFn = <span class="keyword">this</span>.updater[<span class="string">'textUpdater'</span>];</span><br><span class="line">        <span class="keyword">let</span> value = <span class="keyword">this</span>.getTextVal(vm, expr)</span><br><span class="line">        updateFn &amp;&amp; updateFn(node, value)</span><br><span class="line"></span><br><span class="line">        expr.replace(<span class="regexp">/\&#123;\&#123;([^&#125;]+)\&#125;\&#125;/g</span>, (...arguments) =&gt; &#123;</span><br><span class="line">            <span class="keyword">new</span> Watcher(vm, <span class="built_in">arguments</span>[<span class="number">1</span>], () =&gt; &#123;</span><br><span class="line">                <span class="comment">// 如果数据变化了，文本节点需要重新获取依赖的属性更新文本中的内容</span></span><br><span class="line">                updateFn &amp;&amp; updateFn(node, <span class="keyword">this</span>.getTextVal(vm, expr))</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    model(node, vm, expr) &#123; <span class="comment">// 输入框处理</span></span><br><span class="line">        <span class="keyword">let</span> updateFn = <span class="keyword">this</span>.updater[<span class="string">'modelUpdater'</span>];</span><br><span class="line">        <span class="comment">// 这里应该加一个监控，数据变化了，应该调用watch 的callback</span></span><br><span class="line">        <span class="keyword">new</span> Watcher(vm, expr, (newValue) =&gt; &#123;</span><br><span class="line">            <span class="comment">// 当值变化后会调用cb 将newValue传递过来（）</span></span><br><span class="line">            updateFn &amp;&amp; updateFn(node, <span class="keyword">this</span>.getVal(vm, expr))</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        node.addEventListener(<span class="string">'input'</span>, e =&gt; &#123;</span><br><span class="line">            <span class="keyword">let</span> newValue = e.target.value;</span><br><span class="line">            <span class="keyword">this</span>.setVal(vm, expr, newValue)</span><br><span class="line">        &#125;)</span><br><span class="line">        updateFn &amp;&amp; updateFn(node, <span class="keyword">this</span>.getVal(vm, expr))</span><br><span class="line">    &#125;,</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>实现了监听后发现变化并没有通知到所有指令绑定的模板或是双大括号，所以我们需要<code>Dep</code> 监控、实例的发布订阅属性的一个类，我们可以添加到<code>observer.js</code>中</p>
+<h3 id="Dep-类的添加"><a href="#Dep-类的添加" class="headerlink" title="Dep 类的添加"></a>Dep 类的添加</h3><p>注意 第一次编译的时候不会调用<code>Watcher</code>，<code>dep.target</code>不存在,<code>new Watcher</code>的时候<code>target</code>才有值<br>有点绕，看下面代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Watcher</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(vm, expr, cb) &#123;</span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">        <span class="keyword">this</span>.value = <span class="keyword">this</span>.get()</span><br><span class="line">    &#125;</span><br><span class="line">    get()&#123;</span><br><span class="line">        Dep.target = <span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">let</span> value = <span class="keyword">this</span>.getVal(<span class="keyword">this</span>.vm, <span class="keyword">this</span>.expr);</span><br><span class="line">        Dep.target = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// compile.js</span></span><br><span class="line">CompileUtil = &#123;</span><br><span class="line">    model(node, vm, expr) &#123; <span class="comment">// 输入框处理</span></span><br><span class="line">        <span class="comment">//...</span></span><br><span class="line">        <span class="keyword">new</span> Watcher(vm, expr, (newValue) =&gt; &#123;</span><br><span class="line">            <span class="comment">// 当值变化后会调用cb 将newValue传递过来（）</span></span><br><span class="line">            updateFn &amp;&amp; updateFn(node, <span class="keyword">this</span>.getVal(vm, expr))</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Observer</span></span>&#123;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    defineReactive(obj, key, value)&#123;</span><br><span class="line">        <span class="keyword">let</span> that = <span class="keyword">this</span>;</span><br><span class="line">        <span class="keyword">let</span> dep = <span class="keyword">new</span> Dep(); <span class="comment">// 每个变化的数据 都会对应一个数组，这个数组存放所有更新的操作</span></span><br><span class="line">        <span class="built_in">Object</span>.defineProperty(obj, key, &#123;</span><br><span class="line">            <span class="comment">//...</span></span><br><span class="line">            get()&#123;</span><br><span class="line">                Dep.target &amp;&amp; dep.addSub(Dep.target)</span><br><span class="line">                <span class="comment">//...</span></span><br><span class="line">            &#125;</span><br><span class="line">             set(newValue)&#123;</span><br><span class="line">                 <span class="keyword">if</span> (newValue !== value) &#123;</span><br><span class="line">                    <span class="comment">// 这里的this不是实例</span></span><br><span class="line">                    that.observe(newValue) <span class="comment">// 如果是对象继续劫持</span></span><br><span class="line">                    value = newValue;</span><br><span class="line">                    dep.notify(); <span class="comment">//通知所有人更新了</span></span><br><span class="line">                &#125;</span><br><span class="line">             &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dep</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>() &#123;</span><br><span class="line">        <span class="comment">// 订阅的数组</span></span><br><span class="line">        <span class="keyword">this</span>.subs = []</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    addSub(watcher) &#123;</span><br><span class="line">        <span class="keyword">this</span>.subs.push(watcher)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    notify() &#123;</span><br><span class="line">        <span class="keyword">this</span>.subs.forEach(<span class="function"><span class="params">watcher</span> =&gt;</span> watcher.update())</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上代码 就完成了<strong>发布订阅者</strong>模式,简单的实现。。也就是说双向绑定的目标2已经完成了</p>
+<hr>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>板门弄斧了，本人无意哗众取宠，这只是一篇我的学习记录的文章。想分享出来，这样才有进步。<br>如果这篇文章帮助到您，我将十分高兴。有问题可以提<code>issue</code>，有错误之处也希望大家能提出来，非常感激。</p>
+<p>具体源码我放在了我的github了，有需要的自取。<br><a href="https://github.com/gershonv/my-code-store" target="_blank" rel="noopener">源码链接</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Vue-js/" rel="tag"># Vue.js</a>
+          
+            <a href="/tags/MVVM/" rel="tag"># MVVM</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/16/es6-class/" rel="next" title="ES6 - Class">
+                <i class="fa fa-chevron-left"></i> ES6 - Class
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/07/28/react-basic/" rel="prev" title="react 入门">
+                react 入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div id="gitalk-container"></div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="gershonv" />
+            
+              <p class="site-author-name" itemprop="name">gershonv</p>
+              <p class="site-description motion-element" itemprop="description">前端开发爱好者</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/gershonv" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/5acac6c4f265da2378408f92/posts" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Juejin</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#明确本文需要实现的目标"><span class="nav-number">1.0.1.</span> <span class="nav-text">明确本文需要实现的目标</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分解-Vue-实例"><span class="nav-number">2.</span> <span class="nav-text">分解 Vue 实例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现-Complie-编译模板的过程"><span class="nav-number">3.</span> <span class="nav-text">实现 Complie 编译模板的过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vue-类-入口文件的添加"><span class="nav-number">3.1.</span> <span class="nav-text">vue 类-入口文件的添加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Compile-类-模板编译的添加"><span class="nav-number">3.2.</span> <span class="nav-text">Compile 类-模板编译的添加</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#编译过程-compile-fragment"><span class="nav-number">3.2.1.</span> <span class="nav-text">编译过程 compile(fragment)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#compileElement-amp-amp-compileText"><span class="nav-number">3.2.1.1.</span> <span class="nav-text">compileElement &amp;&amp; compileText</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现双向绑定"><span class="nav-number">4.</span> <span class="nav-text">实现双向绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Observer-类-观察者的添加"><span class="nav-number">4.1.</span> <span class="nav-text">Observer 类-观察者的添加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Watcher-类的添加"><span class="nav-number">4.2.</span> <span class="nav-text">Watcher 类的添加</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dep-类的添加"><span class="nav-number">4.3.</span> <span class="nav-text">Dep 类的添加</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">5.</span> <span class="nav-text">结语</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gershonv</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'ece10fea60fa925783ab',
+          clientSecret: 'c28aa931a2204c3ae59ab2e17aaa3ddd6b5ce8e6',
+          repo: 'gershonv.github.io',
+          owner: 'gershonv',
+          admin: ['gershonv'],
+          id: location.pathname,
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')           
+       </script>
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
