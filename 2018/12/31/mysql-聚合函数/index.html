@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Javascript,ES6," />
+  <meta name="keywords" content="MySQL," />
 
 
 
@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="Map 和 SetJavaScript 的默认对象表示方式{}可以视为其他语言中的Map或Dictionary的数据结构，即一组键值对。 但是 JavaScript 的对象有个小问题，就是键必须是字符串。但实际上 Number 或者其他数据类型作为键也是非常合理的。 MapMap是一组键值对的结构，具有极快的查找速度。 举个例子，假设要根据同学的名字查找对应的成绩，如果用Array实现，需要两个A">
-<meta name="keywords" content="Javascript,ES6">
+<meta name="description" content="聚合函数（aggregation function） 聚合函数（aggregation function）—也就是组函数，在一个行的集合（一组行）上进行操作，对每个组给一个结果。  常用的组函数：    function return     AVG([distinct] expr) 求平均值   COUNT({*  [distinct] } expr) 统计行的数量   MAX([distinc">
+<meta name="keywords" content="MySQL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ES6 - Map 和 Set">
-<meta property="og:url" content="https://gershonv.github.io/2018/10/16/es6-map&set/index.html">
+<meta property="og:title" content="mysql - 聚合函数">
+<meta property="og:url" content="https://gershonv.github.io/2018/12/31/mysql-聚合函数/index.html">
 <meta property="og:site_name" content="郭大大的博客">
-<meta property="og:description" content="Map 和 SetJavaScript 的默认对象表示方式{}可以视为其他语言中的Map或Dictionary的数据结构，即一组键值对。 但是 JavaScript 的对象有个小问题，就是键必须是字符串。但实际上 Number 或者其他数据类型作为键也是非常合理的。 MapMap是一组键值对的结构，具有极快的查找速度。 举个例子，假设要根据同学的名字查找对应的成绩，如果用Array实现，需要两个A">
+<meta property="og:description" content="聚合函数（aggregation function） 聚合函数（aggregation function）—也就是组函数，在一个行的集合（一组行）上进行操作，对每个组给一个结果。  常用的组函数：    function return     AVG([distinct] expr) 求平均值   COUNT({*  [distinct] } expr) 统计行的数量   MAX([distinc">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-03T15:12:44.906Z">
+<meta property="og:updated_time" content="2019-01-04T14:14:13.307Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ES6 - Map 和 Set">
-<meta name="twitter:description" content="Map 和 SetJavaScript 的默认对象表示方式{}可以视为其他语言中的Map或Dictionary的数据结构，即一组键值对。 但是 JavaScript 的对象有个小问题，就是键必须是字符串。但实际上 Number 或者其他数据类型作为键也是非常合理的。 MapMap是一组键值对的结构，具有极快的查找速度。 举个例子，假设要根据同学的名字查找对应的成绩，如果用Array实现，需要两个A">
+<meta name="twitter:title" content="mysql - 聚合函数">
+<meta name="twitter:description" content="聚合函数（aggregation function） 聚合函数（aggregation function）—也就是组函数，在一个行的集合（一组行）上进行操作，对每个组给一个结果。  常用的组函数：    function return     AVG([distinct] expr) 求平均值   COUNT({*  [distinct] } expr) 统计行的数量   MAX([distinc">
 
 
 
@@ -122,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://gershonv.github.io/2018/10/16/es6-map&set/"/>
+  <link rel="canonical" href="https://gershonv.github.io/2018/12/31/mysql-聚合函数/"/>
 
 
 
 
 
-  <title>ES6 - Map 和 Set | 郭大大的博客</title>
+  <title>mysql - 聚合函数 | 郭大大的博客</title>
   
 
 
@@ -289,7 +289,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2018/10/16/es6-map&set/">
+    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2018/12/31/mysql-聚合函数/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="gershonv">
@@ -306,7 +306,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">ES6 - Map 和 Set</h1>
+          <h1 class="post-title" itemprop="name headline">mysql - 聚合函数</h1>
         
 
         <div class="post-meta">
@@ -318,8 +318,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-16T09:07:08+08:00">
-                2018-10-16
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-12-31T16:19:35+08:00">
+                2018-12-31
               </time>
             
 
@@ -341,8 +341,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">Javascript</span>
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
                   </a>
                 </span>
 
@@ -378,29 +378,76 @@
       
 
       
-        <h2 id="Map-和-Set"><a href="#Map-和-Set" class="headerlink" title="Map 和 Set"></a>Map 和 Set</h2><p>JavaScript 的默认对象表示方式<code>{}</code>可以视为其他语言中的<code>Map</code>或<code>Dictionary</code>的数据结构，即一组键值对。</p>
-<p>但是 JavaScript 的对象有个小问题，就是键必须是字符串。但实际上 Number 或者其他数据类型作为键也是非常合理的。</p>
-<h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a>Map</h3><p><code>Map</code>是一组键值对的结构，具有极快的查找速度。</p>
-<p>举个例子，假设要根据同学的名字查找对应的成绩，如果用<code>Array</code>实现，需要两个<code>Array</code>：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> names = [<span class="string">'Michael'</span>, <span class="string">'Bob'</span>, <span class="string">'Tracy'</span>]</span><br><span class="line"><span class="keyword">var</span> scores = [<span class="number">95</span>, <span class="number">75</span>, <span class="number">85</span>]</span><br></pre></td></tr></table></figure>
-<p>给定一个名字，要查找对应的成绩，就先要在 names 中找到对应的位置，再从 scores 取出对应的成绩，Array 越长，耗时越长。</p>
-<p>如果用 Map 实现，只需要一个“名字”-“成绩”的对照表，直接根据名字查找成绩，无论这个表有多大，查找速度都不会变慢。用 JavaScript 写一个 Map 如下：</p>
+        <h2 id="聚合函数（aggregation-function）"><a href="#聚合函数（aggregation-function）" class="headerlink" title="聚合函数（aggregation function）"></a>聚合函数（aggregation function）</h2><blockquote>
+<p>聚合函数（<code>aggregation function</code>）—也就是组函数，在一个行的集合（一组行）上进行操作，对每个组给一个结果。</p>
+</blockquote>
+<p>常用的组函数：</p>
+<table>
+<thead>
+<tr>
+<th>function</th>
+<th>return</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AVG([distinct] expr)</td>
+<td>求平均值</td>
+</tr>
+<tr>
+<td>COUNT({*  [distinct] } expr)</td>
+<td>统计行的数量</td>
+</tr>
+<tr>
+<td>MAX([distinct] expr)</td>
+<td>求最大值</td>
+</tr>
+<tr>
+<td>MIN([distinct] expr)</td>
+<td>求最小值</td>
+</tr>
+<tr>
+<td>SUM([distinct] expr)</td>
+<td>求累加和</td>
+</tr>
+</tbody>
+</table>
 <a id="more"></a>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> m = <span class="keyword">new</span> <span class="built_in">Map</span>([[<span class="string">'Michael'</span>, <span class="number">95</span>], [<span class="string">'Bob'</span>, <span class="number">75</span>], [<span class="string">'Tracy'</span>, <span class="number">85</span>]])</span><br><span class="line">m.get(<span class="string">'Michael'</span>) <span class="comment">// 95</span></span><br></pre></td></tr></table></figure>
-<p>初始化<code>Map</code>需要一个二维数组，或者直接初始化一个空<code>Map</code>。<code>Map</code>具有以下方法：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> m = <span class="keyword">new</span> <span class="built_in">Map</span>() <span class="comment">// 空Map</span></span><br><span class="line">m.set(<span class="string">'Adam'</span>, <span class="number">67</span>) <span class="comment">// 添加新的key-value</span></span><br><span class="line">m.set(<span class="string">'Bob'</span>, <span class="number">59</span>)</span><br><span class="line">m.has(<span class="string">'Adam'</span>) <span class="comment">// 是否存在key 'Adam': true</span></span><br><span class="line">m.get(<span class="string">'Adam'</span>) <span class="comment">// 67</span></span><br><span class="line">m.delete(<span class="string">'Adam'</span>) <span class="comment">// 删除key 'Adam'</span></span><br><span class="line">m.get(<span class="string">'Adam'</span>) <span class="comment">// undefined</span></span><br></pre></td></tr></table></figure>
-<p>由于一个 key 只能对应一个 value，所以，多次对一个 key 放入 value，后面的值会把前面的值冲掉：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> m = <span class="keyword">new</span> <span class="built_in">Map</span>()</span><br><span class="line">m.set(<span class="string">'Adam'</span>, <span class="number">67</span>)</span><br><span class="line">m.set(<span class="string">'Adam'</span>, <span class="number">88</span>)</span><br><span class="line">m.get(<span class="string">'Adam'</span>) <span class="comment">// 88</span></span><br></pre></td></tr></table></figure>
-<h3 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h3><p><code>Set</code>和<code>Map</code>类似，也是一组 key 的集合，但不存储 value。由于 key 不能重复，所以，<strong>在<code>Set</code>中，没有重复的 key。</strong></p>
-<p>要创建一个<code>Set</code>，需要提供一个<code>Array</code>作为输入，或者直接创建一个空<code>Set</code>：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s1 = <span class="keyword">new</span> <span class="built_in">Set</span>() <span class="comment">// 空Set</span></span><br><span class="line"><span class="keyword">var</span> s2 = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]) <span class="comment">// 含1, 2, 3</span></span><br></pre></td></tr></table></figure>
-<p>重复元素在<code>Set</code>中自动被过滤：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="string">'3'</span>])</span><br><span class="line">s <span class="comment">// Set &#123;1, 2, 3, "3"&#125;</span></span><br></pre></td></tr></table></figure>
-<p>注意数字<code>3</code>和字符串<code>&#39;3&#39;</code>是不同的元素。</p>
-<p>通过<code>add(key)</code>方法可以添加元素到<code>Set</code>中，可以重复添加，但不会有效果：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">s.add(<span class="number">4</span>)</span><br><span class="line">s <span class="comment">// Set &#123;1, 2, 3, 4&#125;</span></span><br><span class="line">s.add(<span class="number">4</span>)</span><br><span class="line">s <span class="comment">// 仍然是 Set &#123;1, 2, 3, 4&#125;</span></span><br></pre></td></tr></table></figure>
-<p>通过<code>delete(key)</code>方法可以删除元素：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>])</span><br><span class="line">s <span class="comment">// Set &#123;1, 2, 3&#125;</span></span><br><span class="line">s.delete(<span class="number">3</span>)</span><br><span class="line">s <span class="comment">// Set &#123;1, 2&#125;</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>每个组函数接收一个参数</li>
+<li>默认情况下，组函数忽略列值为null的行，不参与计算</li>
+<li>有时，会使用关键字distinct剔除字段值重复的条数</li>
+</ol>
+<p>注意：</p>
+<ul>
+<li>当使用组函数的 <code>select</code> 语句中没有 <code>group by</code> 子句时，中间结果集中的所有行自动形成一组，然后计算组函数；</li>
+<li>组函数不允许嵌套，例如：<code>count(max(…))</code>；</li>
+<li>组函数的参数可以是列或是函数表达式；</li>
+<li>一个 <code>SELECT</code> 子句中可出现多个聚集函数。</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from users;</span><br><span class="line">+----+----------+------+---------------------+---------------------+</span><br><span class="line">| id | name     | age  | createdAt           | updatedAt           |</span><br><span class="line">+----+----------+------+---------------------+---------------------+</span><br><span class="line">|  1 | guodada  |   18 | 2019-10-04 05:56:52 | 2019-10-04 05:56:52 |</span><br><span class="line">|  2 | guodada2 |   18 | 2019-10-04 05:57:01 | 2019-10-04 05:57:01 |</span><br><span class="line">|  3 | guodada3 | NULL | 2019-10-04 05:58:00 | 2019-10-04 05:58:00 |</span><br><span class="line">+----+----------+------+---------------------+---------------------+</span><br><span class="line">3 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<h2 id="count-函数"><a href="#count-函数" class="headerlink" title="count 函数"></a>count 函数</h2><p>① <code>count(*)</code>：返回表中满足 <code>where</code> 条件的行的数量</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(*) <span class="keyword">AS</span> <span class="keyword">count</span> <span class="keyword">FROM</span> <span class="keyword">users</span> <span class="keyword">WHERE</span> age &gt; <span class="number">10</span> <span class="comment">-- count 3</span></span><br></pre></td></tr></table></figure>
+<p>② <code>count(列)</code>：返回列值非空的行的数量</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(age) <span class="keyword">AS</span> <span class="keyword">count</span> <span class="keyword">FROM</span> <span class="keyword">users</span> <span class="comment">-- count 2</span></span><br></pre></td></tr></table></figure>
+<p>③ <code>count(distinct 列)</code>：返回列值非空的、并且列值不重复的行的数量</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(<span class="keyword">distinct</span> age) <span class="keyword">AS</span> <span class="keyword">count</span> <span class="keyword">FROM</span> <span class="keyword">users</span> <span class="comment">-- count 1</span></span><br></pre></td></tr></table></figure>
+<p>④ <code>count(expr)</code>：根据表达式统计数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">COUNT</span>(age=<span class="number">18</span>) <span class="keyword">AS</span> <span class="keyword">count</span> <span class="keyword">FROM</span> <span class="keyword">users</span>; <span class="comment">-- count 2</span></span><br></pre></td></tr></table></figure>
+<h2 id="max-和-min-函数—统计列中的最大最小值"><a href="#max-和-min-函数—统计列中的最大最小值" class="headerlink" title="max 和 min 函数—统计列中的最大最小值"></a>max 和 min 函数—统计列中的最大最小值</h2><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MAX</span>(age) <span class="keyword">as</span> maxAge <span class="keyword">FROM</span> <span class="keyword">users</span> <span class="comment">-- maxAge 18</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">MIN</span>(age) <span class="keyword">as</span> minAge <span class="keyword">FROM</span> <span class="keyword">users</span> <span class="comment">-- minAge 18</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：如果统计的列中只有 <code>NULL</code> 值，那么 <code>MAX</code> 和 <code>MIN</code> 就返回 <code>NULL</code></p>
+</blockquote>
+<h2 id="sum-和-avg-函数—求和与求平均"><a href="#sum-和-avg-函数—求和与求平均" class="headerlink" title="sum 和 avg 函数—求和与求平均"></a>sum 和 avg 函数—求和与求平均</h2><p>！！表中列值为 <code>null</code> 的行不参与计算</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="keyword">AVG</span>(age) <span class="keyword">as</span> avgAge <span class="keyword">FROM</span> <span class="keyword">users</span> <span class="comment">-- avgAge 18</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="keyword">SUM</span>(age) <span class="keyword">as</span> snmAge <span class="keyword">FROM</span> <span class="keyword">users</span> <span class="comment">-- sumAge 36</span></span><br></pre></td></tr></table></figure>
+<p>注意：要想列值为 <code>NULL</code> 的行也参与组函数的计算，必须使用 <code>IFNULL</code> 函数对 <code>NULL</code> 值做转换。</p>
+<h2 id="分组聚合查询"><a href="#分组聚合查询" class="headerlink" title="分组聚合查询"></a>分组聚合查询</h2><p>分组 SELECT 的基本格式：</p>
+<p><code>select [聚合函数] 字段名 from 表名 [where 查询条件] [group by 字段名] [having 过滤条件]</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select name, count(*) as count from users <span class="built_in">where</span> age &gt; 10 group by name;</span><br><span class="line">+----------+-------+</span><br><span class="line">| name     | count |</span><br><span class="line">+----------+-------+</span><br><span class="line">| guodada  |     1 |</span><br><span class="line">| guodada2 |     1 |</span><br><span class="line">+----------+-------+</span><br><span class="line">2 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<p>通过 <code>select</code> 在返回集字段中，这些字段要么就要包含在 <code>group by</code> 语句后面，作为分组的依据，要么就要被包含在聚合函数中。我们可以将 <code>group by</code> 操作想象成如下的一个过程：首先系统根据 <code>select</code> 语句得到一个结果集，然后根据分组字段，将具有相同分组字段的记录归并成了一条记录。这个时候剩下的那些不存在与 <code>group by</code> 语句后面作为分组依据的字段就很有可能出现多个值，但是目前一种分组情况只有一条记录，一个数据格是无法放入多个数值的，所以这个时候就需要通过一定的处理将这些多值的列转化成单值，然后将其放在对应的数据格中，那么完成这个步骤的就是前面讲到的聚合函数，这也就是为什么这些函数叫聚合函数了。</p>
+<ul>
+<li><a href="https://www.cnblogs.com/geaozhang/p/6745147.html#sum-avg" target="_blank" rel="noopener">MySQL最常用分组聚合函数</a></li>
+</ul>
 
       
     </div>
@@ -418,9 +465,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Javascript/" rel="tag"># Javascript</a>
-          
-            <a href="/tags/ES6/" rel="tag"># ES6</a>
+            <a href="/tags/MySQL/" rel="tag"># MySQL</a>
           
         </div>
       
@@ -433,8 +478,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/10/12/webpack-plugins/" rel="next" title="webpack-plugins">
-                <i class="fa fa-chevron-left"></i> webpack-plugins
+              <a href="/2018/12/30/mysql-3/" rel="next" title="mysql - column 的增删改查">
+                <i class="fa fa-chevron-left"></i> mysql - column 的增删改查
               </a>
             
           </div>
@@ -443,8 +488,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/10/16/js-createObject/" rel="prev" title="js - 创建对象的几种方式（工厂模式、构造函数模式、原型模式）">
-                js - 创建对象的几种方式（工厂模式、构造函数模式、原型模式） <i class="fa fa-chevron-right"></i>
+              <a href="/2019/01/03/sequelize-1/" rel="prev" title="Sequelize - quick start">
+                Sequelize - quick start <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -607,7 +652,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Map-和-Set"><span class="nav-number">1.</span> <span class="nav-text">Map 和 Set</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Map"><span class="nav-number">1.1.</span> <span class="nav-text">Map</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Set"><span class="nav-number">1.2.</span> <span class="nav-text">Set</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#聚合函数（aggregation-function）"><span class="nav-number">1.</span> <span class="nav-text">聚合函数（aggregation function）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#count-函数"><span class="nav-number">2.</span> <span class="nav-text">count 函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#max-和-min-函数—统计列中的最大最小值"><span class="nav-number">3.</span> <span class="nav-text">max 和 min 函数—统计列中的最大最小值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sum-和-avg-函数—求和与求平均"><span class="nav-number">4.</span> <span class="nav-text">sum 和 avg 函数—求和与求平均</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分组聚合查询"><span class="nav-number">5.</span> <span class="nav-text">分组聚合查询</span></a></li></ol></div>
             
 
           </div>

@@ -289,6 +289,159 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2018/11/15/js-深入之创建对象的多种方式以及优缺点/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gershonv">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郭大大的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/15/js-深入之创建对象的多种方式以及优缺点/" itemprop="url">[转] JavaScript深入之创建对象的多种方式以及优缺点 </a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-15T14:16:31+08:00">
+                2018-11-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Javascript/" itemprop="url" rel="index">
+                    <span itemprop="name">Javascript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>这篇文章讲解创建对象的各种方式，以及优缺点。</p>
+<p>但是注意：</p>
+<p>这篇文章更像是笔记，因为《JavaScript 高级程序设计》写得真是太好了！</p>
+<h2 id="1-工厂模式"><a href="#1-工厂模式" class="headerlink" title="1. 工厂模式"></a>1. 工厂模式</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createPerson</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> o = <span class="keyword">new</span> <span class="built_in">Object</span>()</span><br><span class="line">  o.name = name</span><br><span class="line">  o.getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> o</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> person1 = createPerson(<span class="string">'kevin'</span>)</span><br></pre></td></tr></table></figure>
+<p>缺点：对象无法识别，因为所有的实例都指向一个原型</p>
+<h2 id="2-构造函数模式"><a href="#2-构造函数模式" class="headerlink" title="2. 构造函数模式"></a>2. 构造函数模式</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = name</span><br><span class="line">  <span class="keyword">this</span>.getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> Person(<span class="string">'kevin'</span>)</span><br></pre></td></tr></table></figure>
+<p>优点：实例可以识别为一个特定的类型</p>
+<p>缺点：每次创建实例时，每个方法都要被创建一次</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/11/15/js-深入之创建对象的多种方式以及优缺点/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2018/11/15/js-深入之类数组对象与arguments/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3165,153 +3318,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2018/11/07/react-router-5/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="gershonv">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郭大大的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/07/react-router-5/" itemprop="url">react-router - 实践系列</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-07T10:37:49+08:00">
-                2018-11-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/React-Router/" itemprop="url" rel="index">
-                    <span itemprop="name">React-Router</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="简单使用"><a href="#简单使用" class="headerlink" title="简单使用"></a>简单使用</h2><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"><span class="keyword">import</span> &#123; BrowserRouter <span class="keyword">as</span> Router, Switch, Route, Link, NavLink &#125; <span class="keyword">from</span> <span class="string">'react-router-dom'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Home = <span class="function"><span class="params">()</span> =&gt;</span> (</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;h2&gt;主页&lt;<span class="regexp">/h2&gt;</span></span><br><span class="line"><span class="regexp">    &lt;Link to="/</span>article/<span class="number">1</span><span class="string">"&gt;文章1&lt;/Link&gt;</span></span><br><span class="line"><span class="string">  &lt;/div&gt;</span></span><br><span class="line"><span class="string">)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">const Mine = () =&gt; &lt;h2&gt;我的&lt;/h2&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">class Article extends Component &#123;</span></span><br><span class="line"><span class="string">  handleClick = () =&gt; &#123;</span></span><br><span class="line"><span class="string">    // 坑点： this.props.history.push('home') 会跳转到路径 /article/home</span></span><br><span class="line"><span class="string">    this.props.history.push('/home')</span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">  render() &#123;</span></span><br><span class="line"><span class="string">    const &#123; match &#125; = this.props</span></span><br><span class="line"><span class="string">    return (</span></span><br><span class="line"><span class="string">      &lt;div&gt;</span></span><br><span class="line"><span class="string">        &lt;h2&gt;文章&lt;/h2&gt;</span></span><br><span class="line"><span class="string">        &lt;ul&gt;</span></span><br><span class="line"><span class="string">          &lt;li&gt;路由传参： &#123;match.params.topicId&#125;&lt;/li&gt;</span></span><br><span class="line"><span class="string">        &lt;/ul&gt;</span></span><br><span class="line"><span class="string">        &lt;button onClick=&#123;this.handleClick&#125;&gt;go Home&lt;/button&gt;</span></span><br><span class="line"><span class="string">      &lt;/div&gt;</span></span><br><span class="line"><span class="string">    )</span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">/**</span></span><br><span class="line"><span class="string"> * 坑点1： You should not use &lt;Link&gt; outside a &lt;Router&gt; @desc Link 组件不要在 Router 组件外使用</span></span><br><span class="line"><span class="string"> * 坑点2： A &lt;Router&gt; may have only one child element @desc Router 组件只能有一个子元素</span></span><br><span class="line"><span class="string"> * 坑点3： /article/:topicId 匹配不到 /Article 组件， /article/123 可以</span></span><br><span class="line"><span class="string"> */</span></span><br><span class="line"><span class="string">class App extends Component &#123;</span></span><br><span class="line"><span class="string">  render() &#123;</span></span><br><span class="line"><span class="string">    return (</span></span><br><span class="line"><span class="string">      &lt;div&gt;</span></span><br><span class="line"><span class="string">        &lt;Router&gt;</span></span><br><span class="line"><span class="string">          &lt;div&gt;</span></span><br><span class="line"><span class="string">            &lt;NavLink to="</span>/<span class="string">" activeClassName="</span>active<span class="string">"&gt;</span></span><br><span class="line"><span class="string">              首页</span></span><br><span class="line"><span class="string">            &lt;/NavLink&gt;</span></span><br><span class="line"><span class="string">            &lt;NavLink to="</span>/article<span class="string">" activeClassName="</span>active<span class="string">"&gt;</span></span><br><span class="line"><span class="string">              文章</span></span><br><span class="line"><span class="string">            &lt;/NavLink&gt;</span></span><br><span class="line"><span class="string">            &lt;NavLink to="</span>/mine<span class="string">" activeClassName="</span>active<span class="string">"&gt;</span></span><br><span class="line"><span class="string">              我的</span></span><br><span class="line"><span class="string">            &lt;/NavLink&gt;</span></span><br><span class="line"><span class="string">            &lt;hr /&gt;</span></span><br><span class="line"><span class="string">            &lt;Switch&gt;</span></span><br><span class="line"><span class="string">              &lt;Route exact path="</span>/<span class="string">" component=&#123;Home&#125; /&gt;</span></span><br><span class="line"><span class="string">              &lt;Route path="</span>/article/:topicId<span class="string">" component=&#123;Article&#125; /&gt;</span></span><br><span class="line"><span class="string">              &lt;Route path="</span>/mine<span class="string">" component=&#123;Mine&#125; /&gt;</span></span><br><span class="line"><span class="string">            &lt;/Switch&gt;</span></span><br><span class="line"><span class="string">          &lt;/div&gt;</span></span><br><span class="line"><span class="string">        &lt;/Router&gt;</span></span><br><span class="line"><span class="string">      &lt;/div&gt;</span></span><br><span class="line"><span class="string">    )</span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string">&#125;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">export default App</span></span><br></pre></td></tr></table></figure>
-<h2 id="url-跳转-传参"><a href="#url-跳转-传参" class="headerlink" title="url 跳转 + 传参"></a>url 跳转 + 传参</h2>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/11/07/react-router-5/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3366,7 +3372,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">71</span>
+                  <span class="site-state-item-count">72</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

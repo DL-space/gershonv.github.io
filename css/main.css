@@ -1243,6 +1243,13 @@ pre .javascript .function {
   font-weight: bold;
   line-height: 1;
 }
+.post-type-normal .post-body a:not(.btn) {
+  color: #0269c8;
+  border-bottom: 1px solid #d1e9ff;
+}
+.post-type-normal .post-body a:hover:not(.btn) {
+  color: #275b8c;
+}
 .post-sticky-flag {
   display: inline-block;
   font-size: 16px;
@@ -1823,7 +1830,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #7f5e4f;
+  background: #fe08ff;
 }
 .links-of-blogroll {
   font-size: 13px;
