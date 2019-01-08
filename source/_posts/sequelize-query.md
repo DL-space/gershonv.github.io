@@ -1,6 +1,6 @@
 ---
 title: Sequelize - 使用 model 查询数据
-date: 2019-01-03 14:35:03
+date: 2019-01-03 14:56:03
 categories: Sequelize
 tags: Sequelize
 ---
