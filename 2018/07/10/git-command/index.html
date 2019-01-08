@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Sequelize," />
+  <meta name="keywords" content="Git," />
 
 
 
@@ -81,18 +81,20 @@
 
 
 
-<meta name="description" content="在 Node.js 社区中，sequelize 是一个广泛使用的 ORM 框架，它支持 MySQL、PostgreSQL、SQLite 和 MSSQL 等多个数据源。  有数据库基础或者使用过 ORM 操作数据库的经验会更容易上手哦，笔者这里用的以 mysql 为主  安装1npm i sequelize mysql2 --registry=https://registry.npm.taobao.">
-<meta name="keywords" content="Sequelize">
+<meta name="description" content="commit 规范速查 feat：新功能（feature） fix：修补 bug docs：文档（documentation） style： 格式（不影响代码运行的变动） refactor：重构（即不是新增功能，也不是修改 bug 的代码变动） test：增加测试 chore：构建过程或辅助工具的变动 revert: 撤销以前的 commit 1revert: feat(pencil): add">
+<meta name="keywords" content="Git">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Sequelize - quick start">
-<meta property="og:url" content="https://gershonv.github.io/2019/01/03/sequelize-1/index.html">
+<meta property="og:title" content="git 实用指南">
+<meta property="og:url" content="https://gershonv.github.io/2018/07/10/git-command/index.html">
 <meta property="og:site_name" content="郭大大的博客">
-<meta property="og:description" content="在 Node.js 社区中，sequelize 是一个广泛使用的 ORM 框架，它支持 MySQL、PostgreSQL、SQLite 和 MSSQL 等多个数据源。  有数据库基础或者使用过 ORM 操作数据库的经验会更容易上手哦，笔者这里用的以 mysql 为主  安装1npm i sequelize mysql2 --registry=https://registry.npm.taobao.">
+<meta property="og:description" content="commit 规范速查 feat：新功能（feature） fix：修补 bug docs：文档（documentation） style： 格式（不影响代码运行的变动） refactor：重构（即不是新增功能，也不是修改 bug 的代码变动） test：增加测试 chore：构建过程或辅助工具的变动 revert: 撤销以前的 commit 1revert: feat(pencil): add">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-03T14:59:27.290Z">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2019/1/8/1682b86ab859defb?w=505&h=412&f=png&s=45734">
+<meta property="og:updated_time" content="2019-01-08T12:34:04.383Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Sequelize - quick start">
-<meta name="twitter:description" content="在 Node.js 社区中，sequelize 是一个广泛使用的 ORM 框架，它支持 MySQL、PostgreSQL、SQLite 和 MSSQL 等多个数据源。  有数据库基础或者使用过 ORM 操作数据库的经验会更容易上手哦，笔者这里用的以 mysql 为主  安装1npm i sequelize mysql2 --registry=https://registry.npm.taobao.">
+<meta name="twitter:title" content="git 实用指南">
+<meta name="twitter:description" content="commit 规范速查 feat：新功能（feature） fix：修补 bug docs：文档（documentation） style： 格式（不影响代码运行的变动） refactor：重构（即不是新增功能，也不是修改 bug 的代码变动） test：增加测试 chore：构建过程或辅助工具的变动 revert: 撤销以前的 commit 1revert: feat(pencil): add">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2019/1/8/1682b86ab859defb?w=505&h=412&f=png&s=45734">
 
 
 
@@ -122,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="https://gershonv.github.io/2019/01/03/sequelize-1/"/>
+  <link rel="canonical" href="https://gershonv.github.io/2018/07/10/git-command/"/>
 
 
 
 
 
-  <title>Sequelize - quick start | 郭大大的博客</title>
+  <title>git 实用指南 | 郭大大的博客</title>
   
 
 
@@ -289,7 +291,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2019/01/03/sequelize-1/">
+    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2018/07/10/git-command/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="gershonv">
@@ -306,7 +308,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Sequelize - quick start</h1>
+          <h1 class="post-title" itemprop="name headline">git 实用指南</h1>
         
 
         <div class="post-meta">
@@ -318,8 +320,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-03T11:52:37+08:00">
-                2019-01-03
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-10T21:30:04+08:00">
+                2018-07-10
               </time>
             
 
@@ -341,8 +343,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Sequelize/" itemprop="url" rel="index">
-                    <span itemprop="name">Sequelize</span>
+                  <a href="/categories/开发工具/" itemprop="url" rel="index">
+                    <span itemprop="name">开发工具</span>
                   </a>
                 </span>
 
@@ -378,39 +380,40 @@
       
 
       
-        <p>在 <code>Node.js</code> 社区中，<code>sequelize</code> 是一个广泛使用的 <code>ORM</code> 框架，它支持 <code>MySQL</code>、<code>PostgreSQL</code>、<code>SQLite</code> 和 <code>MSSQL</code> 等多个数据源。</p>
-<blockquote>
-<p>有数据库基础或者使用过 <code>ORM</code> 操作数据库的经验会更容易上手哦，笔者这里用的以 <code>mysql</code> 为主</p>
-</blockquote>
-<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i sequelize mysql2 --registry=https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
-<p>记得提前启动 <code>mysql</code> 数据库，创建本例中使用的 <code>demo</code> 数据库</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql.server start <span class="comment">// mac (windows net start mysql)</span></span><br><span class="line"></span><br><span class="line">mysql -uroot -p</span><br><span class="line"></span><br><span class="line">CREATE DATABASE IF NOT EXISTS demo;</span><br></pre></td></tr></table></figure>
+        <h2 id="commit-规范速查"><a href="#commit-规范速查" class="headerlink" title="commit 规范速查"></a>commit 规范速查</h2><ul>
+<li><code>feat</code>：新功能（feature）</li>
+<li><code>fix</code>：修补 bug</li>
+<li><code>docs</code>：文档（documentation）</li>
+<li><code>style</code>： 格式（不影响代码运行的变动）</li>
+<li><code>refactor</code>：重构（即不是新增功能，也不是修改 bug 的代码变动）</li>
+<li><code>test</code>：增加测试</li>
+<li><code>chore</code>：构建过程或辅助工具的变动</li>
+<li><p><code>revert</code>: 撤销以前的 commit</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">revert: feat(pencil): add <span class="string">'graphiteWidth'</span> option</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 <a id="more"></a>
-<h2 id="建立连接"><a href="#建立连接" class="headerlink" title="建立连接"></a>建立连接</h2><p><code>Sequelize</code> 将在初始化时设置连接池，所以如果从单个进程连接到数据库，你最好每个数据库只创建一个实例。 如果要从多个进程连接到数据库，则必须为每个进程创建一个实例，但每个实例应具有“最大连接池大小除以实例数”的最大连接池大小。<br>因此，如果您希望最大连接池大小为 90，并且有 3 个工作进程，则每个进程的实例应具有 30 的最大连接池大小。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> sequelize = <span class="keyword">new</span> Sequelize(<span class="string">'database'</span>, <span class="string">'username'</span>, <span class="string">'password'</span>, &#123;</span><br><span class="line">  host: <span class="string">'localhost'</span>,</span><br><span class="line">  dialect: <span class="string">'mysql'</span> | <span class="string">'mariadb'</span> | <span class="string">'sqlite'</span> | <span class="string">'postgres'</span> | <span class="string">'mssql'</span>,</span><br><span class="line"></span><br><span class="line">  pool: &#123;</span><br><span class="line">    max: <span class="number">5</span>,</span><br><span class="line">    min: <span class="number">0</span>,</span><br><span class="line">    idle: <span class="number">10000</span></span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 仅 SQLite 适用</span></span><br><span class="line">  storage: <span class="string">'path/to/database.sqlite'</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 或者可以简单的使用一个连接 uri</span></span><br><span class="line"><span class="keyword">const</span> sequelize = <span class="keyword">new</span> Sequelize(<span class="string">'postgres://user:pass@example.com:5432/dbname'</span>)</span><br></pre></td></tr></table></figure>
-<h2 id="测试连接"><a href="#测试连接" class="headerlink" title="测试连接"></a>测试连接</h2><p>您可以使用 <code>.authenticate()</code> 函数来测试连接。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sequelize</span><br><span class="line">  .authenticate()</span><br><span class="line">  .then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Connection has been established successfully.'</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.error(<span class="string">'Unable to connect to the database:'</span>, err)</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
-<h2 id="model"><a href="#model" class="headerlink" title="model"></a>model</h2><p><code>Sequelize</code> 使用 <code>define</code> 方法定义模型和表之间的映射。大白话就是 我们可以通过 <code>model</code> 去建立表, 添加字段约束等。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> User = sequelize.define(<span class="string">'user'</span>, &#123;</span><br><span class="line">  firstName: Sequelize.STRING</span><br><span class="line">  lastName: &#123;</span><br><span class="line">    type: Sequelize.STRING</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 通过 sync 可以链接模型到数据库中</span></span><br><span class="line"><span class="comment">// force: true 如果表已经存在，将会丢弃表</span></span><br><span class="line"><span class="comment">// force 效果： DROP TABLE IF EXISTS `User` =&gt; CREATE TABLE IF NOT EXISTS `USER`...</span></span><br><span class="line">User.sync(&#123; <span class="attr">force</span>: <span class="literal">true</span> &#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>上面的代码执行后我们可以发现 <code>demo</code> 数据库中创建了一个 <code>users</code> 的表</p>
-<h3 id="model-操作数据库"><a href="#model-操作数据库" class="headerlink" title="model 操作数据库"></a>model 操作数据库</h3><p>demo 就简单创建数据和查询数据吧</p>
-<blockquote>
-<p><code>Sequelize</code> 使用 <code>Bluebird promise</code> 来控制异步控制流程。</p>
-</blockquote>
+<h2 id="本地创建、连接远程仓库"><a href="#本地创建、连接远程仓库" class="headerlink" title="本地创建、连接远程仓库"></a>本地创建、连接远程仓库</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建并连接远程仓库</span></span><br><span class="line">mkdir git-demo</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> git-demo/</span><br><span class="line"></span><br><span class="line">git init</span><br><span class="line"></span><br><span class="line"><span class="comment"># 连接远程仓库</span></span><br><span class="line">git remote add origin https://github.com/gershonv/git-demo.git</span><br></pre></td></tr></table></figure>
+<h2 id="新建文件并推向远端"><a href="#新建文件并推向远端" class="headerlink" title="新建文件并推向远端"></a>新建文件并推向远端</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建 a.js</span></span><br><span class="line">touch a.js</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加到暂存区（见下文）</span></span><br><span class="line">git add .</span><br><span class="line"></span><br><span class="line"><span class="comment"># commit 记录（见下文）</span></span><br><span class="line">git commit -m <span class="string">'feat: 新增 a.js 文件'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 推向远端 master 分支（见下文）</span></span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
 <ul>
-<li>链式写法</li>
+<li>git add<ul>
+<li><code>git add [file1 file2 file3...]</code>: 添加多个文件</li>
+<li><code>git add .</code> : 暂存所有文件</li>
 </ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">User.sync(&#123; <span class="attr">force</span>: <span class="literal">true</span> &#125;).then(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  User.create(&#123;</span><br><span class="line">    firstName: <span class="string">'John'</span>,</span><br><span class="line">    lastName: <span class="string">'Hancock'</span></span><br><span class="line">  &#125;).then(<span class="function"><span class="params">user</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(user.firstName, user.lastName) <span class="comment">// John Hancock</span></span><br><span class="line">    User.findAll().then(<span class="function"><span class="params">users</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'you find: '</span>, users[<span class="number">0</span>][<span class="string">'firstName'</span>], users[<span class="number">0</span>][<span class="string">'lastName'</span>]) <span class="comment">// you find:  John Hancock</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="git-status"><a href="#git-status" class="headerlink" title="git status"></a>git status</h2><p><img src="https://user-gold-cdn.xitu.io/2019/1/8/1682b86ab859defb?w=505&amp;h=412&amp;f=png&amp;s=45734" alt=""></p>
+<p>M - 被修改，A - 被添加，D - 被删除，R - 重命名，?? - 未被跟踪</p>
+<h2 id="撤销操作"><a href="#撤销操作" class="headerlink" title="撤销操作"></a>撤销操作</h2><h3 id="撤销-git-add"><a href="#撤销-git-add" class="headerlink" title="撤销 git add"></a>撤销 git add</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 新建 b.js 文件</span></span><br><span class="line">touch b.js</span><br><span class="line"></span><br><span class="line">git add .</span><br><span class="line"></span><br><span class="line">git statis</span><br><span class="line"></span><br><span class="line"><span class="comment"># 撤销 git add</span></span><br><span class="line">git reset head b.js</span><br></pre></td></tr></table></figure>
 <ul>
-<li><code>async/await</code> 写法</li>
+<li><code>git reset head</code> : 如果后面什么都不跟的话 就是上一次 add 里面的全部撤销了</li>
+<li><code>git reset head file</code>: 对某个文件进行撤销了</li>
 </ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">User.sync(&#123; <span class="attr">force</span>: <span class="literal">true</span> &#125;).then(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> user = <span class="keyword">await</span> User.create(&#123; <span class="attr">firstName</span>: <span class="string">'John'</span>, <span class="attr">lastName</span>: <span class="string">'Hancock'</span> &#125;)</span><br><span class="line">    <span class="keyword">const</span> users = <span class="keyword">await</span> User.findAll()</span><br><span class="line">    <span class="built_in">console</span>.log(user.firstName, user.lastName) <span class="comment">// John Hancock</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'you find: '</span>, users[<span class="number">0</span>][<span class="string">'firstName'</span>], users[<span class="number">0</span>][<span class="string">'lastName'</span>]) <span class="comment">// you find:  John Hancock</span></span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(err)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<h2 id="完整-demo"><a href="#完整-demo" class="headerlink" title="完整 demo"></a>完整 demo</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Sequelize = <span class="built_in">require</span>(<span class="string">'sequelize'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @params ('database', 'username', 'password', options)</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">const</span> sequelize = <span class="keyword">new</span> Sequelize(<span class="string">'demo'</span>, <span class="string">'root'</span>, <span class="string">'123456'</span>, &#123;</span><br><span class="line">  host: <span class="string">'localhost'</span>, <span class="comment">// 连接的 host 地址</span></span><br><span class="line">  dialect: <span class="string">'mysql'</span>, <span class="comment">// 连接到 mysql</span></span><br><span class="line">  port: <span class="number">3306</span>, <span class="comment">// 数据库服务器端口</span></span><br><span class="line">  pool: &#123;</span><br><span class="line">    max: <span class="number">5</span>,</span><br><span class="line">    min: <span class="number">0</span>,</span><br><span class="line">    acquire: <span class="number">30000</span>,</span><br><span class="line">    idle: <span class="number">10000</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> User = sequelize.define(<span class="string">'user'</span>, &#123;</span><br><span class="line">  firstName: Sequelize.STRING,</span><br><span class="line">  lastName: &#123;</span><br><span class="line">    type: Sequelize.STRING</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">sequelize</span><br><span class="line">  .authenticate()</span><br><span class="line">  .then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'Connection has been established successfully'</span>)</span><br><span class="line">    User.sync(&#123; <span class="attr">force</span>: <span class="literal">true</span> &#125;).then(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> user = <span class="keyword">await</span> User.create(&#123; <span class="attr">firstName</span>: <span class="string">'John'</span>, <span class="attr">lastName</span>: <span class="string">'Hancock'</span> &#125;)</span><br><span class="line">        <span class="keyword">const</span> users = <span class="keyword">await</span> User.findAll()</span><br><span class="line">        <span class="built_in">console</span>.log(user.firstName, user.lastName) <span class="comment">// John Hancock</span></span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'you find: '</span>, users[<span class="number">0</span>][<span class="string">'firstName'</span>], users[<span class="number">0</span>][<span class="string">'lastName'</span>]) <span class="comment">// you find:  John Hancock</span></span><br><span class="line">      &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(err)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">  .catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.error(<span class="string">'Unable to connect to the database:'</span>, err)</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
-<ul>
-<li><a href="http://docs.sequelizejs.com/manual/installation/getting-started.html" target="_blank" rel="noopener">sequelize - getting started</a></li>
-<li><a href="https://github.com/demopark/sequelize-docs-Zh-CN/blob/master/getting-started.md" target="_blank" rel="noopener">sequelize - 中文版入门</a></li>
-</ul>
-
+<h3 id="撤销本地修改"><a href="#撤销本地修改" class="headerlink" title="撤销本地修改"></a>撤销本地修改</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 修改文件</span></span><br><span class="line">vim a.js</span><br><span class="line"></span><br><span class="line"><span class="comment"># 插入数据</span></span><br><span class="line"><span class="built_in">shift</span> + i</span><br><span class="line"></span><br><span class="line"><span class="comment"># 保存退出</span></span><br><span class="line"><span class="built_in">shift</span> + : wq</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加入暂存区</span></span><br><span class="line">git add .</span><br><span class="line"></span><br><span class="line">git commit -m <span class="string">'refactor: 修改 a.js 文件'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 撤销修改</span></span><br><span class="line">git checkout -- a.js</span><br></pre></td></tr></table></figure>
+<h3 id="撤销-git-commit"><a href="#撤销-git-commit" class="headerlink" title="撤销 git commit"></a>撤销 git commit</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看 commit 记录</span></span><br><span class="line">git <span class="built_in">log</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 重置到某个节点。</span></span><br><span class="line">git reset --hard ea794cf0dcf934b594</span><br></pre></td></tr></table></figure>
+<h2 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h2><h3 id="新建分支并推向远程"><a href="#新建分支并推向远程" class="headerlink" title="新建分支并推向远程"></a>新建分支并推向远程</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 新建并切换本地分支</span></span><br><span class="line">git checkout -b dev</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前分支</span></span><br><span class="line">git branch</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看远程分支</span></span><br><span class="line">git branch -r</span><br><span class="line"></span><br><span class="line"><span class="comment"># 推送到远程</span></span><br><span class="line">git push origin dev</span><br></pre></td></tr></table></figure>
+<h3 id="合并分支"><a href="#合并分支" class="headerlink" title="合并分支"></a>合并分支</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 开发完 dev 分支后</span></span><br><span class="line">git checkout master</span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并 dev 分支到主分支</span></span><br><span class="line">git merge dev</span><br><span class="line"></span><br><span class="line"><span class="comment"># 推送</span></span><br><span class="line">git push origin master</span><br></pre></td></tr></table></figure>
+<h3 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看所有分支 远程+本地</span></span><br><span class="line">git branch -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除远程分支</span></span><br><span class="line">git push origin -d dev</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除本地分支</span></span><br><span class="line">git checkout master</span><br><span class="line">git branch -d dev</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -427,7 +430,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Sequelize/" rel="tag"># Sequelize</a>
+            <a href="/tags/Git/" rel="tag"># Git</a>
           
         </div>
       
@@ -440,8 +443,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/12/31/mysql-聚合函数/" rel="next" title="mysql - 聚合函数">
-                <i class="fa fa-chevron-left"></i> mysql - 聚合函数
+              <a href="/2018/07/10/js-运行原理解析/" rel="next" title="JavaScript 运行原理解析 - eventLoop 机制">
+                <i class="fa fa-chevron-left"></i> JavaScript 运行原理解析 - eventLoop 机制
               </a>
             
           </div>
@@ -450,8 +453,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/01/03/sequelize-2/" rel="prev" title="Sequelize - model definition">
-                Sequelize - model definition <i class="fa fa-chevron-right"></i>
+              <a href="/2018/07/11/随笔-面试2/" rel="prev" title="js - 笔试题收集">
+                js - 笔试题收集 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -536,7 +539,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-count">74</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -614,7 +617,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建立连接"><span class="nav-number">2.</span> <span class="nav-text">建立连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试连接"><span class="nav-number">3.</span> <span class="nav-text">测试连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#model"><span class="nav-number">4.</span> <span class="nav-text">model</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#model-操作数据库"><span class="nav-number">4.1.</span> <span class="nav-text">model 操作数据库</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#完整-demo"><span class="nav-number">5.</span> <span class="nav-text">完整 demo</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#commit-规范速查"><span class="nav-number">1.</span> <span class="nav-text">commit 规范速查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#本地创建、连接远程仓库"><span class="nav-number">2.</span> <span class="nav-text">本地创建、连接远程仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#新建文件并推向远端"><span class="nav-number">3.</span> <span class="nav-text">新建文件并推向远端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#git-status"><span class="nav-number">4.</span> <span class="nav-text">git status</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#撤销操作"><span class="nav-number">5.</span> <span class="nav-text">撤销操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#撤销-git-add"><span class="nav-number">5.1.</span> <span class="nav-text">撤销 git add</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#撤销本地修改"><span class="nav-number">5.2.</span> <span class="nav-text">撤销本地修改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#撤销-git-commit"><span class="nav-number">5.3.</span> <span class="nav-text">撤销 git commit</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分支"><span class="nav-number">6.</span> <span class="nav-text">分支</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#新建分支并推向远程"><span class="nav-number">6.1.</span> <span class="nav-text">新建分支并推向远程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#合并分支"><span class="nav-number">6.2.</span> <span class="nav-text">合并分支</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分支管理"><span class="nav-number">6.3.</span> <span class="nav-text">分支管理</span></a></li></ol></li></ol></div>
             
 
           </div>

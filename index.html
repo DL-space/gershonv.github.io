@@ -289,7 +289,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2019/01/03/sequelize-2/">
+    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2019/01/03/sequelize-query/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="gershonv">
@@ -308,7 +308,307 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/01/03/sequelize-2/" itemprop="url">Sequelize - model definition</a></h1>
+                <a class="post-title-link" href="/2019/01/03/sequelize-query/" itemprop="url">Sequelize - 使用 model 查询数据</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-03T14:56:03+08:00">
+                2019-01-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Sequelize/" itemprop="url" rel="index">
+                    <span itemprop="name">Sequelize</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p><code>Sequelize</code> 中有两种查询：使用 <code>Model</code>（模型）中的方法查询和使用 <code>sequelize.query()</code> 进行基于 SQL 语句的原始查询。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/01/03/sequelize-query/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2019/01/03/sequelize-associations/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gershonv">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郭大大的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/03/sequelize-associations/" itemprop="url">sequelize - associations</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-03T14:36:03+08:00">
+                2019-01-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Sequelize/" itemprop="url" rel="index">
+                    <span itemprop="name">Sequelize</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>本部分描述了 Sequelize 中的各种关联类型。 Sequelize 中有四种类型的关联</p>
+<ul>
+<li><code>BelongsTo</code></li>
+<li><code>HasOne</code></li>
+<li><code>HasMany</code></li>
+<li><code>BelongsToMany</code></li>
+</ul>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><h3 id="Source-amp-Target"><a href="#Source-amp-Target" class="headerlink" title="Source &amp; Target"></a>Source &amp; Target</h3><p>我们首先从一个基本概念开始，你将会在大多数关联中使用 <code>source</code> 和 <code>target</code> 模型。 假设您正试图在两个模型之间添加关联。 这里我们在 <code>users</code> 和 <code>articles</code> 之间添加一个 <code>hasOne</code> 关联。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> UserModel = sequelize.define(</span><br><span class="line">  <span class="string">'user'</span>,</span><br><span class="line">  &#123;</span><br><span class="line">    name: Sequelize.STRING,</span><br><span class="line">    age: Sequelize.INTEGER</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123; <span class="attr">timestamps</span>: <span class="literal">false</span> &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> ArticleModel = sequelize.define(<span class="string">'article'</span>, &#123;</span><br><span class="line">  title: Sequelize.STRING,</span><br><span class="line">  content: Sequelize.STRING</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">UserModel.hasOne(ArticleModel)</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/01/03/sequelize-associations/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2019/01/03/sequelize-modelDefinition/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gershonv">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郭大大的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/03/sequelize-modelDefinition/" itemprop="url">Sequelize - model definition</a></h1>
         
 
         <div class="post-meta">
@@ -387,7 +687,7 @@
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">DROP</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">EXISTS</span> <span class="string">`users`</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> <span class="string">`users`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">INTEGER</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> auto_increment ,</span><br><span class="line">  <span class="string">`createdAt`</span> DATETIME <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  <span class="string">`updatedAt`</span> DATETIME <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</span><br><span class="line"> ) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span>;</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/01/03/sequelize-2/#more" rel="contents">
+            <a class="btn" href="/2019/01/03/sequelize-modelDefinition/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -438,7 +738,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2019/01/03/sequelize-1/">
+    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2019/01/03/sequelize-quickStart/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="gershonv">
@@ -457,7 +757,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/01/03/sequelize-1/" itemprop="url">Sequelize - quick start</a></h1>
+                <a class="post-title-link" href="/2019/01/03/sequelize-quickStart/" itemprop="url">Sequelize - quick start</a></h1>
         
 
         <div class="post-meta">
@@ -539,7 +839,7 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mysql.server start <span class="comment">// mac (windows net start mysql)</span></span><br><span class="line"></span><br><span class="line">mysql -uroot -p</span><br><span class="line"></span><br><span class="line">CREATE DATABASE IF NOT EXISTS demo;</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2019/01/03/sequelize-1/#more" rel="contents">
+            <a class="btn" href="/2019/01/03/sequelize-quickStart/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -3059,321 +3359,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2018/11/20/http-导学/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="gershonv">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郭大大的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/20/http-导学/" itemprop="url">HTTP - 导学</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-20T19:31:23+08:00">
-                2018-11-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/HTTP/" itemprop="url" rel="index">
-                    <span itemprop="name">HTTP</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="经典五层网络模型"><a href="#经典五层网络模型" class="headerlink" title="经典五层网络模型"></a>经典五层网络模型</h2><p><img src="https://user-gold-cdn.xitu.io/2018/11/20/16730e533ec09d3a?w=1360&amp;h=947&amp;f=png&amp;s=282764" alt=""></p>
-<p>在每一台电脑，每个服务器都有这这几个网络模型层级来维护整个网络数据传输过程。</p>
-<h3 id="一张图了解-TCP-IP-五层网络模型"><a href="#一张图了解-TCP-IP-五层网络模型" class="headerlink" title="一张图了解 TCP/IP 五层网络模型"></a>一张图了解 TCP/IP 五层网络模型</h3><p><img src="https://user-gold-cdn.xitu.io/2018/11/20/167316845f6dde61?w=1255&amp;h=629&amp;f=jpeg&amp;s=180804" alt=""></p>
-<ul>
-<li><strong>物理层</strong>：将信息编码成电流脉冲或其它信号用于网上传输；（电线、光缆等）</li>
-<li><strong>数据链路层</strong>：数据链路层通过物理网络链路供数据传输。可以简单的理解为：规定了 0 和 1 的分包形式，确定了网络数据包的形式。</li>
-<li><strong>网络层</strong>：网络层负责在源和终点之间建立连接;（路由器等）</li>
-<li><strong>传输层</strong>： 敲重点！<blockquote>
-<p>传输层向用户提供可靠的端对端(<code>End-to-End</code>)服务。 常用的（<code>TCP／IP</code>）协议 、<code>UDP</code> 协议；</p>
-</blockquote>
-</li>
-<li><strong>应用层</strong>：敲重点！<blockquote>
-<p>为应用软件提供了很多服务，帮我们实现了 <code>HTTP</code> 协议，我们只要按照规则去使用 <code>HTTP</code> 协议；它构建于 <code>TCP</code> 协议之上；屏蔽了网络传输相关细节。</p>
-</blockquote>
-</li>
-</ul>
-<p>重点在 <strong>应用层</strong> 和 <strong>传输层</strong> 上：<code>http</code> 是在应用层上去实现的，而 <code>http</code> 协议基于传输层的 <code>TCP</code> <code>UDP</code> 协议。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/11/20/http-导学/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2018/11/15/js-深入之继承的多种方式和优缺点/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="gershonv">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郭大大的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/15/js-深入之继承的多种方式和优缺点/" itemprop="url">[转] JavaScript深入之继承的多种方式和优缺点</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-15T14:18:41+08:00">
-                2018-11-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">Javascript</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>本文讲解 JavaScript 各种继承方式和优缺点。</p>
-<p>但是注意：</p>
-<p>这篇文章更像是笔记，哎，再让我感叹一句：《JavaScript 高级程序设计》写得真是太好了！</p>
-<h2 id="1-原型链继承"><a href="#1-原型链继承" class="headerlink" title="1.原型链继承"></a>1.原型链继承</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = <span class="string">'kevin'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Parent.prototype.getName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.name)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">Child.prototype = <span class="keyword">new</span> Parent()</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> child1 = <span class="keyword">new</span> Child()</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(child1.getName()) <span class="comment">// kevin</span></span><br></pre></td></tr></table></figure>
-<p>问题：</p>
-<p>1.引用类型的属性被所有实例共享，举个例子：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Parent</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.names = [<span class="string">'kevin'</span>, <span class="string">'daisy'</span>]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Child</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">Child.prototype = <span class="keyword">new</span> Parent()</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> child1 = <span class="keyword">new</span> Child()</span><br><span class="line"></span><br><span class="line">child1.names.push(<span class="string">'yayu'</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(child1.names) <span class="comment">// ["kevin", "daisy", "yayu"]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> child2 = <span class="keyword">new</span> Child()</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(child2.names) <span class="comment">// ["kevin", "daisy", "yayu"]</span></span><br></pre></td></tr></table></figure>
-<p>2.在创建 Child 的实例时，不能向 Parent 传参</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/11/15/js-深入之继承的多种方式和优缺点/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3428,7 +3413,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-count">74</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

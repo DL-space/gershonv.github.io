@@ -4,6 +4,106 @@
 
     
   <url>
+    <loc>https://gershonv.github.io/2019/01/03/sequelize-query/</loc>
+    <lastmod>2019-01-08T12:36:14.084Z</lastmod>
+    <data>
+        <display>
+        <title>Sequelize - 使用 model 查询数据</title>
+        <pubTime>2019-01-03T06:56:03.000Z</pubTime>
+        
+        <tag>Sequelize</tag>
+         
+         
+           
+             
+              <breadCrumb title="Sequelize" url="https://gershonv.github.io/categories/Sequelize/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://gershonv.github.io/2019/01/03/sequelize-quickStart/</loc>
+    <lastmod>2019-01-08T12:34:04.395Z</lastmod>
+    <data>
+        <display>
+        <title>Sequelize - quick start</title>
+        <pubTime>2019-01-03T03:52:37.000Z</pubTime>
+        
+        <tag>Sequelize</tag>
+         
+         
+           
+             
+              <breadCrumb title="Sequelize" url="https://gershonv.github.io/categories/Sequelize/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://gershonv.github.io/2019/01/03/sequelize-modelDefinition/</loc>
+    <lastmod>2019-01-08T12:34:04.390Z</lastmod>
+    <data>
+        <display>
+        <title>Sequelize - model definition</title>
+        <pubTime>2019-01-03T06:35:03.000Z</pubTime>
+        
+        <tag>Sequelize</tag>
+         
+         
+           
+             
+              <breadCrumb title="Sequelize" url="https://gershonv.github.io/categories/Sequelize/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://gershonv.github.io/2019/01/03/sequelize-associations/</loc>
+    <lastmod>2019-01-08T12:34:04.386Z</lastmod>
+    <data>
+        <display>
+        <title>sequelize - associations</title>
+        <pubTime>2019-01-03T06:36:03.000Z</pubTime>
+        
+        <tag>Sequelize</tag>
+         
+         
+           
+             
+              <breadCrumb title="Sequelize" url="https://gershonv.github.io/categories/Sequelize/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://gershonv.github.io/2018/07/10/git-command/</loc>
+    <lastmod>2019-01-08T12:34:04.383Z</lastmod>
+    <data>
+        <display>
+        <title>git 实用指南</title>
+        <pubTime>2018-07-10T13:30:04.000Z</pubTime>
+        
+        <tag>Git</tag>
+         
+         
+           
+             
+              <breadCrumb title="开发工具" url="https://gershonv.github.io/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://gershonv.github.io/2018/12/31/mysql-%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0/</loc>
     <lastmod>2019-01-04T14:14:13.307Z</lastmod>
     <data>
@@ -283,26 +383,6 @@
            
              
               <breadCrumb title="Javascript" url="https://gershonv.github.io/categories/Javascript/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://gershonv.github.io/2018/07/10/git-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%B0%8F%E8%AE%A1/</loc>
-    <lastmod>2019-01-03T15:12:35.790Z</lastmod>
-    <data>
-        <display>
-        <title>git 常用命令小记</title>
-        <pubTime>2018-07-10T13:30:04.000Z</pubTime>
-        
-        <tag>Git</tag>
-         
-         
-           
-             
-              <breadCrumb title="开发工具" url="https://gershonv.github.io/categories/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/"/>
           
         </display>
     </data>
@@ -1398,46 +1478,6 @@
            
              
               <breadCrumb title="MySQL" url="https://gershonv.github.io/categories/MySQL/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://gershonv.github.io/2019/01/03/sequelize-1/</loc>
-    <lastmod>2019-01-03T14:59:27.290Z</lastmod>
-    <data>
-        <display>
-        <title>Sequelize - quick start</title>
-        <pubTime>2019-01-03T03:52:37.000Z</pubTime>
-        
-        <tag>Sequelize</tag>
-         
-         
-           
-             
-              <breadCrumb title="Sequelize" url="https://gershonv.github.io/categories/Sequelize/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://gershonv.github.io/2019/01/03/sequelize-2/</loc>
-    <lastmod>2019-01-03T14:57:01.139Z</lastmod>
-    <data>
-        <display>
-        <title>Sequelize - model definition</title>
-        <pubTime>2019-01-03T06:35:03.000Z</pubTime>
-        
-        <tag>Sequelize</tag>
-         
-         
-           
-             
-              <breadCrumb title="Sequelize" url="https://gershonv.github.io/categories/Sequelize/"/>
           
         </display>
     </data>

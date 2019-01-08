@@ -289,7 +289,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2018/07/16/vue-mvvm/">
+    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2018/07/29/react-LifeCycle/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="gershonv">
@@ -308,7 +308,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/07/16/vue-mvvm/" itemprop="url">实现简易的 VUE-MVVM</a></h1>
+                <a class="post-title-link" href="/2018/07/29/react-LifeCycle/" itemprop="url">react - 生命周期</a></h1>
         
 
         <div class="post-meta">
@@ -320,8 +320,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-16T22:19:09+08:00">
-                2018-07-16
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-29T21:20:13+08:00">
+                2018-07-29
               </time>
             
 
@@ -343,8 +343,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Vue-js/" itemprop="url" rel="index">
-                    <span itemprop="name">Vue.js</span>
+                  <a href="/categories/React/" itemprop="url" rel="index">
+                    <span itemprop="name">React</span>
                   </a>
                 </span>
 
@@ -381,45 +381,177 @@
 
       
         
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这是本人的学习的记录，因为最近在准备面试，很多情况下会被提问到：请简述 <code>mvvm</code> ?<br>一般情况下我可能这么答：<code>mvvm</code> 是视图和逻辑的一个分离，是<code>model view view-model</code> 的缩写，通过虚拟dom的方式实现双向数据绑定（我随便答得）</p>
-<p>那么问题来了，你知道 <code>mvvm</code> 是怎么实现的？<br>回答: <code>mvvm</code> 主要通过 <code>Object</code> 的 <code>defineProperty</code> 属性，重写 <code>data</code> 的 <code>set</code> 和<code>get</code> 函数来实现。 ok，回答得60分，那么你知道具体实现过程么？想想看，就算他没问到而你答了出来是不是更好？前提下，一定要手撸一下简单的<code>mvvm</code>才会对它有印象~</p>
-<p>话不多说，接下来是参考自张仁阳老师的教学视频而作，采用的是<a href="http://es6.ruanyifeng.com/#docs/class" target="_blank" rel="noopener">ES6</a>语法，其中也包含了我个人的理解，如果能帮助到您，我将十分高兴。如有错误之处，请各位大佬指正出来，不胜感激~~~</p>
-<p>在实现之前，请先了解基本的<code>mvvm</code>的编译过程以及使用</p>
-<ul>
-<li><p>编译的流程图<br><img src="https://user-gold-cdn.xitu.io/2018/7/18/164ac9a02d21c8cb?w=700&amp;h=374&amp;f=jpeg&amp;s=31670" alt=""></p>
-</li>
-<li><p>整体分析<br><img src="https://user-gold-cdn.xitu.io/2018/7/18/164ac90097e68912?w=639&amp;h=388&amp;f=png&amp;s=49631" alt=""></p>
-</li>
-</ul>
-<p>可以发现<code>new MVVM()</code>后的编译过程主体分为两个部分：</p>
-<ol>
-<li>一部分是模板的编译 <code>Compile</code><ul>
-<li>编译元素和文本，最终渲染到页面中</li>
-<li>其中标签中有模板指令的标签才执行编译 例如<code>&lt;div&gt;我很帅&lt;/div&gt;</code> 不执行编译</li>
+          <h2 id="v16-3"><a href="#v16-3" class="headerlink" title="v16.3+"></a>v16.3+</h2><ul>
+<li>Mounting<ul>
+<li>constructor(props)</li>
+<li>static getDerivedStateFromProps(props, state)</li>
+<li>render()</li>
+<li>componentDidMount()</li>
 </ul>
 </li>
-<li>一部分是数据劫持 <code>Observer</code><ul>
-<li><code>Dep</code> 发布订阅，将所有需要通知变化的<code>data</code>添加到一个数组中</li>
-<li><code>Watcher</code> 如果数据发生改变，在<code>Object</code>的<code>defineProperty</code>的<code>set</code>函数中调用<code>Watcher</code>的<code>update</code>方法</li>
+<li>Updating<ul>
+<li>static getDerivedStateFromProps()</li>
+<li>shouldComponentUpdate(nextProps, nextState)</li>
+<li>render()</li>
+<li>getSnapshotBeforeUpdate(prevProps, prevState)</li>
+<li>componentDidUpdate(prevProps, prevState, snapshot)</li>
 </ul>
 </li>
-</ol>
-<h4 id="明确本文需要实现的目标"><a href="#明确本文需要实现的目标" class="headerlink" title="明确本文需要实现的目标"></a>明确本文需要实现的目标</h4><ol>
-<li><strong>实现模板编译的过程 完成<code>Vue</code>实例中的属性可以正确绑定在标签中，并且渲染在页面中</strong><ul>
-<li>工作：指令的解析，正则替换双大括号</li>
-<li>将节点的内容<code>node.textContent</code>或者<code>input</code>的<code>value</code>编译出来</li>
 </ul>
-</li>
-<li><strong>完成数据的双向绑定</strong><ul>
-<li>工作：通过<code>observe</code>类劫持数据变化</li>
-<li>添加发布与订阅：<code>Object.defineProperty</code> 在<code>get</code>钩子中<code>addSub</code>,<code>set</code>钩子中通知变化<code>dep.notify()</code></li>
-<li><code>dep.notify()</code>调用的是<code>Watcher</code>的<code>update</code>方法，也就是说需要在<code>input</code>变化时调用更新</li>
-</ul>
-</li>
-</ol>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/07/16/vue-mvvm/#more" rel="contents">
+            <a class="btn" href="/2018/07/29/react-LifeCycle/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2018/07/28/react-basic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gershonv">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郭大大的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/28/react-basic/" itemprop="url">react 入门</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-28T23:03:29+08:00">
+                2018-07-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React/" itemprop="url" rel="index">
+                    <span itemprop="name">React</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://unpkg.com/react@16/umd/react.development.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://unpkg.com/react-dom@16/umd/react-dom.development.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 生产环境中不建议使用 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"https://unpkg.com/babel-standalone@6.15.0/babel.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"example"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/babel"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">ReactDOM.render(</span></span><br><span class="line"><span class="javascript">    &lt;h1&gt;Hello, world!<span class="xml"><span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span>,</span></span><br><span class="line"><span class="javascript">    <span class="built_in">document</span>.getElementById(<span class="string">'example'</span>)</span></span><br><span class="line"><span class="undefined">);</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>react.min.js - React 的核心库</li>
+<li>react-dom.min.js - 提供与 DOM 相关的功能</li>
+<li>babel.min.js - Babel 可以将 ES6 代码转为 ES5 代码</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/07/28/react-basic/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -569,6 +701,187 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/07/16/es6-class/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2018/07/16/vue-mvvm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gershonv">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郭大大的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/16/vue-mvvm/" itemprop="url">实现简易的 VUE-MVVM</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-16T22:19:09+08:00">
+                2018-07-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Vue-js/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue.js</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这是本人的学习的记录，因为最近在准备面试，很多情况下会被提问到：请简述 <code>mvvm</code> ?<br>一般情况下我可能这么答：<code>mvvm</code> 是视图和逻辑的一个分离，是<code>model view view-model</code> 的缩写，通过虚拟dom的方式实现双向数据绑定（我随便答得）</p>
+<p>那么问题来了，你知道 <code>mvvm</code> 是怎么实现的？<br>回答: <code>mvvm</code> 主要通过 <code>Object</code> 的 <code>defineProperty</code> 属性，重写 <code>data</code> 的 <code>set</code> 和<code>get</code> 函数来实现。 ok，回答得60分，那么你知道具体实现过程么？想想看，就算他没问到而你答了出来是不是更好？前提下，一定要手撸一下简单的<code>mvvm</code>才会对它有印象~</p>
+<p>话不多说，接下来是参考自张仁阳老师的教学视频而作，采用的是<a href="http://es6.ruanyifeng.com/#docs/class" target="_blank" rel="noopener">ES6</a>语法，其中也包含了我个人的理解，如果能帮助到您，我将十分高兴。如有错误之处，请各位大佬指正出来，不胜感激~~~</p>
+<p>在实现之前，请先了解基本的<code>mvvm</code>的编译过程以及使用</p>
+<ul>
+<li><p>编译的流程图<br><img src="https://user-gold-cdn.xitu.io/2018/7/18/164ac9a02d21c8cb?w=700&amp;h=374&amp;f=jpeg&amp;s=31670" alt=""></p>
+</li>
+<li><p>整体分析<br><img src="https://user-gold-cdn.xitu.io/2018/7/18/164ac90097e68912?w=639&amp;h=388&amp;f=png&amp;s=49631" alt=""></p>
+</li>
+</ul>
+<p>可以发现<code>new MVVM()</code>后的编译过程主体分为两个部分：</p>
+<ol>
+<li>一部分是模板的编译 <code>Compile</code><ul>
+<li>编译元素和文本，最终渲染到页面中</li>
+<li>其中标签中有模板指令的标签才执行编译 例如<code>&lt;div&gt;我很帅&lt;/div&gt;</code> 不执行编译</li>
+</ul>
+</li>
+<li>一部分是数据劫持 <code>Observer</code><ul>
+<li><code>Dep</code> 发布订阅，将所有需要通知变化的<code>data</code>添加到一个数组中</li>
+<li><code>Watcher</code> 如果数据发生改变，在<code>Object</code>的<code>defineProperty</code>的<code>set</code>函数中调用<code>Watcher</code>的<code>update</code>方法</li>
+</ul>
+</li>
+</ol>
+<h4 id="明确本文需要实现的目标"><a href="#明确本文需要实现的目标" class="headerlink" title="明确本文需要实现的目标"></a>明确本文需要实现的目标</h4><ol>
+<li><strong>实现模板编译的过程 完成<code>Vue</code>实例中的属性可以正确绑定在标签中，并且渲染在页面中</strong><ul>
+<li>工作：指令的解析，正则替换双大括号</li>
+<li>将节点的内容<code>node.textContent</code>或者<code>input</code>的<code>value</code>编译出来</li>
+</ul>
+</li>
+<li><strong>完成数据的双向绑定</strong><ul>
+<li>工作：通过<code>observe</code>类劫持数据变化</li>
+<li>添加发布与订阅：<code>Object.defineProperty</code> 在<code>get</code>钩子中<code>addSub</code>,<code>set</code>钩子中通知变化<code>dep.notify()</code></li>
+<li><code>dep.notify()</code>调用的是<code>Watcher</code>的<code>update</code>方法，也就是说需要在<code>input</code>变化时调用更新</li>
+</ul>
+</li>
+</ol>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/07/16/vue-mvvm/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -1104,7 +1417,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2018/07/10/git-常用命令小计/">
+    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2018/07/10/git-command/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="gershonv">
@@ -1123,7 +1436,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/07/10/git-常用命令小计/" itemprop="url">git 常用命令小记</a></h1>
+                <a class="post-title-link" href="/2018/07/10/git-command/" itemprop="url">git 实用指南</a></h1>
         
 
         <div class="post-meta">
@@ -1196,21 +1509,21 @@
 
       
         
-          <h2 id="git-status"><a href="#git-status" class="headerlink" title="git status"></a>git status</h2><p><img src="https://cdn.liaoxuefeng.com/cdn/files/attachments/001384907702917346729e9afbf4127b6dfbae9207af016000/0" alt="enter description here"></p>
-<p><img src="http://pbj98r3fm.bkt.clouddn.com/git.png" alt="git"></p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status <span class="comment">// 查看状态 - 红色表示未加入工作区</span></span><br></pre></td></tr></table></figure>
-<p>M - 被修改，A - 被添加，D - 被删除，R - 重命名，?? - 未被跟踪</p>
-<p>根据上面 git status 命令的提示内容，我们至少可以得到三种命令的使用方式：</p>
-<blockquote>
-<ul>
-<li>暂存文件的命令：<strong>git add &lt;文件名&gt;</strong></li>
-<li>放弃未暂存文件的修改命令：<strong>git checkout – &lt;文件名&gt;</strong></li>
-<li>将被修改的文件暂存并提交的命令：<strong>git commit -a</strong></li>
+          <h2 id="commit-规范速查"><a href="#commit-规范速查" class="headerlink" title="commit 规范速查"></a>commit 规范速查</h2><ul>
+<li><code>feat</code>：新功能（feature）</li>
+<li><code>fix</code>：修补 bug</li>
+<li><code>docs</code>：文档（documentation）</li>
+<li><code>style</code>： 格式（不影响代码运行的变动）</li>
+<li><code>refactor</code>：重构（即不是新增功能，也不是修改 bug 的代码变动）</li>
+<li><code>test</code>：增加测试</li>
+<li><code>chore</code>：构建过程或辅助工具的变动</li>
+<li><p><code>revert</code>: 撤销以前的 commit</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">revert: feat(pencil): add <span class="string">'graphiteWidth'</span> option</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
-</blockquote>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/07/10/git-常用命令小计/#more" rel="contents">
+            <a class="btn" href="/2018/07/10/git-command/#more" rel="contents">
               Read more &raquo;
             </a>
           </div>
@@ -2226,7 +2539,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">72</span>
+                  <span class="site-state-item-count">74</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

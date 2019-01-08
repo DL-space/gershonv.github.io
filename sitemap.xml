@@ -2,6 +2,41 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://gershonv.github.io/2019/01/03/sequelize-query/</loc>
+    
+    <lastmod>2019-01-08T12:36:14.084Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://gershonv.github.io/2019/01/03/sequelize-quickStart/</loc>
+    
+    <lastmod>2019-01-08T12:34:04.395Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://gershonv.github.io/2019/01/03/sequelize-modelDefinition/</loc>
+    
+    <lastmod>2019-01-08T12:34:04.390Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://gershonv.github.io/2019/01/03/sequelize-associations/</loc>
+    
+    <lastmod>2019-01-08T12:34:04.386Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://gershonv.github.io/2018/07/10/git-command/</loc>
+    
+    <lastmod>2019-01-08T12:34:04.383Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://gershonv.github.io/2018/12/31/mysql-%E8%81%9A%E5%90%88%E5%87%BD%E6%95%B0/</loc>
     
     <lastmod>2019-01-04T14:14:13.307Z</lastmod>
@@ -96,13 +131,6 @@
     <loc>https://gershonv.github.io/2018/10/16/es6-map&set/</loc>
     
     <lastmod>2019-01-03T15:12:44.906Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://gershonv.github.io/2018/07/10/git-%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E5%B0%8F%E8%AE%A1/</loc>
-    
-    <lastmod>2019-01-03T15:12:35.790Z</lastmod>
     
   </url>
   
@@ -467,20 +495,6 @@
     <loc>https://gershonv.github.io/2018/12/30/mysql-3/</loc>
     
     <lastmod>2019-01-03T15:00:29.431Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://gershonv.github.io/2019/01/03/sequelize-1/</loc>
-    
-    <lastmod>2019-01-03T14:59:27.290Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://gershonv.github.io/2019/01/03/sequelize-2/</loc>
-    
-    <lastmod>2019-01-03T14:57:01.139Z</lastmod>
     
   </url>
   
