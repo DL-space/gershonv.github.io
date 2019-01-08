@@ -81,7 +81,7 @@ git reset head b.js
 - `git reset head` : 如果后面什么都不跟的话 就是上一次 add 里面的全部撤销了
 - `git reset head file`: 对某个文件进行撤销了
 
-## 撤销修改
+### 撤销本地修改
 
 ```bash
 # 修改文件
