@@ -289,6 +289,518 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2019/01/10/sequelize-curd/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gershonv">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郭大大的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/10/sequelize-curd/" itemprop="url">Sequelize - CURD</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-10T22:45:06+08:00">
+                2019-01-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Sequelize/" itemprop="url" rel="index">
+                    <span itemprop="name">Sequelize</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Create"><a href="#Create" class="headerlink" title="Create"></a>Create</h2><h3 id="create-创建保存新实例"><a href="#create-创建保存新实例" class="headerlink" title="create - 创建保存新实例"></a>create - 创建保存新实例</h3><blockquote>
+<p>create(values, [options]) -&gt; Promise.<instance></instance></p>
+</blockquote>
+<p>构建一个新的模型实例，并进行保存。与 <code>build()</code>方法不同的是，此方法除创建新实例外，还会将其保存到对应数据库表中。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 直接操作db</span></span><br><span class="line"><span class="keyword">const</span> user = <span class="keyword">await</span> UserModel.create(&#123;</span><br><span class="line">  name: <span class="string">'guodada'</span>,</span><br><span class="line">  age: <span class="number">23</span>,</span><br><span class="line">  sex: <span class="number">1</span>,</span><br><span class="line">  score: <span class="number">99</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>values</td>
+<td><code>Object</code></td>
+<td>无</td>
+</tr>
+<tr>
+<td>[options]</td>
+<td><code>Object</code></td>
+<td>无</td>
+</tr>
+<tr>
+<td>[options.raw=false]</td>
+<td><code>Boolean</code></td>
+<td>设置为true时，值会忽略字段和虚拟设置器</td>
+</tr>
+<tr>
+<td>[options.isNewRecord=true]</td>
+<td><code>Boolean</code></td>
+<td>无</td>
+</tr>
+<tr>
+<td>[options.fields]</td>
+<td><code>Array</code></td>
+<td>如果设置后，只有列表中区别的列才会进行保存</td>
+</tr>
+<tr>
+<td>[options.include]</td>
+<td><code>Array</code></td>
+<td>用于构建prefetched/included模型，参见 set</td>
+</tr>
+<tr>
+<td>[options.onDuplicate]</td>
+<td><code>String</code></td>
+<td>无</td>
+</tr>
+<tr>
+<td>[options.transaction]</td>
+<td><code>Transaction</code></td>
+<td>在事务中执行查询</td>
+</tr>
+<tr>
+<td>[options.logging=false]</td>
+<td><code>Function</code></td>
+<td>一个用于打印查询时所执行sql的函数</td>
+</tr>
+<tr>
+<td>[options.searchPath=DEFAULT]</td>
+<td><code>String</code></td>
+<td>指定schema的 search_path (仅 Postgres)</td>
+</tr>
+<tr>
+<td>[options.benchmark=false]</td>
+<td><code>Boolean</code></td>
+<td>当打印SQL日志时同时输出查询执行时间（毫秒）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="build-创建新实例"><a href="#build-创建新实例" class="headerlink" title="build - 创建新实例"></a>build - 创建新实例</h3><blockquote>
+<p>build(values, [options]) -&gt; Instance</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build后对象只存在于内存中，调用save后才操作db</span></span><br><span class="line"><span class="keyword">const</span> user = UserModel.build(&#123;</span><br><span class="line">  name: <span class="string">'guodada'</span>,</span><br><span class="line">  age: <span class="number">23</span>,</span><br><span class="line">  sex: <span class="number">1</span>,</span><br><span class="line">  score: <span class="number">99</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">const</span> result = <span class="keyword">await</span> user.save()</span><br><span class="line"><span class="built_in">console</span>.log(user.get(&#123; <span class="attr">plain</span>: <span class="literal">true</span> &#125;))</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>values</td>
+<td>Object</td>
+<td>无</td>
+</tr>
+<tr>
+<td>[options]</td>
+<td>Object</td>
+<td>无</td>
+</tr>
+<tr>
+<td>[options.raw=false]</td>
+<td>Boolean</td>
+<td>设置为true时，值会忽略字段和虚拟设置器</td>
+</tr>
+<tr>
+<td>[options.isNewRecord=true]</td>
+<td>Boolean</td>
+<td>无</td>
+</tr>
+<tr>
+<td>[options.include]</td>
+<td>Array</td>
+<td>用于构建<code>prefetched/included</code>模型，参见 set</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Update"><a href="#Update" class="headerlink" title="Update"></a>Update</h2><h3 id="update-更新记录"><a href="#update-更新记录" class="headerlink" title="update - 更新记录"></a>update - 更新记录</h3><blockquote>
+<p>update(values, options) -&gt; Promise.&lt;Array.&lt;affectedCount, affectedRows&gt;&gt;</p>
+</blockquote>
+<p>更新所匹配的多个实例。promise 回调中会返回一个包含一个或两个元素的数组，第一个元素始终表示受影响的行数，<br>第二个元素表示实际影响的行（仅 Postgreoptions.returning 为 true 时受支持）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> UserModel.update(&#123; <span class="attr">name</span>: <span class="string">'guoxiaoxiao'</span>, <span class="attr">age</span>: <span class="number">18</span> &#125;, &#123; <span class="attr">where</span>: &#123; <span class="attr">id</span>: <span class="number">1</span> &#125; &#125;)</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>values</td>
+<td><code>Object</code></td>
+<td>无</td>
+</tr>
+<tr>
+<td>options</td>
+<td><code>Object</code></td>
+<td>无</td>
+</tr>
+<tr>
+<td>options.where</td>
+<td><code>Object</code></td>
+<td>筛选条件</td>
+</tr>
+<tr>
+<td>[options.fields]</td>
+<td><code>Array</code></td>
+<td>要更新字段，默认为全部</td>
+</tr>
+<tr>
+<td>[options.validate=true]</td>
+<td><code>Boolean</code></td>
+<td>更新每条记录前进行验证</td>
+</tr>
+<tr>
+<td>[options.hooks=true]</td>
+<td><code>Boolean</code></td>
+<td>在执行更新前/后创建钩子</td>
+</tr>
+<tr>
+<td>[options.individualHooks=false]</td>
+<td><code>Boolean</code></td>
+<td>在执行更新前/后为每个实例创建钩子</td>
+</tr>
+<tr>
+<td>[options.sideEffects=true]</td>
+<td><code>Boolean</code></td>
+<td>是否更新任何虚拟设置</td>
+</tr>
+<tr>
+<td>[options.returning=false]</td>
+<td><code>Boolean</code></td>
+<td>返回受影响的行 (仅适用于 postgres)</td>
+</tr>
+<tr>
+<td>[options.limit]</td>
+<td><code>Number</code></td>
+<td>要更新的行数 (仅适用于 mysql 和 mariadb)</td>
+</tr>
+<tr>
+<td>[options.transaction]</td>
+<td><code>Transaction</code></td>
+<td>在事务中执行查询</td>
+</tr>
+<tr>
+<td>[options.silent=false]</td>
+<td><code>Boolean</code></td>
+<td>如果为true，updatedAt字段将不会更新</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Read"><a href="#Read" class="headerlink" title="Read"></a>Read</h2><p>详见 <a href="https://gershonv.github.io/2019/01/03/sequelize-query/">Sequelize - 使用 model 查询数据</a></p>
+<h2 id="Delete"><a href="#Delete" class="headerlink" title="Delete"></a>Delete</h2><h3 id="destroy-删除记录"><a href="#destroy-删除记录" class="headerlink" title="destroy - 删除记录"></a>destroy - 删除记录</h3><blockquote>
+<p>destroy(options) -&gt; Promise.<integer></integer></p>
+</blockquote>
+<p>删除多个实例，或设置 <code>deletedAt</code> 的时间戳为当前时间（当启用 <code>paranoid</code> 时）</p>
+<p>执行成功后返回被删除的行数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> deleteRowsCount = <span class="keyword">await</span> UserModel.destroy(&#123;</span><br><span class="line">  where: &#123; <span class="attr">id</span>: <span class="number">2</span> &#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(deleteRowsCount) <span class="comment">// 执行成功后返回被删除的行数</span></span><br></pre></td></tr></table></figure>
+<p>名称 | 类型 | 说明<br>| options                         | Object        |<br>| ——————————- | ————- | ———————————————————————– |<br>| [options.where]                 | <code>Object</code>      | 筛选条件                                                                |<br>| [options.hooks=true]            | <code>Boolean</code>     | 在执行前/后创建钩子                                                     |<br>| [options.individualHooks=false] | <code>Boolean</code>     | 在执行前/后为每个实例创建钩子                                           |<br>| [options.limit]                 | <code>Number</code>      | 要删除的行数                                                            |<br>| [options.force=false]           | <code>Boolean</code>     | 删除而不是设置 deletedAt 为当前时间戳 (仅启用 paranoid 时适用)          |<br>| [options.truncate=false]        | <code>Boolean</code>     | 设置为true时，会使用TRUNCATE代替DELETE FROM，这时会忽略where和limit选项 |<br>| [options.cascade=false]         | <code>Boolean</code>     | 仅适用于连接查询时的TRUNCATE操作，截断所有外键匹配的表                  |<br>| [options.transaction]           | <code>Transaction</code> | 在事务中执行查询                                                        |</p>
+<h2 id="findOrCreate-查找或创建"><a href="#findOrCreate-查找或创建" class="headerlink" title="findOrCreate - 查找或创建"></a>findOrCreate - 查找或创建</h2><blockquote>
+<p>findOrCreate(options) -&gt; Promise.&lt;Instance, created&gt;</p>
+</blockquote>
+<p>查找一行记录，如果不存在则创建实例并保存到数据库中</p>
+<p>在这个方法中，如果options对象中没有传入事务，那么会在内部自动创建一个新的事务，以防止在创建完成之前有新匹配查询进入。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// findOrCreate 返回一个包含已找到或创建的对象的数组，找到或创建的对象和一个布尔值</span></span><br><span class="line">UserModel.findOrCreate(&#123;</span><br><span class="line">  defaults: &#123; <span class="attr">name</span>: <span class="string">'guoxiaoxiao'</span> &#125;,</span><br><span class="line">  where: &#123; <span class="attr">name</span>: <span class="string">'guoxiaoxiao'</span> &#125;</span><br><span class="line">&#125;).spread(<span class="function">(<span class="params">user, created</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(user.name, created)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在上面的例子中，".spread" 将数组分成2部分，并将它们作为参数传递给回调函数，在这种情况下将它们视为 "user" 和 "created" 。</span></span><br><span class="line"><span class="comment">// 所以“user”将是返回数组的索引0的对象，并且 "created" 将等于 "true"。）</span></span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>options</td>
+<td><code>Object</code></td>
+<td>无</td>
+</tr>
+<tr>
+<td>options.where</td>
+<td><code>Object</code></td>
+<td>查询属性</td>
+</tr>
+<tr>
+<td>[options.defaults]</td>
+<td><code>Object</code></td>
+<td>用于创建新实例的默认值</td>
+</tr>
+<tr>
+<td>[options.transaction]</td>
+<td><code>Transaction</code></td>
+<td>在事务中执行查询</td>
+</tr>
+</tbody>
+</table>
+<h2 id="findCreateFind-查找或创建"><a href="#findCreateFind-查找或创建" class="headerlink" title="findCreateFind - 查找或创建"></a>findCreateFind - 查找或创建</h2><blockquote>
+<p>findCreateFind(options) -&gt; Promise.&lt;Instance, created&gt;</p>
+</blockquote>
+<p>效率更高的 <code>findOrCreate</code>，不会在事务中执行。首先会尝试进行查询，如果为空则尝试创建，如果是唯一约束则尝试再次查找。</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>options</td>
+<td><code>Object</code></td>
+<td>无</td>
+</tr>
+<tr>
+<td>options.where</td>
+<td><code>Object</code></td>
+<td>查询属性</td>
+</tr>
+<tr>
+<td>[options.defaults]</td>
+<td><code>Object</code></td>
+<td>用于创建新实例的默认值</td>
+</tr>
+<tr>
+<td>[options.transaction]</td>
+<td><code>Transaction</code></td>
+<td>在事务中执行查询</td>
+</tr>
+</tbody>
+</table>
+<p>ps: <code>findOrInitialize</code>  - 查找或初始化: 查找一行记录，如果不存在则创建（不保存）实例</p>
+<h2 id="insertOrUpdate-更新或创建"><a href="#insertOrUpdate-更新或创建" class="headerlink" title="insertOrUpdate - 更新或创建"></a>insertOrUpdate - 更新或创建</h2><blockquote>
+<p>upsert(values, [options]) -&gt; Promise.<created></created></p>
+</blockquote>
+<p>创建或更新一行。如果匹配到主键或唯一约束键时会进行更新。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> isCreate = <span class="keyword">await</span> TaskModel.insertOrUpdate(&#123; <span class="attr">title</span>: <span class="string">'11'</span>, <span class="attr">content</span>: <span class="string">'adfadf'</span> &#125;)</span><br><span class="line"><span class="comment">// isCreate true 创建成功 false 修改成功~</span></span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>values</td>
+<td><code>Object</code></td>
+<td>无</td>
+</tr>
+<tr>
+<td>[options]</td>
+<td><code>Object</code></td>
+<td>无</td>
+</tr>
+<tr>
+<td>[options.validate=true]</td>
+<td><code>Boolean</code></td>
+<td>插入前进行验证</td>
+</tr>
+<tr>
+<td>[options.fields=Object.keys(this.attributes)]</td>
+<td><code>Array</code></td>
+<td>要插入/更新字段。默认全部</td>
+</tr>
+<tr>
+<td>[options.transaction]</td>
+<td><code>Transaction</code></td>
+<td>在事务中执行查询</td>
+</tr>
+</tbody>
+</table>
+<h2 id="bulkCreate-创建多条记录"><a href="#bulkCreate-创建多条记录" class="headerlink" title="bulkCreate - 创建多条记录"></a>bulkCreate - 创建多条记录</h2><blockquote>
+<p>bulkCreate(records, [options]) -&gt; Promise.&lt;Array.<instance>&gt;</instance></p>
+</blockquote>
+<p>批量创建并保存多个实例。</p>
+<p>处理成功后，会在回调函数中返回一个包含多个实例的数组。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">const</span> users = <span class="keyword">await</span> UserModel.bulkCreate([</span><br><span class="line">  &#123; <span class="attr">name</span>: <span class="string">'guo'</span>, <span class="attr">age</span>: <span class="number">22</span>, <span class="attr">sex</span>: <span class="number">1</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">name</span>: <span class="string">'guo2'</span>, <span class="attr">age</span>: <span class="number">12</span>, <span class="attr">sex</span>: <span class="number">0</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">name</span>: <span class="string">'guo3'</span>, <span class="attr">age</span>: <span class="number">32</span>, <span class="attr">sex</span>: <span class="number">1</span> &#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>records</td>
+<td><code>Array</code></td>
+<td>要创建实例的对象（键/值 对）列表</td>
+</tr>
+<tr>
+<td>[options]</td>
+<td><code>Object</code></td>
+<td>无</td>
+</tr>
+<tr>
+<td>[options.fields]</td>
+<td><code>Array</code></td>
+<td>要插入的字段。默认全部</td>
+</tr>
+<tr>
+<td>[options.validate=true]</td>
+<td><code>Boolean</code></td>
+<td>插入每条记录前进行验证</td>
+</tr>
+<tr>
+<td>[options.hooks=true]</td>
+<td><code>Boolean</code></td>
+<td>在执行前/后创建钩子</td>
+</tr>
+<tr>
+<td>[options.individualHooks=false]</td>
+<td><code>Boolean</code></td>
+<td>在执行前/后为每个实例创建钩子</td>
+</tr>
+<tr>
+<td>[options.ignoreDuplicates=false]</td>
+<td><code>Boolean</code></td>
+<td>忽略重复主键（Postgres不支持）</td>
+</tr>
+<tr>
+<td>[options.updateOnDuplicate]</td>
+<td><code>Array</code></td>
+<td>如果行键已存在是否更新（mysql &amp; mariadb支持）. 默认为更新</td>
+</tr>
+<tr>
+<td>[options.transaction]</td>
+<td><code>Transaction</code></td>
+<td>在事务中执行查询</td>
+</tr>
+</tbody>
+</table>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2019/01/03/sequelize-query/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -454,7 +966,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/01/03/sequelize-associations/" itemprop="url">sequelize - associations</a></h1>
+                <a class="post-title-link" href="/2019/01/03/sequelize-associations/" itemprop="url">Sequelize - associations</a></h1>
         
 
         <div class="post-meta">
@@ -3195,170 +3707,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2018/11/21/http-TCP/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="gershonv">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郭大大的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/21/http-TCP/" itemprop="url">HTTP - TCP 三次握手四次挥手</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-21T09:47:17+08:00">
-                2018-11-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/HTTP/" itemprop="url" rel="index">
-                    <span itemprop="name">HTTP</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="TCP-的三次握手"><a href="#TCP-的三次握手" class="headerlink" title="TCP 的三次握手"></a>TCP 的三次握手</h2><blockquote>
-<p><code>HTTP</code> 请求与 <code>TCP</code> 链接之间的关系，在客户端向服务端请求和返回的过程中，是需要去创建一个 <code>TCP connection</code>，因为 <code>HTTP</code> 是不存在链接这样一个概念的，它只有请求和响应这样一个概念，请求和响应都是一个数据包，中间要通过一个传输通道，这个传输通道就是在 <code>TCP</code> 里面创建了一个从客户端发起和服务端接收的一个链接，<code>TCP</code> 链接在创建的时候是有一个三次握手(三次网络传输)这样一个消耗在的。</p>
-</blockquote>
-<p>下面是 <code>TCP</code> 报文格式图：</p>
-<p><img src="https://user-gold-cdn.xitu.io/2018/11/21/1673405dad1eced0?w=500&amp;h=380&amp;f=jpeg&amp;s=32339" alt=""><br>↓↓↓↓<br><img src="https://user-gold-cdn.xitu.io/2018/11/21/1673405e30495223?w=1046&amp;h=402&amp;f=png&amp;s=27889" alt=""></p>
-<p>有几个字段需要重点介绍下：</p>
-<ol>
-<li>Seq 序号: <code>sequeence number</code>，用来标识从 TCP 源端向目的端发送的字节流，发起方发送数据时对此进行标记。</li>
-<li>确认序号：<code>acknowledgment number</code>，只有 ACK 标志位为 1 时，确认序号字段才有效，<code>Ack=Seq+1</code>。</li>
-<li>标志位：共 6 个，即 URG、ACK、PSH、RST、SYN、FIN 等，具体含义如下：<ul>
-<li><code>URG</code>：紧急指针（urgent pointer）有效。</li>
-<li><code>ACK</code>：确认序号有效。</li>
-<li><code>PSH</code>：接收方应该尽快将这个报文交给应用层。</li>
-<li><code>RST</code>：重置连接。</li>
-<li><code>SYN</code>：发起一个新连接。</li>
-<li><code>FIN</code>：释放一个连接。</li>
-</ul>
-</li>
-</ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/11/21/http-TCP/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3413,7 +3761,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">74</span>
+                  <span class="site-state-item-count">75</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>

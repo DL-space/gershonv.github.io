@@ -5,11 +5,51 @@
     
   <url>
     <loc>https://gershonv.github.io/2019/01/03/sequelize-query/</loc>
-    <lastmod>2019-01-08T12:36:14.084Z</lastmod>
+    <lastmod>2019-01-10T15:51:16.343Z</lastmod>
     <data>
         <display>
         <title>Sequelize - 使用 model 查询数据</title>
         <pubTime>2019-01-03T06:56:03.000Z</pubTime>
+        
+        <tag>Sequelize</tag>
+         
+         
+           
+             
+              <breadCrumb title="Sequelize" url="https://gershonv.github.io/categories/Sequelize/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://gershonv.github.io/2019/01/03/sequelize-associations/</loc>
+    <lastmod>2019-01-10T15:48:38.719Z</lastmod>
+    <data>
+        <display>
+        <title>Sequelize - associations</title>
+        <pubTime>2019-01-03T06:36:03.000Z</pubTime>
+        
+        <tag>Sequelize</tag>
+         
+         
+           
+             
+              <breadCrumb title="Sequelize" url="https://gershonv.github.io/categories/Sequelize/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://gershonv.github.io/2019/01/10/sequelize-curd/</loc>
+    <lastmod>2019-01-10T15:48:00.225Z</lastmod>
+    <data>
+        <display>
+        <title>Sequelize - CURD</title>
+        <pubTime>2019-01-10T14:45:06.000Z</pubTime>
         
         <tag>Sequelize</tag>
          
@@ -50,26 +90,6 @@
         <display>
         <title>Sequelize - model definition</title>
         <pubTime>2019-01-03T06:35:03.000Z</pubTime>
-        
-        <tag>Sequelize</tag>
-         
-         
-           
-             
-              <breadCrumb title="Sequelize" url="https://gershonv.github.io/categories/Sequelize/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://gershonv.github.io/2019/01/03/sequelize-associations/</loc>
-    <lastmod>2019-01-08T12:34:04.386Z</lastmod>
-    <data>
-        <display>
-        <title>sequelize - associations</title>
-        <pubTime>2019-01-03T06:36:03.000Z</pubTime>
         
         <tag>Sequelize</tag>
          

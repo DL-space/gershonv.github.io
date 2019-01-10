@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="react-router," />
+  <meta name="keywords" content="Sequelize," />
 
 
 
@@ -81,18 +81,18 @@
 
 
 
-<meta name="description" content="动态组件webpack 的 import 方法webpack 将 import()看做一个分割点并将其请求的 module 打包为一个独立的 chunk。import()以模块名称作为参数名并且返回一个 Promise 对象。 采用适配器模式封装 import() 适配器模式（Adapter）:将一个类的接口转换成客户希望的另外一个接口。Adapter 模式使得原本由于接口不兼容而不能一起工作的那">
-<meta name="keywords" content="react-router">
+<meta name="description" content="Createcreate - 创建保存新实例 create(values, [options]) -&amp;gt; Promise.  构建一个新的模型实例，并进行保存。与 build()方法不同的是，此方法除创建新实例外，还会将其保存到对应数据库表中。 1234567// 直接操作dbconst user = await UserModel.create(&amp;#123;  name: &apos;guodada&apos;">
+<meta name="keywords" content="Sequelize">
 <meta property="og:type" content="article">
-<meta property="og:title" content="react-router - 动态路由">
-<meta property="og:url" content="https://gershonv.github.io/2018/11/08/react-router-6/index.html">
+<meta property="og:title" content="Sequelize - CURD">
+<meta property="og:url" content="https://gershonv.github.io/2019/01/10/sequelize-curd/index.html">
 <meta property="og:site_name" content="郭大大的博客">
-<meta property="og:description" content="动态组件webpack 的 import 方法webpack 将 import()看做一个分割点并将其请求的 module 打包为一个独立的 chunk。import()以模块名称作为参数名并且返回一个 Promise 对象。 采用适配器模式封装 import() 适配器模式（Adapter）:将一个类的接口转换成客户希望的另外一个接口。Adapter 模式使得原本由于接口不兼容而不能一起工作的那">
+<meta property="og:description" content="Createcreate - 创建保存新实例 create(values, [options]) -&amp;gt; Promise.  构建一个新的模型实例，并进行保存。与 build()方法不同的是，此方法除创建新实例外，还会将其保存到对应数据库表中。 1234567// 直接操作dbconst user = await UserModel.create(&amp;#123;  name: &apos;guodada&apos;">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-03T15:08:01.266Z">
+<meta property="og:updated_time" content="2019-01-10T15:48:00.225Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="react-router - 动态路由">
-<meta name="twitter:description" content="动态组件webpack 的 import 方法webpack 将 import()看做一个分割点并将其请求的 module 打包为一个独立的 chunk。import()以模块名称作为参数名并且返回一个 Promise 对象。 采用适配器模式封装 import() 适配器模式（Adapter）:将一个类的接口转换成客户希望的另外一个接口。Adapter 模式使得原本由于接口不兼容而不能一起工作的那">
+<meta name="twitter:title" content="Sequelize - CURD">
+<meta name="twitter:description" content="Createcreate - 创建保存新实例 create(values, [options]) -&amp;gt; Promise.  构建一个新的模型实例，并进行保存。与 build()方法不同的是，此方法除创建新实例外，还会将其保存到对应数据库表中。 1234567// 直接操作dbconst user = await UserModel.create(&amp;#123;  name: &apos;guodada&apos;">
 
 
 
@@ -122,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="https://gershonv.github.io/2018/11/08/react-router-6/"/>
+  <link rel="canonical" href="https://gershonv.github.io/2019/01/10/sequelize-curd/"/>
 
 
 
 
 
-  <title>react-router - 动态路由 | 郭大大的博客</title>
+  <title>Sequelize - CURD | 郭大大的博客</title>
   
 
 
@@ -289,7 +289,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2018/11/08/react-router-6/">
+    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2019/01/10/sequelize-curd/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="gershonv">
@@ -306,7 +306,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">react-router - 动态路由</h1>
+          <h1 class="post-title" itemprop="name headline">Sequelize - CURD</h1>
         
 
         <div class="post-meta">
@@ -318,8 +318,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-08T15:59:59+08:00">
-                2018-11-08
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-10T22:45:06+08:00">
+                2019-01-10
               </time>
             
 
@@ -341,8 +341,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/React-Router/" itemprop="url" rel="index">
-                    <span itemprop="name">React-Router</span>
+                  <a href="/categories/Sequelize/" itemprop="url" rel="index">
+                    <span itemprop="name">Sequelize</span>
                   </a>
                 </span>
 
@@ -378,22 +378,377 @@
       
 
       
-        <h2 id="动态组件"><a href="#动态组件" class="headerlink" title="动态组件"></a>动态组件</h2><h3 id="webpack-的-import-方法"><a href="#webpack-的-import-方法" class="headerlink" title="webpack 的 import 方法"></a>webpack 的 import 方法</h3><p><code>webpack</code> 将 <code>import()</code>看做一个分割点并将其请求的 <code>module</code> 打包为一个独立的 <code>chunk</code>。<code>import()</code>以模块名称作为参数名并且返回一个 <code>Promise</code> 对象。</p>
-<h3 id="采用适配器模式封装-import"><a href="#采用适配器模式封装-import" class="headerlink" title="采用适配器模式封装 import()"></a>采用适配器模式封装 import()</h3><blockquote>
-<p>适配器模式（Adapter）:将一个类的接口转换成客户希望的另外一个接口。Adapter 模式使得原本由于接口不兼容而不能一起工作的那些类可以一起工作。</p>
+        <h2 id="Create"><a href="#Create" class="headerlink" title="Create"></a>Create</h2><h3 id="create-创建保存新实例"><a href="#create-创建保存新实例" class="headerlink" title="create - 创建保存新实例"></a>create - 创建保存新实例</h3><blockquote>
+<p>create(values, [options]) -&gt; Promise.<instance></instance></p>
 </blockquote>
-<p>当前场景，需要解决的是，使用 <code>import()</code>异步加载组件后，如何将加载的组件交给 <code>React</code> 进行更新。<br>方法也很容易，就是利用 <code>state</code>。当异步加载好组件后，调用 <code>setState</code> 方法，就可以通知到。<br>那么，依照这个思路，新建个高阶组件，运用适配器模式，来对 <code>import()</code>进行封装。</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"><span class="keyword">import</span> &#123; BrowserRouter <span class="keyword">as</span> Router, Route, Switch &#125; <span class="keyword">from</span> <span class="string">'react-router-dom'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">asyncComponent</span>(<span class="params">importComponent</span>) </span>&#123;</span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">AsyncComponent</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">      <span class="keyword">super</span>(props)</span><br><span class="line">      <span class="keyword">this</span>.state = &#123;</span><br><span class="line">        component: <span class="literal">null</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">async</span> componentDidMount() &#123;</span><br><span class="line">      <span class="keyword">const</span> &#123; <span class="attr">default</span>: component &#125; = <span class="keyword">await</span> importComponent()</span><br><span class="line">      <span class="keyword">this</span>.setState(&#123;</span><br><span class="line">        component: component</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">    render() &#123;</span><br><span class="line">      <span class="keyword">const</span> RenderComponet = <span class="keyword">this</span>.state.component</span><br><span class="line">      <span class="keyword">return</span> RenderComponet ? <span class="xml"><span class="tag">&lt;<span class="name">RenderComponet</span> &#123;<span class="attr">...this.props</span>&#125; /&gt;</span> : <span class="tag">&lt;<span class="name">div</span>&gt;</span>loading...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="xml">    &#125;</span></span><br><span class="line"><span class="xml">  &#125;</span></span><br><span class="line"><span class="xml">  return AsyncComponent</span></span><br><span class="line"><span class="xml">&#125;</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">const NoFound = asyncComponent(() =&gt; import('./components/NoFound'))</span></span><br><span class="line"><span class="xml"></span></span><br><span class="line"><span class="xml">class App extends Component &#123;</span></span><br><span class="line"><span class="xml">  render() &#123;</span></span><br><span class="line"><span class="xml">    return (</span></span><br><span class="line">      &lt;Router&gt;</span><br><span class="line">        &lt;Switch&gt;</span><br><span class="line">          &lt;Route exact path="/" component=&#123;() =&gt; &lt;h2&gt;Home&lt;/h2&gt;&#125; /&gt;</span><br><span class="line">          &lt;Route component=&#123;NoFound&#125; /&gt;</span><br><span class="line">        &lt;/Switch&gt;</span><br><span class="line">      &lt;/Router&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">export default App</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-<h2 id="基于-react-loadable-实现代码分割"><a href="#基于-react-loadable-实现代码分割" class="headerlink" title="基于 react-loadable 实现代码分割"></a>基于 react-loadable 实现代码分割</h2><p>react-router v4 发生了巨大改变，由静态路由开始转向动态路由，从此，就像使用普通组件一样来声明路由。其实，路由从此就是一个普通组件。</p>
-<p>路由的按需加载的实质是代码分割,<code>react-router</code> 官网有个代码拆分的示例，是基于 <del>bundle-loader</del> 实现的.现在官网的代码已经改为基于<code>react-loadable</code> 实现。</p>
-<p>按照上述方法，已经实现了代码分割。然而，<code>react-loadable</code> 为我们提供了更好的解决方案。<code>react-loadable</code> 核心实现原理也是通过 <code>dynamic import</code> 来实现组件的异步加载。在此基础上，它提供了更为强大的功能，如根据延迟时间确定是否显示 <code>loading</code> 组件、预加载、支持服务端渲染等。</p>
-<p>在另一篇译文- <a href="https://gershonv.github.io/2018/11/07/react-router-3/">[译] react-router Code Splitting</a>中，我也写过了 react-loadable 的用法介绍，详情可以查看这篇文章。</p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"><span class="keyword">import</span> &#123; BrowserRouter <span class="keyword">as</span> Router, Route, Switch &#125; <span class="keyword">from</span> <span class="string">'react-router-dom'</span></span><br><span class="line"><span class="keyword">import</span> Loadable <span class="keyword">from</span> <span class="string">'react-loadable'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> NoFound = Loadable(&#123;</span><br><span class="line">  loader: <span class="function"><span class="params">()</span> =&gt;</span> <span class="keyword">import</span>(<span class="string">'./components/NoFound'</span>),</span><br><span class="line">  loading: <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>loading<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">App</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;Router&gt;</span><br><span class="line">        &lt;Switch&gt;</span><br><span class="line">          &lt;Route exact path=<span class="string">"/"</span> component=&#123;() =&gt; <span class="xml"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>Home<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span>&#125; /&gt;</span><br><span class="line">          &lt;Route component=&#123;NoFound&#125; /&gt;</span><br><span class="line">        &lt;<span class="regexp">/Switch&gt;</span></span><br><span class="line"><span class="regexp">      &lt;/</span>Router&gt;</span><br><span class="line">    )</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App</span><br></pre></td></tr></table></figure>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
-<li><a href="https://blog.segmentfault.net/a/1190000016362502#articleHeader1" target="_blank" rel="noopener">React router 动态加载组件-适配器模式的应用</a></li>
-<li><a href="https://blog.segmentfault.net/a/1190000013589728" target="_blank" rel="noopener">react 扬帆起航之路由配置与组件分割</a></li>
-</ul>
+<p>构建一个新的模型实例，并进行保存。与 <code>build()</code>方法不同的是，此方法除创建新实例外，还会将其保存到对应数据库表中。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 直接操作db</span></span><br><span class="line"><span class="keyword">const</span> user = <span class="keyword">await</span> UserModel.create(&#123;</span><br><span class="line">  name: <span class="string">'guodada'</span>,</span><br><span class="line">  age: <span class="number">23</span>,</span><br><span class="line">  sex: <span class="number">1</span>,</span><br><span class="line">  score: <span class="number">99</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>values</td>
+<td><code>Object</code></td>
+<td>无</td>
+</tr>
+<tr>
+<td>[options]</td>
+<td><code>Object</code></td>
+<td>无</td>
+</tr>
+<tr>
+<td>[options.raw=false]</td>
+<td><code>Boolean</code></td>
+<td>设置为true时，值会忽略字段和虚拟设置器</td>
+</tr>
+<tr>
+<td>[options.isNewRecord=true]</td>
+<td><code>Boolean</code></td>
+<td>无</td>
+</tr>
+<tr>
+<td>[options.fields]</td>
+<td><code>Array</code></td>
+<td>如果设置后，只有列表中区别的列才会进行保存</td>
+</tr>
+<tr>
+<td>[options.include]</td>
+<td><code>Array</code></td>
+<td>用于构建prefetched/included模型，参见 set</td>
+</tr>
+<tr>
+<td>[options.onDuplicate]</td>
+<td><code>String</code></td>
+<td>无</td>
+</tr>
+<tr>
+<td>[options.transaction]</td>
+<td><code>Transaction</code></td>
+<td>在事务中执行查询</td>
+</tr>
+<tr>
+<td>[options.logging=false]</td>
+<td><code>Function</code></td>
+<td>一个用于打印查询时所执行sql的函数</td>
+</tr>
+<tr>
+<td>[options.searchPath=DEFAULT]</td>
+<td><code>String</code></td>
+<td>指定schema的 search_path (仅 Postgres)</td>
+</tr>
+<tr>
+<td>[options.benchmark=false]</td>
+<td><code>Boolean</code></td>
+<td>当打印SQL日志时同时输出查询执行时间（毫秒）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="build-创建新实例"><a href="#build-创建新实例" class="headerlink" title="build - 创建新实例"></a>build - 创建新实例</h3><blockquote>
+<p>build(values, [options]) -&gt; Instance</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build后对象只存在于内存中，调用save后才操作db</span></span><br><span class="line"><span class="keyword">const</span> user = UserModel.build(&#123;</span><br><span class="line">  name: <span class="string">'guodada'</span>,</span><br><span class="line">  age: <span class="number">23</span>,</span><br><span class="line">  sex: <span class="number">1</span>,</span><br><span class="line">  score: <span class="number">99</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">const</span> result = <span class="keyword">await</span> user.save()</span><br><span class="line"><span class="built_in">console</span>.log(user.get(&#123; <span class="attr">plain</span>: <span class="literal">true</span> &#125;))</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>values</td>
+<td>Object</td>
+<td>无</td>
+</tr>
+<tr>
+<td>[options]</td>
+<td>Object</td>
+<td>无</td>
+</tr>
+<tr>
+<td>[options.raw=false]</td>
+<td>Boolean</td>
+<td>设置为true时，值会忽略字段和虚拟设置器</td>
+</tr>
+<tr>
+<td>[options.isNewRecord=true]</td>
+<td>Boolean</td>
+<td>无</td>
+</tr>
+<tr>
+<td>[options.include]</td>
+<td>Array</td>
+<td>用于构建<code>prefetched/included</code>模型，参见 set</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Update"><a href="#Update" class="headerlink" title="Update"></a>Update</h2><h3 id="update-更新记录"><a href="#update-更新记录" class="headerlink" title="update - 更新记录"></a>update - 更新记录</h3><blockquote>
+<p>update(values, options) -&gt; Promise.&lt;Array.&lt;affectedCount, affectedRows&gt;&gt;</p>
+</blockquote>
+<p>更新所匹配的多个实例。promise 回调中会返回一个包含一个或两个元素的数组，第一个元素始终表示受影响的行数，<br>第二个元素表示实际影响的行（仅 Postgreoptions.returning 为 true 时受支持）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> UserModel.update(&#123; <span class="attr">name</span>: <span class="string">'guoxiaoxiao'</span>, <span class="attr">age</span>: <span class="number">18</span> &#125;, &#123; <span class="attr">where</span>: &#123; <span class="attr">id</span>: <span class="number">1</span> &#125; &#125;)</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>values</td>
+<td><code>Object</code></td>
+<td>无</td>
+</tr>
+<tr>
+<td>options</td>
+<td><code>Object</code></td>
+<td>无</td>
+</tr>
+<tr>
+<td>options.where</td>
+<td><code>Object</code></td>
+<td>筛选条件</td>
+</tr>
+<tr>
+<td>[options.fields]</td>
+<td><code>Array</code></td>
+<td>要更新字段，默认为全部</td>
+</tr>
+<tr>
+<td>[options.validate=true]</td>
+<td><code>Boolean</code></td>
+<td>更新每条记录前进行验证</td>
+</tr>
+<tr>
+<td>[options.hooks=true]</td>
+<td><code>Boolean</code></td>
+<td>在执行更新前/后创建钩子</td>
+</tr>
+<tr>
+<td>[options.individualHooks=false]</td>
+<td><code>Boolean</code></td>
+<td>在执行更新前/后为每个实例创建钩子</td>
+</tr>
+<tr>
+<td>[options.sideEffects=true]</td>
+<td><code>Boolean</code></td>
+<td>是否更新任何虚拟设置</td>
+</tr>
+<tr>
+<td>[options.returning=false]</td>
+<td><code>Boolean</code></td>
+<td>返回受影响的行 (仅适用于 postgres)</td>
+</tr>
+<tr>
+<td>[options.limit]</td>
+<td><code>Number</code></td>
+<td>要更新的行数 (仅适用于 mysql 和 mariadb)</td>
+</tr>
+<tr>
+<td>[options.transaction]</td>
+<td><code>Transaction</code></td>
+<td>在事务中执行查询</td>
+</tr>
+<tr>
+<td>[options.silent=false]</td>
+<td><code>Boolean</code></td>
+<td>如果为true，updatedAt字段将不会更新</td>
+</tr>
+</tbody>
+</table>
+<h2 id="Read"><a href="#Read" class="headerlink" title="Read"></a>Read</h2><p>详见 <a href="https://gershonv.github.io/2019/01/03/sequelize-query/">Sequelize - 使用 model 查询数据</a></p>
+<h2 id="Delete"><a href="#Delete" class="headerlink" title="Delete"></a>Delete</h2><h3 id="destroy-删除记录"><a href="#destroy-删除记录" class="headerlink" title="destroy - 删除记录"></a>destroy - 删除记录</h3><blockquote>
+<p>destroy(options) -&gt; Promise.<integer></integer></p>
+</blockquote>
+<p>删除多个实例，或设置 <code>deletedAt</code> 的时间戳为当前时间（当启用 <code>paranoid</code> 时）</p>
+<p>执行成功后返回被删除的行数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> deleteRowsCount = <span class="keyword">await</span> UserModel.destroy(&#123;</span><br><span class="line">  where: &#123; <span class="attr">id</span>: <span class="number">2</span> &#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(deleteRowsCount) <span class="comment">// 执行成功后返回被删除的行数</span></span><br></pre></td></tr></table></figure>
+<p>名称 | 类型 | 说明<br>| options                         | Object        |<br>| ——————————- | ————- | ———————————————————————– |<br>| [options.where]                 | <code>Object</code>      | 筛选条件                                                                |<br>| [options.hooks=true]            | <code>Boolean</code>     | 在执行前/后创建钩子                                                     |<br>| [options.individualHooks=false] | <code>Boolean</code>     | 在执行前/后为每个实例创建钩子                                           |<br>| [options.limit]                 | <code>Number</code>      | 要删除的行数                                                            |<br>| [options.force=false]           | <code>Boolean</code>     | 删除而不是设置 deletedAt 为当前时间戳 (仅启用 paranoid 时适用)          |<br>| [options.truncate=false]        | <code>Boolean</code>     | 设置为true时，会使用TRUNCATE代替DELETE FROM，这时会忽略where和limit选项 |<br>| [options.cascade=false]         | <code>Boolean</code>     | 仅适用于连接查询时的TRUNCATE操作，截断所有外键匹配的表                  |<br>| [options.transaction]           | <code>Transaction</code> | 在事务中执行查询                                                        |</p>
+<h2 id="findOrCreate-查找或创建"><a href="#findOrCreate-查找或创建" class="headerlink" title="findOrCreate - 查找或创建"></a>findOrCreate - 查找或创建</h2><blockquote>
+<p>findOrCreate(options) -&gt; Promise.&lt;Instance, created&gt;</p>
+</blockquote>
+<p>查找一行记录，如果不存在则创建实例并保存到数据库中</p>
+<p>在这个方法中，如果options对象中没有传入事务，那么会在内部自动创建一个新的事务，以防止在创建完成之前有新匹配查询进入。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// findOrCreate 返回一个包含已找到或创建的对象的数组，找到或创建的对象和一个布尔值</span></span><br><span class="line">UserModel.findOrCreate(&#123;</span><br><span class="line">  defaults: &#123; <span class="attr">name</span>: <span class="string">'guoxiaoxiao'</span> &#125;,</span><br><span class="line">  where: &#123; <span class="attr">name</span>: <span class="string">'guoxiaoxiao'</span> &#125;</span><br><span class="line">&#125;).spread(<span class="function">(<span class="params">user, created</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(user.name, created)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在上面的例子中，".spread" 将数组分成2部分，并将它们作为参数传递给回调函数，在这种情况下将它们视为 "user" 和 "created" 。</span></span><br><span class="line"><span class="comment">// 所以“user”将是返回数组的索引0的对象，并且 "created" 将等于 "true"。）</span></span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>options</td>
+<td><code>Object</code></td>
+<td>无</td>
+</tr>
+<tr>
+<td>options.where</td>
+<td><code>Object</code></td>
+<td>查询属性</td>
+</tr>
+<tr>
+<td>[options.defaults]</td>
+<td><code>Object</code></td>
+<td>用于创建新实例的默认值</td>
+</tr>
+<tr>
+<td>[options.transaction]</td>
+<td><code>Transaction</code></td>
+<td>在事务中执行查询</td>
+</tr>
+</tbody>
+</table>
+<h2 id="findCreateFind-查找或创建"><a href="#findCreateFind-查找或创建" class="headerlink" title="findCreateFind - 查找或创建"></a>findCreateFind - 查找或创建</h2><blockquote>
+<p>findCreateFind(options) -&gt; Promise.&lt;Instance, created&gt;</p>
+</blockquote>
+<p>效率更高的 <code>findOrCreate</code>，不会在事务中执行。首先会尝试进行查询，如果为空则尝试创建，如果是唯一约束则尝试再次查找。</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>options</td>
+<td><code>Object</code></td>
+<td>无</td>
+</tr>
+<tr>
+<td>options.where</td>
+<td><code>Object</code></td>
+<td>查询属性</td>
+</tr>
+<tr>
+<td>[options.defaults]</td>
+<td><code>Object</code></td>
+<td>用于创建新实例的默认值</td>
+</tr>
+<tr>
+<td>[options.transaction]</td>
+<td><code>Transaction</code></td>
+<td>在事务中执行查询</td>
+</tr>
+</tbody>
+</table>
+<p>ps: <code>findOrInitialize</code>  - 查找或初始化: 查找一行记录，如果不存在则创建（不保存）实例</p>
+<h2 id="insertOrUpdate-更新或创建"><a href="#insertOrUpdate-更新或创建" class="headerlink" title="insertOrUpdate - 更新或创建"></a>insertOrUpdate - 更新或创建</h2><blockquote>
+<p>upsert(values, [options]) -&gt; Promise.<created></created></p>
+</blockquote>
+<p>创建或更新一行。如果匹配到主键或唯一约束键时会进行更新。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> isCreate = <span class="keyword">await</span> TaskModel.insertOrUpdate(&#123; <span class="attr">title</span>: <span class="string">'11'</span>, <span class="attr">content</span>: <span class="string">'adfadf'</span> &#125;)</span><br><span class="line"><span class="comment">// isCreate true 创建成功 false 修改成功~</span></span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>values</td>
+<td><code>Object</code></td>
+<td>无</td>
+</tr>
+<tr>
+<td>[options]</td>
+<td><code>Object</code></td>
+<td>无</td>
+</tr>
+<tr>
+<td>[options.validate=true]</td>
+<td><code>Boolean</code></td>
+<td>插入前进行验证</td>
+</tr>
+<tr>
+<td>[options.fields=Object.keys(this.attributes)]</td>
+<td><code>Array</code></td>
+<td>要插入/更新字段。默认全部</td>
+</tr>
+<tr>
+<td>[options.transaction]</td>
+<td><code>Transaction</code></td>
+<td>在事务中执行查询</td>
+</tr>
+</tbody>
+</table>
+<h2 id="bulkCreate-创建多条记录"><a href="#bulkCreate-创建多条记录" class="headerlink" title="bulkCreate - 创建多条记录"></a>bulkCreate - 创建多条记录</h2><blockquote>
+<p>bulkCreate(records, [options]) -&gt; Promise.&lt;Array.<instance>&gt;</instance></p>
+</blockquote>
+<p>批量创建并保存多个实例。</p>
+<p>处理成功后，会在回调函数中返回一个包含多个实例的数组。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">const</span> users = <span class="keyword">await</span> UserModel.bulkCreate([</span><br><span class="line">  &#123; <span class="attr">name</span>: <span class="string">'guo'</span>, <span class="attr">age</span>: <span class="number">22</span>, <span class="attr">sex</span>: <span class="number">1</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">name</span>: <span class="string">'guo2'</span>, <span class="attr">age</span>: <span class="number">12</span>, <span class="attr">sex</span>: <span class="number">0</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">name</span>: <span class="string">'guo3'</span>, <span class="attr">age</span>: <span class="number">32</span>, <span class="attr">sex</span>: <span class="number">1</span> &#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>类型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>records</td>
+<td><code>Array</code></td>
+<td>要创建实例的对象（键/值 对）列表</td>
+</tr>
+<tr>
+<td>[options]</td>
+<td><code>Object</code></td>
+<td>无</td>
+</tr>
+<tr>
+<td>[options.fields]</td>
+<td><code>Array</code></td>
+<td>要插入的字段。默认全部</td>
+</tr>
+<tr>
+<td>[options.validate=true]</td>
+<td><code>Boolean</code></td>
+<td>插入每条记录前进行验证</td>
+</tr>
+<tr>
+<td>[options.hooks=true]</td>
+<td><code>Boolean</code></td>
+<td>在执行前/后创建钩子</td>
+</tr>
+<tr>
+<td>[options.individualHooks=false]</td>
+<td><code>Boolean</code></td>
+<td>在执行前/后为每个实例创建钩子</td>
+</tr>
+<tr>
+<td>[options.ignoreDuplicates=false]</td>
+<td><code>Boolean</code></td>
+<td>忽略重复主键（Postgres不支持）</td>
+</tr>
+<tr>
+<td>[options.updateOnDuplicate]</td>
+<td><code>Array</code></td>
+<td>如果行键已存在是否更新（mysql &amp; mariadb支持）. 默认为更新</td>
+</tr>
+<tr>
+<td>[options.transaction]</td>
+<td><code>Transaction</code></td>
+<td>在事务中执行查询</td>
+</tr>
+</tbody>
+</table>
 
       
     </div>
@@ -411,7 +766,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/react-router/" rel="tag"># react-router</a>
+            <a href="/tags/Sequelize/" rel="tag"># Sequelize</a>
           
         </div>
       
@@ -424,8 +779,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/11/07/react-router-5/" rel="next" title="react-router - 实践系列">
-                <i class="fa fa-chevron-left"></i> react-router - 实践系列
+              <a href="/2019/01/03/sequelize-query/" rel="next" title="Sequelize - 使用 model 查询数据">
+                <i class="fa fa-chevron-left"></i> Sequelize - 使用 model 查询数据
               </a>
             
           </div>
@@ -433,10 +788,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/11/09/react-context/" rel="prev" title="react-context">
-                react-context <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -598,7 +949,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#动态组件"><span class="nav-number">1.</span> <span class="nav-text">动态组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack-的-import-方法"><span class="nav-number">1.1.</span> <span class="nav-text">webpack 的 import 方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#采用适配器模式封装-import"><span class="nav-number">1.2.</span> <span class="nav-text">采用适配器模式封装 import()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于-react-loadable-实现代码分割"><span class="nav-number">2.</span> <span class="nav-text">基于 react-loadable 实现代码分割</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">3.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Create"><span class="nav-number">1.</span> <span class="nav-text">Create</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#create-创建保存新实例"><span class="nav-number">1.1.</span> <span class="nav-text">create - 创建保存新实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#build-创建新实例"><span class="nav-number">1.2.</span> <span class="nav-text">build - 创建新实例</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Update"><span class="nav-number">2.</span> <span class="nav-text">Update</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#update-更新记录"><span class="nav-number">2.1.</span> <span class="nav-text">update - 更新记录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Read"><span class="nav-number">3.</span> <span class="nav-text">Read</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Delete"><span class="nav-number">4.</span> <span class="nav-text">Delete</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#destroy-删除记录"><span class="nav-number">4.1.</span> <span class="nav-text">destroy - 删除记录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#findOrCreate-查找或创建"><span class="nav-number">5.</span> <span class="nav-text">findOrCreate - 查找或创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#findCreateFind-查找或创建"><span class="nav-number">6.</span> <span class="nav-text">findCreateFind - 查找或创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#insertOrUpdate-更新或创建"><span class="nav-number">7.</span> <span class="nav-text">insertOrUpdate - 更新或创建</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bulkCreate-创建多条记录"><span class="nav-number">8.</span> <span class="nav-text">bulkCreate - 创建多条记录</span></a></li></ol></div>
             
 
           </div>

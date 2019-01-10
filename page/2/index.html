@@ -289,6 +289,170 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2018/11/21/http-TCP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gershonv">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郭大大的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/21/http-TCP/" itemprop="url">HTTP - TCP 三次握手四次挥手</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-21T09:47:17+08:00">
+                2018-11-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/HTTP/" itemprop="url" rel="index">
+                    <span itemprop="name">HTTP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="TCP-的三次握手"><a href="#TCP-的三次握手" class="headerlink" title="TCP 的三次握手"></a>TCP 的三次握手</h2><blockquote>
+<p><code>HTTP</code> 请求与 <code>TCP</code> 链接之间的关系，在客户端向服务端请求和返回的过程中，是需要去创建一个 <code>TCP connection</code>，因为 <code>HTTP</code> 是不存在链接这样一个概念的，它只有请求和响应这样一个概念，请求和响应都是一个数据包，中间要通过一个传输通道，这个传输通道就是在 <code>TCP</code> 里面创建了一个从客户端发起和服务端接收的一个链接，<code>TCP</code> 链接在创建的时候是有一个三次握手(三次网络传输)这样一个消耗在的。</p>
+</blockquote>
+<p>下面是 <code>TCP</code> 报文格式图：</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/11/21/1673405dad1eced0?w=500&amp;h=380&amp;f=jpeg&amp;s=32339" alt=""><br>↓↓↓↓<br><img src="https://user-gold-cdn.xitu.io/2018/11/21/1673405e30495223?w=1046&amp;h=402&amp;f=png&amp;s=27889" alt=""></p>
+<p>有几个字段需要重点介绍下：</p>
+<ol>
+<li>Seq 序号: <code>sequeence number</code>，用来标识从 TCP 源端向目的端发送的字节流，发起方发送数据时对此进行标记。</li>
+<li>确认序号：<code>acknowledgment number</code>，只有 ACK 标志位为 1 时，确认序号字段才有效，<code>Ack=Seq+1</code>。</li>
+<li>标志位：共 6 个，即 URG、ACK、PSH、RST、SYN、FIN 等，具体含义如下：<ul>
+<li><code>URG</code>：紧急指针（urgent pointer）有效。</li>
+<li><code>ACK</code>：确认序号有效。</li>
+<li><code>PSH</code>：接收方应该尽快将这个报文交给应用层。</li>
+<li><code>RST</code>：重置连接。</li>
+<li><code>SYN</code>：发起一个新连接。</li>
+<li><code>FIN</code>：释放一个连接。</li>
+</ul>
+</li>
+</ol>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/11/21/http-TCP/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2018/11/20/http-导学/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -3188,153 +3352,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2018/11/09/react-context-todoList/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="gershonv">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="郭大大的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/09/react-context-todoList/" itemprop="url">react-context 实现 todoList</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-11-09T23:56:25+08:00">
-                2018-11-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/React/" itemprop="url" rel="index">
-                    <span itemprop="name">React</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><code>src/context/TodoContext.js</code></p>
-<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> TodoContext = React.createContext()</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">TodoProvider</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">  state = &#123;</span><br><span class="line">    todoList: []</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  addTodo = <span class="function"><span class="params">text</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> todoList = [...this.state.todoList, &#123; <span class="attr">id</span>: <span class="built_in">Math</span>.random(), text &#125;]</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123; todoList &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  deleteTodo = <span class="function"><span class="params">id</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> todoList = <span class="keyword">this</span>.state.todoList.filter(<span class="function"><span class="params">todo</span> =&gt;</span> todo.id !== id)</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123; todoList &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  clearTodos = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">this</span>.setState(&#123; <span class="attr">todoList</span>: [] &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  render() &#123;</span><br><span class="line">    <span class="keyword">return</span> (</span><br><span class="line">      &lt;TodoContext.Provider</span><br><span class="line">        value=&#123;&#123;</span><br><span class="line">          todoList: <span class="keyword">this</span>.state.todoList,</span><br><span class="line">          addTodo: <span class="keyword">this</span>.addTodo,</span><br><span class="line">          deleteTodo: <span class="keyword">this</span>.deleteTodo,</span><br><span class="line">          clearTodos: <span class="keyword">this</span>.clearTodos</span><br><span class="line">        &#125;&#125;&gt;</span><br><span class="line">        &#123;<span class="keyword">this</span>.props.children&#125;</span><br><span class="line">      &lt;<span class="regexp">/TodoContext.Provider&gt;</span></span><br><span class="line"><span class="regexp">    )</span></span><br><span class="line"><span class="regexp">  &#125;</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/11/09/react-context-todoList/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -3389,7 +3406,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">74</span>
+                  <span class="site-state-item-count">75</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
