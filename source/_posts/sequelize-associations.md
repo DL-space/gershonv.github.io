@@ -1,5 +1,5 @@
 ---
-title: sequelize - associations
+title: Sequelize - associations
 date: 2019-01-03 14:36:03
 categories: Sequelize
 tags: Sequelize

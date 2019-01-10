@@ -7,6 +7,8 @@ tags: Sequelize
 
 `Sequelize` 中有两种查询：使用 `Model`（模型）中的方法查询和使用 `sequelize.query()` 进行基于 SQL 语句的原始查询。
 
+<!-- more -->
+
 下面是事先创建好的数据：
 
 ```bash
@@ -326,3 +328,5 @@ console.log(result.count) // 2
 - `count(field, [options])`-统计查询结果数
 - `max(field, [options])`-查询最大值
 - `min(field, [options])`-查询最小值
+
+### 
