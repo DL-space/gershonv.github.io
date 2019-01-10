@@ -162,6 +162,44 @@ const results = await UserModel.findAll({
 })
 ```
 
+### 分页与限制返回结果数
+
+查询进，我们可以使用 `limit` 限制返回结果条数，并可以通过 `offset` 来设置查询偏移（跳过）量，通过这两个属性我们可以实现分页查询的功能：
+
+```js
+// 获取 10 条数据（实例）
+UserModel.findAll({ limit: 10 })
+
+// 跳过 8 条数据（实例）
+UserModel.findAll({ offset: 8 })
+
+// 跳过 5 条数据并获取其后的 5 条数据（实例）
+UserModel.findAll({ offset: 5, limit: 5 })
+```
+
+### 排序
+
+`order` 选项用于查询结果的排序数据。排序时应该传入一个包含属性-排序方向的元组/数组，以保证正确的转义：
+
+```js
+const result = await UserModel.findAll({
+  order: sequelize.literal('name DESC') // 降序
+})
+
+// demo2
+const result = await UserModel.findAll({
+  order: [sequelize.literal('score DESC'), sequelize.literal('name DESC')]
+})
+
+// 按 max(age) DESC 排序
+[sequelize.fn('max', sequelize.col('age')), 'DESC'],
+
+// 按相关联的User 模型的 name 属性排序
+[ArticleModel, 'name', 'DESC']
+
+// ...
+```
+
 ## 查询单项
 
 ```js
@@ -317,12 +355,180 @@ console.log(result.count) // 2
 
 ## 聚合查询
 
+### SQL 中的分组查询
+
 [mysql-聚合函数](https://gershonv.github.io/2018/12/31/mysql-聚合函数/)
+
+`SQL` 查询中，通 `GROUP BY` 语名实现分组查询。GROUP BY 子句要和聚合函数配合使用才能完成分组查询，在 `SELECT` 查询的字段中，如果没有使用聚合函数就必须出现在 ORDER BY 子句中。分组查询后，查询结果为一个或多个列分组后的结果集。
+
+```js
+SELECT 列名, 聚合函数(列名)
+FROM 表名
+WHERE 列名 operator value
+GROUP BY 列名
+[HAVING 条件表达式] [WITH ROLLUP]
+```
+
+在以上语句中：
+
+- 聚合函数 - 分组查询通常要与聚合函数一起使用，聚合函数包括：
+  - `COUNT()`-用于统计记录条数
+  - `SUM()`-用于计算字段的值的总和
+  - `AVG()`-用于计算字段的值的平均值
+  - `MAX`-用于查找查询字段的最大值
+  - `MIX`-用于查找查询字段的最小值
+- `GROUP BY` 子名-用于指定分组的字段
+- `HAVING` 子名-用于过滤分组结果，符合条件表达式的结果将会被显示
+- `WITH ROLLUP` 子名-用于指定追加一条记录，用于汇总前面的数据
+
+### sum(field, [options])
 
 `Sequelize` 提供了聚合函数，可以直接对模型进行聚合查询：
 
 - `aggregate(field, aggregateFunction, [options])`-通过指定的聚合函数进行查询
 - `sum(field, [options])`-求和
-- `count(field, [options])`-统计查询结果数
+- `count(options: Object)`-统计查询结果数
 - `max(field, [options])`-查询最大值
 - `min(field, [options])`-查询最小值
+
+以上这些聚合函数中，可以通过 `options.attributes`、`options.attributes` 属性指定分组相关字段，并可以通过 `options.having` 指定过滤条件，但没有直接指定 `WITH ROLLUP` 子句的参数。
+
+使用`.sum()`查询订单数量大于 1 的用户订单额：
+
+```js
+const result = await OrderModel.sum('price', {
+  attributes: ['name', [sequelize.fn('COUNT', sequelize.col('price')), 'sum']],
+  group: 'name',
+  plain: false, // 执行的查询类型，sequelize会根据这个类型对返回结果格式化。
+  having: {
+    $and: [sequelize.literal('COUNT(name) > 1')]
+  }
+})
+
+// SELECT `name`, SUM(`price`) AS `sum` FROM `orders` AS `order` GROUP BY `name` HAVING (COUNT(name) > 1);
+
+// [ { name: 'guo', sum: '44' }, { name: 'guo2', sum: '22' } ]
+```
+
+- [plain](https://itbilu.com/nodejs/npm/VkYIaRPz-.html#api-instance-fn):执行的查询类型，`sequelize` 会根据这个类型对返回结果格式化
+- [sequelize.literal](https://itbilu.com/nodejs/npm/N1pPjUdMf.html#multi): 创建一个字面量对象，该值不会转义
+
+除直接使用聚合函数外，也可以在 `findAll()`等方法中，指定聚合查询相关参数实现聚合查询。
+查询时，同样可以通过通过 `options.attributes`、`options.attributes` 属性指定分组相关字段，并可以通过 options.having 指定过滤条件。与直接使用聚合函数查询不一样，通过参数构建聚合查询时，
+要以数组或对象形式设置 `options.attributes` 参数中的聚合字段，并需要通过 `sequelize.fn()`方法传入聚合函数。
+
+```js
+const result = await OrderModel.findAll({
+  attributes: ['name', [sequelize.fn('SUM', sequelize.col('price')), 'sum']],
+  group: 'name',
+  having: {
+    $and: [sequelize.literal('COUNT(name) > 1')]
+  },
+  raw: true // row 对查询结果进行格式化， false 返回 instance
+})
+```
+
+`sequelize.fn()` - 函数调用
+
+```js
+sequelize.fn(fn, args) -> Sequelize.fn
+```
+
+创建于一个相当于数据库函数的对象。该函数可用于搜索查询的 `where` 和 `order` 部分，以及做为列定义的默认值。如果想在列中引用你定义的函数，就要使用 `sequelize.col`，这样列就能正确的解析，而不是解析为字符串。
+如，将 `username` 字段值解析为大写形式：
+
+```js
+instance.updateAttributes({
+  username: self.sequelize.fn('upper', self.sequelize.col('username'))
+})
+```
+
+`sequelize.col()` - 列对象
+
+创建一个相当于数据库列的对象。这个方法经常结合 sequelize.fn 使用，它可以保证将列名正确的传递给该方法，而不是经过转义。
+
+### count(options: Object)
+
+```js
+const result = await OrderModel.count({
+  where: { price: 24 }
+})
+```
+
+### max/min
+
+```js
+const result = await OrderModel.max('price', {
+  where: {
+    price: { $lt: 23 }
+  }
+})
+```
+
+## 原始查询
+
+[原始查询](https://itbilu.com/nodejs/npm/VJIR1CjMb.html#raw-query)
+
+有时会使用原始查询或执行已准备好的 SQL 语句，这时可以用 `Sequlize` 提供的工具函数 `sequelize.query` 来实现。
+
+```js
+const result = await sequelize.query('SELECT * FROM users', { model: UserModel })
+```
+
+### 查询参数替换
+
+原始查询中有两种替换查询参数的方法，以:开头的参数的形式替换或以不命名以?替换。在选项对象中传递参数：
+
+- 如果传递一个数组，? 会按数组的顺序被依次替换
+- 巢传递一个对象，:key 将会用对象的键替换。如果对象中未找到指定键，则会引发异常（反之亦然）
+
+```js
+sequelize
+  .query('SELECT * FROM projects WHERE status = ?', { replacements: ['active'], type: sequelize.QueryTypes.SELECT })
+  .then(function(projects) {
+    console.log(projects)
+  })
+
+sequelize
+  .query('SELECT * FROM projects WHERE status = :status ', {
+    replacements: { status: 'active' },
+    type: sequelize.QueryTypes.SELECT
+  })
+  .then(function(projects) {
+    console.log(projects)
+  })
+```
+
+### 参数绑定
+
+参数绑定类似于参数替换。尤其是参数替换会在发送到数据库前被 sequelize 转义和替换，而参数绑定会被发送到 SQL 查询文本外。
+
+只有 `SQLite` 和 `PostgreSQL` 支持参数绑定，其它类型数据库都会将其插入到 `SQL` 查询，并以相同的方式进行参数替换。参数绑定可以使用$1、$2……或\$key 的形式：
+
+- 如果传入的是数组，\$1 会绑定到数组听第 1 个参数 (bind[0])
+- 如果传入一个对象，$key 会绑定到 `object['key']`。每个 key 必须以非数字的字符开始。$1 不是个有效的 key，尽管 object['1'] 是存在的。
+- 在使用\$$时，不会被转义而是将$做为一个字面量使用。
+
+传入的数组或对象必须包含所有绑定值，否则 `Sequelize` 会抛出异常。这同样适用于数据库可能会忽略绑定参数的情况下。
+
+数据库可能会做进一步限制，绑定参数不能使用数据库关键字，也不能是表或列名，它在引用文本或数据时也可能被忽略。在 PostgreSQL 中，如果不能从上下文\$1::varchar 中推断类型，那么也需要进行类型转换
+
+```js
+sequelize
+  .query('SELECT *, "text with literal $$1 and literal $$status" as t FROM projects WHERE status = $1', {
+    bind: ['active'],
+    type: sequelize.QueryTypes.SELECT
+  })
+  .then(function(projects) {
+    console.log(projects)
+  })
+
+sequelize
+  .query('SELECT *, "text with literal $$1 and literal $$status" as t FROM projects WHERE status = $status', {
+    bind: { status: 'active' },
+    type: sequelize.QueryTypes.SELECT
+  })
+  .then(function(projects) {
+    console.log(projects)
+  })
+```
