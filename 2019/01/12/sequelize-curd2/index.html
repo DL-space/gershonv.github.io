@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Sequelize," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="郭大大的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="一对一1234567891011121314151617181920212223const UserModel = sequelize.define(&apos;user&apos;, &amp;#123;  uuid: &amp;#123;    type: Sequelize.INTEGER,    allowNull: false,    unique: true  &amp;#125;&amp;#125;)const AccountMode">
+<meta name="keywords" content="Sequelize">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sequelize - 多表 CURD">
+<meta property="og:url" content="https://gershonv.github.io/2019/01/12/sequelize-curd2/index.html">
+<meta property="og:site_name" content="郭大大的博客">
+<meta property="og:description" content="一对一1234567891011121314151617181920212223const UserModel = sequelize.define(&apos;user&apos;, &amp;#123;  uuid: &amp;#123;    type: Sequelize.INTEGER,    allowNull: false,    unique: true  &amp;#125;&amp;#125;)const AccountMode">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-01-12T07:26:43.136Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Sequelize - 多表 CURD">
+<meta name="twitter:description" content="一对一1234567891011121314151617181920212223const UserModel = sequelize.define(&apos;user&apos;, &amp;#123;  uuid: &amp;#123;    type: Sequelize.INTEGER,    allowNull: false,    unique: true  &amp;#125;&amp;#125;)const AccountMode">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://gershonv.github.io/2019/01/12/sequelize-curd2/"/>
+
+
+
+
+
+  <title>Sequelize - 多表 CURD | 郭大大的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">郭大大的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">生活就像海洋，只有意志坚强的人才能到达彼岸</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2019/01/12/sequelize-curd2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gershonv">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郭大大的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Sequelize - 多表 CURD</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-12T12:58:33+08:00">
+                2019-01-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Sequelize/" itemprop="url" rel="index">
+                    <span itemprop="name">Sequelize</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="一对一"><a href="#一对一" class="headerlink" title="一对一"></a>一对一</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> UserModel = sequelize.define(<span class="string">'user'</span>, &#123;</span><br><span class="line">  uuid: &#123;</span><br><span class="line">    type: Sequelize.INTEGER,</span><br><span class="line">    allowNull: <span class="literal">false</span>,</span><br><span class="line">    unique: <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> AccountModel = sequelize.define(<span class="string">'account'</span>, &#123;</span><br><span class="line">  email: &#123;</span><br><span class="line">    type: Sequelize.CHAR(<span class="number">60</span>),</span><br><span class="line">    allowNull: <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//  User的实例对象将拥有 getAccount、setAccount、createAccount 方法</span></span><br><span class="line">UserModel.hasOne(AccountModel)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Account的实例对象将拥有getUser、setUser、addUser 方法</span></span><br><span class="line">AccountModel.belongsTo(UserModel, &#123;</span><br><span class="line">  foreignKey: <span class="string">'userId'</span>,</span><br><span class="line">  targetKey: <span class="string">'uuid'</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="增-createAccount"><a href="#增-createAccount" class="headerlink" title="增 - createAccount"></a>增 - createAccount</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 增</span></span><br><span class="line"><span class="keyword">const</span> user = <span class="keyword">await</span> UserModel.create(&#123; <span class="attr">uuid</span>: <span class="number">666</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> account = <span class="keyword">await</span> user.createAccount(&#123; <span class="attr">email</span>: <span class="string">'12306@qq.com'</span> &#125;) <span class="comment">// 增</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(account.get(&#123; <span class="attr">plain</span>: <span class="literal">true</span> &#125;))</span><br></pre></td></tr></table></figure>
+<p>使用对应的的 <code>userId</code> 作为外键在 <code>accounts</code> 表里插入一条数据。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * <span class="keyword">from</span> users;</span><br><span class="line">+----+------+---------------------+---------------------+</span><br><span class="line">| id | uuid | createdAt           | updatedAt           |</span><br><span class="line">+----+------+---------------------+---------------------+</span><br><span class="line">|  <span class="number">1</span> |  <span class="number">666</span> | <span class="number">2019</span><span class="number">-01</span><span class="number">-11</span> <span class="number">05</span>:<span class="number">23</span>:<span class="number">05</span> | <span class="number">2019</span><span class="number">-01</span><span class="number">-11</span> <span class="number">05</span>:<span class="number">23</span>:<span class="number">05</span> |</span><br><span class="line">+----+------+---------------------+---------------------+</span><br><span class="line"><span class="number">1</span> row <span class="keyword">in</span> set (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * <span class="keyword">from</span> accounts;</span><br><span class="line">+----+--------------+---------------------+---------------------+--------+</span><br><span class="line">| id | email        | createdAt           | updatedAt           | userId |</span><br><span class="line">+----+--------------+---------------------+---------------------+--------+</span><br><span class="line">|  <span class="number">1</span> | <span class="number">12306</span>@qq.com | <span class="number">2019</span><span class="number">-01</span><span class="number">-11</span> <span class="number">05</span>:<span class="number">23</span>:<span class="number">05</span> | <span class="number">2019</span><span class="number">-01</span><span class="number">-11</span> <span class="number">08</span>:<span class="number">05</span>:<span class="number">38</span> |      <span class="number">1</span> |</span><br><span class="line">+----+--------------+---------------------+---------------------+--------+</span><br><span class="line"><span class="number">1</span> row <span class="keyword">in</span> set (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<h3 id="改-setAccount"><a href="#改-setAccount" class="headerlink" title="改 - setAccount"></a>改 - setAccount</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> user = <span class="keyword">await</span> UserModel.findByPk(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">const</span> antherAccount = <span class="keyword">await</span> AccountModel.create(&#123; <span class="attr">email</span>: <span class="string">'aaa'</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> account = <span class="keyword">await</span> user.setAccount(antherAccount)</span><br></pre></td></tr></table></figure>
+<ol>
+<li>插入一条 <code>account</code> 数据，此时外键 <code>userId</code> 是空的，还没有关联 <code>user</code></li>
+<li>找出当前 <code>user</code> 所关联的 <code>account</code> 并将其 <code>userId</code> 置为 <code>NULL</code>（为了保证一对一关系）</li>
+<li>设置新的 <code>acount</code> 的外键 <code>userId</code> 为 <code>user</code> 的属性 <code>id</code>，生成关系</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * <span class="keyword">from</span> accounts;</span><br><span class="line">+----+--------------+---------------------+---------------------+--------+</span><br><span class="line">| id | email        | createdAt           | updatedAt           | userId |</span><br><span class="line">+----+--------------+---------------------+---------------------+--------+</span><br><span class="line">|  <span class="number">1</span> | <span class="number">12306</span>@qq.com | <span class="number">2019</span><span class="number">-01</span><span class="number">-11</span> <span class="number">05</span>:<span class="number">23</span>:<span class="number">05</span> | <span class="number">2019</span><span class="number">-01</span><span class="number">-11</span> <span class="number">08</span>:<span class="number">11</span>:<span class="number">59</span> |   NULL |</span><br><span class="line">|  <span class="number">2</span> | aaa          | <span class="number">2019</span><span class="number">-01</span><span class="number">-11</span> <span class="number">08</span>:<span class="number">11</span>:<span class="number">59</span> | <span class="number">2019</span><span class="number">-01</span><span class="number">-11</span> <span class="number">08</span>:<span class="number">11</span>:<span class="number">59</span> |      <span class="number">1</span> |</span><br><span class="line">+----+--------------+---------------------+---------------------+--------+</span><br><span class="line"><span class="number">2</span> rows <span class="keyword">in</span> set (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<h3 id="软删-setAccount-null"><a href="#软删-setAccount-null" class="headerlink" title="软删 - setAccount(null)"></a>软删 - setAccount(null)</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> user = <span class="keyword">await</span> UserModel.findByPk(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">const</span> account = <span class="keyword">await</span> user.setAccount(<span class="literal">null</span>)</span><br></pre></td></tr></table></figure>
+<p>这里的删除实际上只是“切断”关系，并不会真正的物理删除记录。<br>SQL 执行逻辑是：</p>
+<ol>
+<li>找出 <code>user</code> 所关联的 <code>account</code> 数据</li>
+<li>将其外键 <code>userId</code> 设置为 <code>NULL</code>，完成关系的“切断”</li>
+</ol>
+<h3 id="查-getAccount"><a href="#查-getAccount" class="headerlink" title="查 - getAccount"></a>查 - getAccount</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> user = <span class="keyword">await</span> UserModel.findByPk(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">const</span> account = <span class="keyword">await</span> user.getAccount()</span><br><span class="line"><span class="built_in">console</span>.log(account.get(&#123; <span class="attr">plain</span>: <span class="literal">true</span> &#125;))</span><br></pre></td></tr></table></figure>
+<p>or</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> user = <span class="keyword">await</span> UserModel.findByPk(<span class="number">1</span>, &#123;</span><br><span class="line">  include: [AccountModel]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(user.get(&#123; <span class="attr">plain</span>: <span class="literal">true</span> &#125;))</span><br><span class="line"><span class="comment">// &#123; id: 1,</span></span><br><span class="line"><span class="comment">//   uuid: 666,</span></span><br><span class="line"><span class="comment">//   createdAt: 2019-01-11T05:23:05.000Z,</span></span><br><span class="line"><span class="comment">//   updatedAt: 2019-01-11T05:23:05.000Z,</span></span><br><span class="line"><span class="comment">//   account:</span></span><br><span class="line"><span class="comment">//    &#123; id: 2,</span></span><br><span class="line"><span class="comment">//      email: 'aaa',</span></span><br><span class="line"><span class="comment">//      createdAt: 2019-01-11T08:11:59.000Z,</span></span><br><span class="line"><span class="comment">//      updatedAt: 2019-01-11T08:11:59.000Z,</span></span><br><span class="line"><span class="comment">//      userId: 1 &#125; &#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; SELECT <span class="string">`user`</span>.<span class="string">`id`</span>, <span class="string">`user`</span>.<span class="string">`uuid`</span>, <span class="string">`user`</span>.<span class="string">`createdAt`</span>, <span class="string">`user`</span>.<span class="string">`updatedAt`</span>,</span><br><span class="line"><span class="string">`account`</span>.<span class="string">`id`</span> AS <span class="string">`account.id`</span>, <span class="string">`account`</span>.<span class="string">`email`</span> AS <span class="string">`account.email`</span>, <span class="string">`account`</span>.<span class="string">`createdAt`</span> AS <span class="string">`account.createdAt`</span>,</span><br><span class="line"><span class="string">`account`</span>.<span class="string">`updatedAt`</span> AS <span class="string">`account.updatedAt`</span>, <span class="string">`account`</span>.<span class="string">`userId`</span> AS <span class="string">`account.userId`</span> FROM <span class="string">`users`</span> AS <span class="string">`user`</span></span><br><span class="line">LEFT OUTER JOIN <span class="string">`accounts`</span> AS <span class="string">`account`</span> ON <span class="string">`user`</span>.<span class="string">`id`</span> = <span class="string">`account`</span>.<span class="string">`userId`</span> WHERE <span class="string">`user`</span>.<span class="string">`id`</span> = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">+----+------+---------------------+---------------------+------------+---------------+---------------------+---------------------+----------------+</span><br><span class="line">| id | uuid | createdAt           | updatedAt           | account.id | account.email | account.createdAt   | account.updatedAt   | account.userId |</span><br><span class="line">+----+------+---------------------+---------------------+------------+---------------+---------------------+---------------------+----------------+</span><br><span class="line">|  <span class="number">1</span> |  <span class="number">666</span> | <span class="number">2019</span><span class="number">-01</span><span class="number">-11</span> <span class="number">05</span>:<span class="number">23</span>:<span class="number">05</span> | <span class="number">2019</span><span class="number">-01</span><span class="number">-11</span> <span class="number">05</span>:<span class="number">23</span>:<span class="number">05</span> |          <span class="number">9</span> | aaa           | <span class="number">2019</span><span class="number">-01</span><span class="number">-11</span> <span class="number">08</span>:<span class="number">11</span>:<span class="number">59</span> | <span class="number">2019</span><span class="number">-01</span><span class="number">-11</span> <span class="number">08</span>:<span class="number">11</span>:<span class="number">59</span> |              <span class="number">1</span> |</span><br><span class="line">+----+------+---------------------+---------------------+------------+---------------+---------------------+---------------------+----------------+</span><br><span class="line"><span class="number">1</span> row <span class="keyword">in</span> set (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<p>可以看到，我们对 2 个表进行了一个外联接，从而在取 <code>user</code> 的同时也获取到了 <code>account</code>。</p>
+<h2 id="一对多"><a href="#一对多" class="headerlink" title="一对多"></a>一对多</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> UserModel = sequelize.define(</span><br><span class="line">  <span class="string">'user'</span>,</span><br><span class="line">  &#123;</span><br><span class="line">    uuid: &#123;</span><br><span class="line">      type: Sequelize.INTEGER,</span><br><span class="line">      allowNull: <span class="literal">false</span>,</span><br><span class="line">      unique: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123; <span class="attr">timestamps</span>: <span class="literal">false</span> &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> NoteModel = sequelize.define(<span class="string">'note'</span>, &#123;</span><br><span class="line">  title: &#123;</span><br><span class="line">    type: Sequelize.CHAR(<span class="number">64</span>),</span><br><span class="line">    allowNull: <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// User的实例对象将拥有getNotes、setNotes、addNote、createNote、removeNote、hasNote方法</span></span><br><span class="line">UserModel.hasMany(NoteModel)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Note的实例对象将拥有getUser、setUser、createUser方法</span></span><br><span class="line">NoteModel.belongsTo(UserModel)</span><br></pre></td></tr></table></figure>
+<p>生成的 sql 语句：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> <span class="string">`users`</span> (</span><br><span class="line">    <span class="string">`id`</span> <span class="built_in">INTEGER</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> auto_increment ,</span><br><span class="line">    <span class="string">`uuid`</span> <span class="built_in">INTEGER</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">UNIQUE</span>, PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</span><br><span class="line">  ) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> <span class="string">`notes`</span> (</span><br><span class="line">    <span class="string">`id`</span> <span class="built_in">INTEGER</span> <span class="keyword">NOT</span> <span class="literal">NULL</span> auto_increment,</span><br><span class="line">    <span class="string">`title`</span> <span class="built_in">CHAR</span>(<span class="number">64</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    <span class="string">`createdAt`</span> DATETIME <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    <span class="string">`updatedAt`</span> DATETIME <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">    <span class="string">`userId`</span> <span class="built_in">INTEGER</span>,</span><br><span class="line">    PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>),</span><br><span class="line">    FOREIGN <span class="keyword">KEY</span> (<span class="string">`userId`</span>) <span class="keyword">REFERENCES</span> <span class="string">`users`</span> (<span class="string">`id`</span>) <span class="keyword">ON</span> <span class="keyword">DELETE</span></span><br><span class="line">    <span class="keyword">SET</span></span><br><span class="line">        <span class="literal">NULL</span> ONUPDATE <span class="keyword">CASCADE</span></span><br><span class="line">) <span class="keyword">ENGINE</span> = <span class="keyword">InnoDB</span>;</span><br></pre></td></tr></table></figure>
+<p>可以看到这种关系中，外键 <code>userId</code> 加在了多的一端（<code>notes</code> 表）。同时相关的模型也自动获得了一些方法。</p>
+<h3 id="增"><a href="#增" class="headerlink" title="增"></a>增</h3><h4 id="createNote"><a href="#createNote" class="headerlink" title="createNote"></a>createNote</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> user = <span class="keyword">await</span> UserModel.create(&#123; <span class="attr">uuid</span>: <span class="number">1234</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> note1 = <span class="keyword">await</span> user.createNote(&#123; <span class="attr">title</span>: <span class="string">'aa'</span> &#125;) <span class="comment">// 增</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(note1.get(&#123; <span class="attr">plain</span>: <span class="literal">true</span> &#125;))</span><br></pre></td></tr></table></figure>
+<p>SQL 执行逻辑：</p>
+<blockquote>
+<p>使用 <code>user</code> 的主键 <code>id</code> 值作为外键直接在 <code>notes</code> 表里插入一条数据。</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">INSERT INTO <span class="string">`notes`</span> (<span class="string">`id`</span>,<span class="string">`title`</span>,<span class="string">`createdAt`</span>,<span class="string">`updatedAt`</span>,<span class="string">`userId`</span>)</span><br><span class="line">VALUES (DEFAULT,<span class="string">'aa'</span>,<span class="string">'2019-01-12 05:32:50'</span>,<span class="string">'2019-01-12 05:32:50'</span>,<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="addNote"><a href="#addNote" class="headerlink" title="addNote"></a>addNote</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> user = <span class="keyword">await</span> UserModel.create(&#123; <span class="attr">uuid</span>: <span class="number">1234</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> note = <span class="keyword">await</span> NoteModel.create(&#123; <span class="attr">title</span>: <span class="string">'bb'</span> &#125;)</span><br><span class="line"><span class="keyword">await</span> user.addNote(note)</span><br></pre></td></tr></table></figure>
+<p><code>SQL</code>:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`users`</span> (<span class="string">`id`</span>,<span class="string">`uuid`</span>) <span class="keyword">VALUES</span> (<span class="keyword">DEFAULT</span>,<span class="number">1234</span>);</span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`notes`</span> (<span class="string">`id`</span>,<span class="string">`title`</span>,<span class="string">`createdAt`</span>,<span class="string">`updatedAt`</span>) <span class="keyword">VALUES</span> (<span class="keyword">DEFAULT</span>,<span class="string">'bb'</span>,<span class="string">'2019-01-12 05:40:34'</span>,<span class="string">'2019-01-12 05:40:34'</span>);</span><br><span class="line"><span class="keyword">UPDATE</span> <span class="string">`notes`</span> <span class="keyword">SET</span> <span class="string">`userId`</span>=<span class="number">1</span>,<span class="string">`updatedAt`</span>=<span class="string">'2019-01-12 05:40:34'</span> <span class="keyword">WHERE</span> <span class="string">`id`</span> <span class="keyword">IN</span> (<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<ol>
+<li>插入一条 <code>note</code> 数据，此时该条数据的外键 <code>userId</code> 为空</li>
+<li>使用 <code>user</code> 的属性 <code>id</code> 值再更新该条 <code>note</code> 数据，设置好外键，完成关系建立</li>
+</ol>
+<h4 id="addNotes"><a href="#addNotes" class="headerlink" title="addNotes"></a>addNotes</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> user = <span class="keyword">await</span> UserModel.create(&#123; <span class="attr">uuid</span>: <span class="number">1234</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> note1 = <span class="keyword">await</span> NoteModel.create(&#123; <span class="attr">title</span>: <span class="string">'aa'</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> note2 = <span class="keyword">await</span> NoteModel.create(&#123; <span class="attr">title</span>: <span class="string">'bb'</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">await</span> user.addNotes([note1, note2])</span><br></pre></td></tr></table></figure>
+<h3 id="改-setNotes"><a href="#改-setNotes" class="headerlink" title="改 - setNotes"></a>改 - setNotes</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> user = <span class="keyword">await</span> UserModel.create(&#123; <span class="attr">uuid</span>: <span class="number">1234</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> note1 = <span class="keyword">await</span> user.createNote(&#123; <span class="attr">title</span>: <span class="string">'aa'</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> note2 = <span class="keyword">await</span> user.createNote(&#123; <span class="attr">title</span>: <span class="string">'bb'</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> note3 = <span class="keyword">await</span> NoteModel.create(&#123; <span class="attr">title</span>: <span class="string">'cc'</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> note4 = <span class="keyword">await</span> NoteModel.create(&#123; <span class="attr">title</span>: <span class="string">'dd'</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">await</span> user.setNotes([note3, note4])</span><br></pre></td></tr></table></figure>
+<ol>
+<li>根据 <code>user</code> 的属性 id 查询所有相关的 <code>note</code> 数据</li>
+<li>将 <code>note1</code>、<code>note2</code> 的外键 <code>userId</code> 置为 <code>NULL</code>，切断关系</li>
+<li>将 <code>note3</code>、<code>note4</code> 的外键 <code>userId</code> 置为 <code>user</code> 的属性 <code>id</code>，完成关系建立</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * <span class="keyword">from</span> notes;</span><br><span class="line">+----+-------+---------------------+---------------------+--------+</span><br><span class="line">| id | title | createdAt           | updatedAt           | userId |</span><br><span class="line">+----+-------+---------------------+---------------------+--------+</span><br><span class="line">|  <span class="number">1</span> | aa    | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">05</span>:<span class="number">53</span>:<span class="number">11</span> | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">05</span>:<span class="number">53</span>:<span class="number">11</span> |   NULL |</span><br><span class="line">|  <span class="number">2</span> | bb    | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">05</span>:<span class="number">53</span>:<span class="number">11</span> | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">05</span>:<span class="number">53</span>:<span class="number">11</span> |   NULL |</span><br><span class="line">|  <span class="number">3</span> | cc    | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">05</span>:<span class="number">53</span>:<span class="number">11</span> | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">05</span>:<span class="number">53</span>:<span class="number">11</span> |      <span class="number">1</span> |</span><br><span class="line">|  <span class="number">4</span> | dd    | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">05</span>:<span class="number">53</span>:<span class="number">11</span> | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">05</span>:<span class="number">53</span>:<span class="number">11</span> |      <span class="number">1</span> |</span><br><span class="line">+----+-------+---------------------+---------------------+--------+</span><br><span class="line"><span class="number">4</span> rows <span class="keyword">in</span> set (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<h3 id="软删"><a href="#软删" class="headerlink" title="软删"></a>软删</h3><h4 id="removeNote"><a href="#removeNote" class="headerlink" title="removeNote"></a>removeNote</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> user = <span class="keyword">await</span> UserModel.create(&#123; <span class="attr">uuid</span>: <span class="number">1234</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> note1 = <span class="keyword">await</span> user.createNote(&#123; <span class="attr">title</span>: <span class="string">'aa'</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> note2 = <span class="keyword">await</span> user.createNote(&#123; <span class="attr">title</span>: <span class="string">'bb'</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">await</span> user.removeNote(note1)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * <span class="keyword">from</span> notes;</span><br><span class="line">+----+-------+---------------------+---------------------+--------+</span><br><span class="line">| id | title | createdAt           | updatedAt           | userId |</span><br><span class="line">+----+-------+---------------------+---------------------+--------+</span><br><span class="line">|  <span class="number">1</span> | aa    | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">06</span>:<span class="number">05</span>:<span class="number">40</span> | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">06</span>:<span class="number">05</span>:<span class="number">40</span> |   NULL |</span><br><span class="line">|  <span class="number">2</span> | bb    | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">06</span>:<span class="number">05</span>:<span class="number">40</span> | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">06</span>:<span class="number">05</span>:<span class="number">40</span> |      <span class="number">1</span> |</span><br><span class="line">+----+-------+---------------------+---------------------+--------+</span><br><span class="line"><span class="number">2</span> rows <span class="keyword">in</span> set (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<h4 id="setNotes"><a href="#setNotes" class="headerlink" title="setNotes([])"></a>setNotes([])</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> user = <span class="keyword">await</span> UserModel.create(&#123; <span class="attr">uuid</span>: <span class="number">1234</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> note1 = <span class="keyword">await</span> user.createNote(&#123; <span class="attr">title</span>: <span class="string">'aa'</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> note2 = <span class="keyword">await</span> user.createNote(&#123; <span class="attr">title</span>: <span class="string">'bb'</span> &#125;)</span><br><span class="line"><span class="keyword">await</span> user.setNotes([])</span><br></pre></td></tr></table></figure>
+<h3 id="查"><a href="#查" class="headerlink" title="查"></a>查</h3><h4 id="getNotes"><a href="#getNotes" class="headerlink" title="getNotes"></a>getNotes</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> user = <span class="keyword">await</span> UserModel.create(&#123; <span class="attr">uuid</span>: <span class="number">1234</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> note1 = <span class="keyword">await</span> user.createNote(&#123; <span class="attr">title</span>: <span class="string">'aa'</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> note2 = <span class="keyword">await</span> user.createNote(&#123; <span class="attr">title</span>: <span class="string">'bb'</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> notes = <span class="keyword">await</span> user.getNotes(&#123;</span><br><span class="line">  where: &#123;</span><br><span class="line">    title: &#123; <span class="attr">$like</span>: <span class="string">'%a%'</span> &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line">notes.map(<span class="function"><span class="params">note</span> =&gt;</span> <span class="built_in">console</span>.log(note.title))</span><br></pre></td></tr></table></figure>
+<h4 id="findAll"><a href="#findAll" class="headerlink" title="findAll"></a>findAll</h4><blockquote>
+<p>场景 1： 查询所有满足条件的 <code>note</code>，同时获取 <code>note</code> 属于哪个 <code>user</code>。</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> notes = <span class="keyword">await</span> NoteModel.findAll(&#123;</span><br><span class="line">  include: UserModel, <span class="comment">// or [UserModel, ...]</span></span><br><span class="line">  where: &#123;</span><br><span class="line">    title: &#123; <span class="attr">$like</span>: <span class="string">'%a%'</span> &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">notes.map(<span class="function"><span class="params">note</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(note.get(&#123; <span class="attr">plain</span>: <span class="literal">true</span> &#125;))</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// result</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// &#123; id: 1,</span></span><br><span class="line"><span class="comment">//   title: 'aa',</span></span><br><span class="line"><span class="comment">//   createdAt: 2019-01-12T06:12:33.000Z,</span></span><br><span class="line"><span class="comment">//   updatedAt: 2019-01-12T06:12:33.000Z,</span></span><br><span class="line"><span class="comment">//   userId: 1,</span></span><br><span class="line"><span class="comment">//   user: &#123; id: 1, uuid: 1234 &#125; &#125;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>场景 2 查询所有满足条件的 <code>note</code>，同时获取 <code>note</code> 属于哪个<code>user</code>。</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> user = <span class="keyword">await</span> UserModel.create(&#123; <span class="attr">uuid</span>: <span class="number">1234</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> note1 = <span class="keyword">await</span> user.createNote(&#123; <span class="attr">title</span>: <span class="string">'aa'</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> note2 = <span class="keyword">await</span> user.createNote(&#123; <span class="attr">title</span>: <span class="string">'bb'</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> users = <span class="keyword">await</span> UserModel.findAll(&#123;</span><br><span class="line">  include: [NoteModel], <span class="comment">// or [UserModel, ...]</span></span><br><span class="line">  where: &#123; <span class="attr">uuid</span>: <span class="number">1234</span> &#125;</span><br><span class="line">&#125;)</span><br><span class="line">users.map(<span class="function"><span class="params">note</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(note.get(&#123; <span class="attr">plain</span>: <span class="literal">true</span> &#125;))</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// result</span></span><br><span class="line"><span class="comment">// &#123; id: 1,</span></span><br><span class="line"><span class="comment">//   uuid: 1234,</span></span><br><span class="line"><span class="comment">//   notes:</span></span><br><span class="line"><span class="comment">//    [ &#123; id: 1,</span></span><br><span class="line"><span class="comment">//        title: 'aa',</span></span><br><span class="line"><span class="comment">//        createdAt: 2019-01-12T06:17:39.000Z,</span></span><br><span class="line"><span class="comment">//        updatedAt: 2019-01-12T06:17:39.000Z,</span></span><br><span class="line"><span class="comment">//        userId: 1 &#125;,</span></span><br><span class="line"><span class="comment">//      &#123; id: 2,</span></span><br><span class="line"><span class="comment">//        title: 'bb',</span></span><br><span class="line"><span class="comment">//        createdAt: 2019-01-12T06:17:39.000Z,</span></span><br><span class="line"><span class="comment">//        updatedAt: 2019-01-12T06:17:39.000Z,</span></span><br><span class="line"><span class="comment">//        userId: 1 &#125; ] &#125;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 查询创建时间在今天之前的所有user，同时获取他们note的标题中含有关键字css的所有note</span></span><br><span class="line"><span class="keyword">const</span> users = <span class="keyword">await</span> UserModel.findAll(&#123;</span><br><span class="line">  include: [</span><br><span class="line">    &#123;</span><br><span class="line">      model: NoteModel,</span><br><span class="line">      where: &#123;</span><br><span class="line">        title: &#123; <span class="attr">$like</span>: <span class="string">'%aa%'</span> &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  where: &#123; <span class="attr">uuid</span>: <span class="number">1234</span> &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="多对多"><a href="#多对多" class="headerlink" title="多对多"></a>多对多</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> NoteModel = sequelize.define(<span class="string">'note'</span>, &#123;</span><br><span class="line">  title: &#123;</span><br><span class="line">    type: Sequelize.CHAR(<span class="number">64</span>),</span><br><span class="line">    allowNull: <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> TagModel = sequelize.define(<span class="string">'tag'</span>, &#123;</span><br><span class="line">  name: Sequelize.CHAR(<span class="number">64</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> TaggingModel = sequelize.define(<span class="string">'tagging'</span>, &#123;</span><br><span class="line">  type: Sequelize.INTEGER</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Note的实例拥有getTags、setTags、addTag、addTags、createTag、removeTag、hasTag方法</span></span><br><span class="line">NoteModel.belongsToMany(TagModel, &#123;</span><br><span class="line">  through: TaggingModel</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Tag的实例拥有getNotes、setNotes、addNote、addNotes、createNote、removeNote、hasNote方法</span></span><br><span class="line">TagModel.belongsToMany(NoteModel, &#123;</span><br><span class="line">  through: TaggingModel</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><code>tagging</code> 表连接两个表：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show columns <span class="keyword">from</span> taggings;</span><br><span class="line">+-----------+----------+------+-----+---------+-------+</span><br><span class="line">| Field     | Type     | Null | Key | Default | Extra |</span><br><span class="line">+-----------+----------+------+-----+---------+-------+</span><br><span class="line">| type      | int(<span class="number">11</span>)  | YES  |     | NULL    |       |</span><br><span class="line">| createdAt | datetime | NO   |     | NULL    |       |</span><br><span class="line">| updatedAt | datetime | NO   |     | NULL    |       |</span><br><span class="line">| noteId    | int(<span class="number">11</span>)  | NO   | PRI | NULL    |       |</span><br><span class="line">| tagId     | int(<span class="number">11</span>)  | NO   | PRI | NULL    |       |</span><br><span class="line">+-----------+----------+------+-----+---------+-------+</span><br><span class="line"><span class="number">5</span> rows <span class="keyword">in</span> set (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<h3 id="增-1"><a href="#增-1" class="headerlink" title="增"></a>增</h3><h4 id="createTag"><a href="#createTag" class="headerlink" title="createTag"></a>createTag</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> note = <span class="keyword">await</span> NoteModel.create(&#123; <span class="attr">title</span>: <span class="string">'aa'</span> &#125;)</span><br><span class="line"><span class="keyword">await</span> note.createTag(&#123; <span class="attr">name</span>: <span class="string">'react.js'</span> &#125;, &#123; <span class="attr">through</span>: &#123; <span class="attr">type</span>: <span class="number">0</span> &#125; &#125;)</span><br></pre></td></tr></table></figure>
+<p>SQL:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`notes`</span></span><br><span class="line">  (<span class="string">`id`</span>,<span class="string">`title`</span>,<span class="string">`createdAt`</span>,<span class="string">`updatedAt`</span>) <span class="keyword">VALUES</span> (<span class="keyword">DEFAULT</span>,<span class="string">'aa'</span>,<span class="string">'2019-01-12 06:38:09'</span>,<span class="string">'2019-01-12 06:38:09'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`tags`</span></span><br><span class="line">  (<span class="string">`id`</span>,<span class="string">`name`</span>,<span class="string">`createdAt`</span>,<span class="string">`updatedAt`</span>) <span class="keyword">VALUES</span> (<span class="keyword">DEFAULT</span>,<span class="string">'react.js'</span>,<span class="string">'2019-01-12 06:38:09'</span>,<span class="string">'2019-01-12 06:38:09'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">`taggings`</span></span><br><span class="line">  (<span class="string">`type`</span>,<span class="string">`createdAt`</span>,<span class="string">`updatedAt`</span>,<span class="string">`noteId`</span>,<span class="string">`tagId`</span>) <span class="keyword">VALUES</span> (<span class="number">0</span>,<span class="string">'2019-01-12 06:51:10'</span>,<span class="string">'2019-01-12 06:51:10'</span>,<span class="number">1</span>,<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+<ol>
+<li>在 <code>notes</code> 表插入记录</li>
+<li>在 <code>tags</code> 表中插入记录</li>
+<li>使用对应的值设置外键 <code>tagId</code> 和 <code>noteId</code> 以及关系模型本身需要的属性（<code>type: 0</code>）在关系表 tagging 中插入记录</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * <span class="keyword">from</span> notes;</span><br><span class="line">+----+-------+---------------------+---------------------+</span><br><span class="line">| id | title | createdAt           | updatedAt           |</span><br><span class="line">+----+-------+---------------------+---------------------+</span><br><span class="line">|  <span class="number">1</span> | aa    | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">06</span>:<span class="number">51</span>:<span class="number">10</span> | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">06</span>:<span class="number">51</span>:<span class="number">10</span> |</span><br><span class="line">+----+-------+---------------------+---------------------+</span><br><span class="line"><span class="number">1</span> row <span class="keyword">in</span> set (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * <span class="keyword">from</span> taggings;</span><br><span class="line">+------+---------------------+---------------------+--------+-------+</span><br><span class="line">| type | createdAt           | updatedAt           | noteId | tagId |</span><br><span class="line">+------+---------------------+---------------------+--------+-------+</span><br><span class="line">|    <span class="number">0</span> | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">06</span>:<span class="number">51</span>:<span class="number">10</span> | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">06</span>:<span class="number">51</span>:<span class="number">10</span> |      <span class="number">1</span> |     <span class="number">1</span> |</span><br><span class="line">+------+---------------------+---------------------+--------+-------+</span><br><span class="line"><span class="number">1</span> row <span class="keyword">in</span> set (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * <span class="keyword">from</span> tags;</span><br><span class="line">+----+----------+---------------------+---------------------+</span><br><span class="line">| id | name     | createdAt           | updatedAt           |</span><br><span class="line">+----+----------+---------------------+---------------------+</span><br><span class="line">|  <span class="number">1</span> | react.js | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">06</span>:<span class="number">55</span>:<span class="number">00</span> | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">06</span>:<span class="number">55</span>:<span class="number">00</span> |</span><br><span class="line">+----+----------+---------------------+---------------------+</span><br><span class="line"><span class="number">1</span> row <span class="keyword">in</span> set (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<h4 id="addTag"><a href="#addTag" class="headerlink" title="addTag"></a>addTag</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> note = <span class="keyword">await</span> NoteModel.create(&#123; <span class="attr">title</span>: <span class="string">'aa'</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> tag = <span class="keyword">await</span> TagModel.create(&#123; <span class="attr">name</span>: <span class="string">'react.js'</span> &#125;)</span><br><span class="line"><span class="keyword">await</span> note.addTag(tag, &#123; <span class="attr">through</span>: &#123; <span class="attr">type</span>: <span class="number">1</span> &#125; &#125;)</span><br></pre></td></tr></table></figure>
+<h4 id="addTags"><a href="#addTags" class="headerlink" title="addTags"></a>addTags</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> note = <span class="keyword">await</span> NoteModel.create(&#123; <span class="attr">title</span>: <span class="string">'aa'</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> tag1 = <span class="keyword">await</span> TagModel.create(&#123; <span class="attr">name</span>: <span class="string">'react.js'</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> tag2 = <span class="keyword">await</span> TagModel.create(&#123; <span class="attr">name</span>: <span class="string">'vue.js'</span> &#125;)</span><br><span class="line"><span class="keyword">await</span> note.addTags([tag1, tag2], &#123; <span class="attr">through</span>: &#123; <span class="attr">type</span>: <span class="number">1</span> &#125; &#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="改-setTags"><a href="#改-setTags" class="headerlink" title="改 - setTags"></a>改 - setTags</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> note = <span class="keyword">await</span> NoteModel.create(&#123; <span class="attr">title</span>: <span class="string">'aa'</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> tag1 = <span class="keyword">await</span> TagModel.create(&#123; <span class="attr">name</span>: <span class="string">'react.js'</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> tag2 = <span class="keyword">await</span> TagModel.create(&#123; <span class="attr">name</span>: <span class="string">'vue.js'</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">await</span> note.addTags([tag1, tag2], &#123; <span class="attr">through</span>: &#123; <span class="attr">type</span>: <span class="number">1</span> &#125; &#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> tag3 = <span class="keyword">await</span> TagModel.create(&#123; <span class="attr">name</span>: <span class="string">'angular.js'</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> tag4 = <span class="keyword">await</span> TagModel.create(&#123; <span class="attr">name</span>: <span class="string">'ant-desgin'</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">await</span> note.setTags([tag3, tag4], &#123; <span class="attr">through</span>: &#123; <span class="attr">type</span>: <span class="number">2</span> &#125; &#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * <span class="keyword">from</span> taggings;</span><br><span class="line">+------+---------------------+---------------------+--------+-------+</span><br><span class="line">| type | createdAt           | updatedAt           | noteId | tagId |</span><br><span class="line">+------+---------------------+---------------------+--------+-------+</span><br><span class="line">|    <span class="number">2</span> | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">07</span>:<span class="number">02</span>:<span class="number">52</span> | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">07</span>:<span class="number">02</span>:<span class="number">52</span> |      <span class="number">1</span> |     <span class="number">3</span> |</span><br><span class="line">|    <span class="number">2</span> | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">07</span>:<span class="number">02</span>:<span class="number">52</span> | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">07</span>:<span class="number">02</span>:<span class="number">52</span> |      <span class="number">1</span> |     <span class="number">4</span> |</span><br><span class="line">+------+---------------------+---------------------+--------+-------+</span><br><span class="line"><span class="number">2</span> rows <span class="keyword">in</span> set (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * <span class="keyword">from</span> tags;</span><br><span class="line">+----+------------+---------------------+---------------------+</span><br><span class="line">| id | name       | createdAt           | updatedAt           |</span><br><span class="line">+----+------------+---------------------+---------------------+</span><br><span class="line">|  <span class="number">1</span> | react.js   | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">07</span>:<span class="number">02</span>:<span class="number">51</span> | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">07</span>:<span class="number">02</span>:<span class="number">51</span> |</span><br><span class="line">|  <span class="number">2</span> | vue.js     | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">07</span>:<span class="number">02</span>:<span class="number">51</span> | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">07</span>:<span class="number">02</span>:<span class="number">51</span> |</span><br><span class="line">|  <span class="number">3</span> | angular.js | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">07</span>:<span class="number">02</span>:<span class="number">52</span> | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">07</span>:<span class="number">02</span>:<span class="number">52</span> |</span><br><span class="line">|  <span class="number">4</span> | ant-desgin | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">07</span>:<span class="number">02</span>:<span class="number">52</span> | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">07</span>:<span class="number">02</span>:<span class="number">52</span> |</span><br><span class="line">+----+------------+---------------------+---------------------+</span><br><span class="line"><span class="number">4</span> rows <span class="keyword">in</span> set (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<h3 id="删"><a href="#删" class="headerlink" title="删"></a>删</h3><h4 id="removeTag"><a href="#removeTag" class="headerlink" title="removeTag"></a>removeTag</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> note = <span class="keyword">await</span> NoteModel.create(&#123; <span class="attr">title</span>: <span class="string">'aa'</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> tag1 = <span class="keyword">await</span> TagModel.create(&#123; <span class="attr">name</span>: <span class="string">'react.js'</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> tag2 = <span class="keyword">await</span> TagModel.create(&#123; <span class="attr">name</span>: <span class="string">'vue.js'</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">await</span> note.addTags([tag1, tag2], &#123; <span class="attr">through</span>: &#123; <span class="attr">type</span>: <span class="number">1</span> &#125; &#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">await</span> note.removeTag(tag2)</span><br><span class="line"></span><br><span class="line"><span class="comment">// DELETE FROM `taggings` WHERE `noteId` = 1 AND `tagId` IN (2)</span></span><br></pre></td></tr></table></figure>
+<p>–&gt; 软删:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * <span class="keyword">from</span> tags;</span><br><span class="line">+----+----------+---------------------+---------------------+</span><br><span class="line">| id | name     | createdAt           | updatedAt           |</span><br><span class="line">+----+----------+---------------------+---------------------+</span><br><span class="line">|  <span class="number">1</span> | react.js | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">07</span>:<span class="number">06</span>:<span class="number">18</span> | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">07</span>:<span class="number">06</span>:<span class="number">18</span> |</span><br><span class="line">|  <span class="number">2</span> | vue.js   | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">07</span>:<span class="number">06</span>:<span class="number">18</span> | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">07</span>:<span class="number">06</span>:<span class="number">18</span> |</span><br><span class="line">+----+----------+---------------------+---------------------+</span><br><span class="line"><span class="number">2</span> rows <span class="keyword">in</span> set (<span class="number">0.00</span> sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * <span class="keyword">from</span> taggings;</span><br><span class="line">+------+---------------------+---------------------+--------+-------+</span><br><span class="line">| type | createdAt           | updatedAt           | noteId | tagId |</span><br><span class="line">+------+---------------------+---------------------+--------+-------+</span><br><span class="line">|    <span class="number">1</span> | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">07</span>:<span class="number">06</span>:<span class="number">18</span> | <span class="number">2019</span><span class="number">-01</span><span class="number">-12</span> <span class="number">07</span>:<span class="number">06</span>:<span class="number">18</span> |      <span class="number">1</span> |     <span class="number">1</span> |</span><br><span class="line">+------+---------------------+---------------------+--------+-------+</span><br><span class="line"><span class="number">1</span> row <span class="keyword">in</span> set (<span class="number">0.00</span> sec)</span><br></pre></td></tr></table></figure>
+<h4 id="setTags"><a href="#setTags" class="headerlink" title="setTags([])"></a>setTags([])</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> note = <span class="keyword">await</span> NoteModel.create(&#123; <span class="attr">title</span>: <span class="string">'aa'</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> tag1 = <span class="keyword">await</span> TagModel.create(&#123; <span class="attr">name</span>: <span class="string">'react.js'</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> tag2 = <span class="keyword">await</span> TagModel.create(&#123; <span class="attr">name</span>: <span class="string">'vue.js'</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">await</span> note.addTags([tag1, tag2], &#123; <span class="attr">through</span>: &#123; <span class="attr">type</span>: <span class="number">1</span> &#125; &#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">await</span> note.setTags([])</span><br></pre></td></tr></table></figure>
+<h3 id="查-1"><a href="#查-1" class="headerlink" title="查"></a>查</h3><h4 id="getTags"><a href="#getTags" class="headerlink" title="getTags"></a>getTags</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> note = <span class="keyword">await</span> NoteModel.create(&#123; <span class="attr">title</span>: <span class="string">'aa'</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> tag1 = <span class="keyword">await</span> TagModel.create(&#123; <span class="attr">name</span>: <span class="string">'react.js'</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> tag2 = <span class="keyword">await</span> TagModel.create(&#123; <span class="attr">name</span>: <span class="string">'vue.js'</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">await</span> note.addTags([tag1, tag2], &#123; <span class="attr">through</span>: &#123; <span class="attr">type</span>: <span class="number">1</span> &#125; &#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> notes = <span class="keyword">await</span> note.getTags(&#123;</span><br><span class="line">  <span class="comment">// 这里可以对tags进行where</span></span><br><span class="line">&#125;)</span><br><span class="line">notes.map(<span class="function"><span class="params">d</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(d.get(&#123; <span class="attr">plain</span>: <span class="literal">true</span> &#125;))</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// &#123; id: 1,</span></span><br><span class="line"><span class="comment">//   name: 'react.js',</span></span><br><span class="line"><span class="comment">//   createdAt: 2019-01-12T07:11:26.000Z,</span></span><br><span class="line"><span class="comment">//   updatedAt: 2019-01-12T07:11:26.000Z,</span></span><br><span class="line"><span class="comment">//   tagging:</span></span><br><span class="line"><span class="comment">//    &#123; type: 1,</span></span><br><span class="line"><span class="comment">//      createdAt: 2019-01-12T07:11:26.000Z,</span></span><br><span class="line"><span class="comment">//      updatedAt: 2019-01-12T07:11:26.000Z,</span></span><br><span class="line"><span class="comment">//      noteId: 1,</span></span><br><span class="line"><span class="comment">//      tagId: 1 &#125; &#125;</span></span><br><span class="line"><span class="comment">// &#123; id: 2,</span></span><br><span class="line"><span class="comment">//   name: 'vue.js',</span></span><br><span class="line"><span class="comment">//   createdAt: 2019-01-12T07:11:26.000Z,</span></span><br><span class="line"><span class="comment">//   updatedAt: 2019-01-12T07:11:26.000Z,</span></span><br><span class="line"><span class="comment">//   tagging:</span></span><br><span class="line"><span class="comment">//    &#123; type: 1,</span></span><br><span class="line"><span class="comment">//      createdAt: 2019-01-12T07:11:26.000Z,</span></span><br><span class="line"><span class="comment">//      updatedAt: 2019-01-12T07:11:26.000Z,</span></span><br><span class="line"><span class="comment">//      noteId: 1,</span></span><br><span class="line"><span class="comment">//      tagId: 2 &#125; &#125;</span></span><br></pre></td></tr></table></figure>
+<p>可以看到这种查询，就是执行一个 <code>inner join</code>。</p>
+<h4 id="findAll-1"><a href="#findAll-1" class="headerlink" title="findAll"></a>findAll</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> note = <span class="keyword">await</span> NoteModel.create(&#123; <span class="attr">title</span>: <span class="string">'aa'</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> tag1 = <span class="keyword">await</span> TagModel.create(&#123; <span class="attr">name</span>: <span class="string">'react.js'</span> &#125;)</span><br><span class="line"><span class="keyword">const</span> tag2 = <span class="keyword">await</span> TagModel.create(&#123; <span class="attr">name</span>: <span class="string">'vue.js'</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">await</span> note.addTags([tag1, tag2], &#123; <span class="attr">through</span>: &#123; <span class="attr">type</span>: <span class="number">1</span> &#125; &#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> notes = <span class="keyword">await</span> NoteModel.findAll(&#123;</span><br><span class="line">  include: TagModel</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">notes.map(<span class="function"><span class="params">d</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(d.get(&#123; <span class="attr">plain</span>: <span class="literal">true</span> &#125;))</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// &#123; id: 1,</span></span><br><span class="line"><span class="comment">//   title: 'aa',</span></span><br><span class="line"><span class="comment">//   createdAt: 2019-01-12T07:14:43.000Z,</span></span><br><span class="line"><span class="comment">//   updatedAt: 2019-01-12T07:14:43.000Z,</span></span><br><span class="line"><span class="comment">//   tags:</span></span><br><span class="line"><span class="comment">//    [ &#123; id: 1,</span></span><br><span class="line"><span class="comment">//        name: 'react.js',</span></span><br><span class="line"><span class="comment">//        createdAt: 2019-01-12T07:14:43.000Z,</span></span><br><span class="line"><span class="comment">//        updatedAt: 2019-01-12T07:14:43.000Z,</span></span><br><span class="line"><span class="comment">//        tagging: [Object] &#125;,</span></span><br><span class="line"><span class="comment">//      &#123; id: 2,</span></span><br><span class="line"><span class="comment">//        name: 'vue.js',</span></span><br><span class="line"><span class="comment">//        createdAt: 2019-01-12T07:14:43.000Z,</span></span><br><span class="line"><span class="comment">//        updatedAt: 2019-01-12T07:14:43.000Z,</span></span><br><span class="line"><span class="comment">//        tagging: [Object] &#125; ] &#125;</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Sequelize/" rel="tag"># Sequelize</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/10/sequelize-curd/" rel="next" title="Sequelize - 单表 CURD">
+                <i class="fa fa-chevron-left"></i> Sequelize - 单表 CURD
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div id="gitalk-container"></div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="gershonv" />
+            
+              <p class="site-author-name" itemprop="name">gershonv</p>
+              <p class="site-description motion-element" itemprop="description">前端开发爱好者</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">76</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/gershonv" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/5acac6c4f265da2378408f92/posts" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Juejin</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一对一"><span class="nav-number">1.</span> <span class="nav-text">一对一</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#增-createAccount"><span class="nav-number">1.1.</span> <span class="nav-text">增 - createAccount</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#改-setAccount"><span class="nav-number">1.2.</span> <span class="nav-text">改 - setAccount</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#软删-setAccount-null"><span class="nav-number">1.3.</span> <span class="nav-text">软删 - setAccount(null)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查-getAccount"><span class="nav-number">1.4.</span> <span class="nav-text">查 - getAccount</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一对多"><span class="nav-number">2.</span> <span class="nav-text">一对多</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#增"><span class="nav-number">2.1.</span> <span class="nav-text">增</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#createNote"><span class="nav-number">2.1.1.</span> <span class="nav-text">createNote</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#addNote"><span class="nav-number">2.1.2.</span> <span class="nav-text">addNote</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#addNotes"><span class="nav-number">2.1.3.</span> <span class="nav-text">addNotes</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#改-setNotes"><span class="nav-number">2.2.</span> <span class="nav-text">改 - setNotes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#软删"><span class="nav-number">2.3.</span> <span class="nav-text">软删</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#removeNote"><span class="nav-number">2.3.1.</span> <span class="nav-text">removeNote</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#setNotes"><span class="nav-number">2.3.2.</span> <span class="nav-text">setNotes([])</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查"><span class="nav-number">2.4.</span> <span class="nav-text">查</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#getNotes"><span class="nav-number">2.4.1.</span> <span class="nav-text">getNotes</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#findAll"><span class="nav-number">2.4.2.</span> <span class="nav-text">findAll</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多对多"><span class="nav-number">3.</span> <span class="nav-text">多对多</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#增-1"><span class="nav-number">3.1.</span> <span class="nav-text">增</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#createTag"><span class="nav-number">3.1.1.</span> <span class="nav-text">createTag</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#addTag"><span class="nav-number">3.1.2.</span> <span class="nav-text">addTag</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#addTags"><span class="nav-number">3.1.3.</span> <span class="nav-text">addTags</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#改-setTags"><span class="nav-number">3.2.</span> <span class="nav-text">改 - setTags</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删"><span class="nav-number">3.3.</span> <span class="nav-text">删</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#removeTag"><span class="nav-number">3.3.1.</span> <span class="nav-text">removeTag</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#setTags"><span class="nav-number">3.3.2.</span> <span class="nav-text">setTags([])</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查-1"><span class="nav-number">3.4.</span> <span class="nav-text">查</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#getTags"><span class="nav-number">3.4.1.</span> <span class="nav-text">getTags</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#findAll-1"><span class="nav-number">3.4.2.</span> <span class="nav-text">findAll</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gershonv</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'ece10fea60fa925783ab',
+          clientSecret: 'c28aa931a2204c3ae59ab2e17aaa3ddd6b5ce8e6',
+          repo: 'gershonv.github.io',
+          owner: 'gershonv',
+          admin: ['gershonv'],
+          id: location.pathname,
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')           
+       </script>
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Sequelize," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="郭大大的博客" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="Sequelize 中有两种查询：使用 Model（模型）中的方法查询和使用 sequelize.query() 进行基于 SQL 语句的原始查询。">
+<meta name="keywords" content="Sequelize">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sequelize - 使用 model 查询数据">
+<meta property="og:url" content="https://gershonv.github.io/2019/01/03/sequelize-query/index.html">
+<meta property="og:site_name" content="郭大大的博客">
+<meta property="og:description" content="Sequelize 中有两种查询：使用 Model（模型）中的方法查询和使用 sequelize.query() 进行基于 SQL 语句的原始查询。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-01-10T15:51:16.343Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Sequelize - 使用 model 查询数据">
+<meta name="twitter:description" content="Sequelize 中有两种查询：使用 Model（模型）中的方法查询和使用 sequelize.query() 进行基于 SQL 语句的原始查询。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://gershonv.github.io/2019/01/03/sequelize-query/"/>
+
+
+
+
+
+  <title>Sequelize - 使用 model 查询数据 | 郭大大的博客</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">郭大大的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">生活就像海洋，只有意志坚强的人才能到达彼岸</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            Search
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://gershonv.github.io/2019/01/03/sequelize-query/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="gershonv">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="郭大大的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Sequelize - 使用 model 查询数据</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-03T14:56:03+08:00">
+                2019-01-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Sequelize/" itemprop="url" rel="index">
+                    <span itemprop="name">Sequelize</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><code>Sequelize</code> 中有两种查询：使用 <code>Model</code>（模型）中的方法查询和使用 <code>sequelize.query()</code> 进行基于 SQL 语句的原始查询。</p>
+<a id="more"></a>
+<p>下面是事先创建好的数据：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; select * from users;</span><br><span class="line">+----+----------+------+------+-------+</span><br><span class="line">| id | name     | age  | sex  | score |</span><br><span class="line">+----+----------+------+------+-------+</span><br><span class="line">|  1 | guodada0 |   15 |    0 |    60 |</span><br><span class="line">|  2 | guodada1 |   16 |    1 |    80 |</span><br><span class="line">|  3 | guodada2 |   17 |    0 |    55 |</span><br><span class="line">|  4 | guodada3 |   18 |    1 |    87 |</span><br><span class="line">|  5 | guodada4 |   19 |    0 |    73 |</span><br><span class="line">|  6 | guodada5 |   20 |    1 |    22 |</span><br><span class="line">+----+----------+------+------+-------+</span><br><span class="line">6 rows <span class="keyword">in</span> <span class="built_in">set</span> (0.00 sec)</span><br></pre></td></tr></table></figure>
+<p>定义的 model</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> UserModel = sequelize.define(</span><br><span class="line">  <span class="string">'user'</span>,</span><br><span class="line">  &#123;</span><br><span class="line">    name: Sequelize.STRING,</span><br><span class="line">    age: Sequelize.INTEGER,</span><br><span class="line">    sex: Sequelize.INTEGER,</span><br><span class="line">    score: Sequelize.INTEGER</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123; <span class="attr">timestamps</span>: <span class="literal">false</span> &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<h2 id="查询多项-findAll"><a href="#查询多项-findAll" class="headerlink" title="查询多项 (findAll)"></a>查询多项 (findAll)</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> result = <span class="keyword">await</span> UserModel.findAll() <span class="comment">// result 将是所有 UserModel 实例的数组</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// the same as</span></span><br><span class="line"><span class="keyword">const</span> result = <span class="keyword">await</span> UserModel.all()</span><br><span class="line"></span><br><span class="line"><span class="comment">//...</span></span><br></pre></td></tr></table></figure>
+<h3 id="限制字段"><a href="#限制字段" class="headerlink" title="限制字段"></a>限制字段</h3><p>查询时，如果只需要查询模型的部分属性，可以在通过在查询选项中指定 <code>attributes</code> 实现。该选项是一个数组参数，在数组中指定要查询的属性即可，这些要查询的属性就表示要在数据库查询的字段：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Model.findAll(&#123;</span><br><span class="line">  attributes: [<span class="string">'foo'</span>, <span class="string">'bar'</span>]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="字段重命名"><a href="#字段重命名" class="headerlink" title="字段重命名"></a>字段重命名</h3><p>查询属性（字段）可以通过传入一个嵌套数据进行重命名：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Model.findAll(&#123;</span><br><span class="line">  attributes: [<span class="string">'foo'</span>, [<span class="string">'bar'</span>, <span class="string">'baz'</span>]]</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// SELECT foo, bar AS baz ...</span></span><br></pre></td></tr></table></figure>
+<p>demo</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> results = <span class="keyword">await</span> UserModel.findAll(&#123;</span><br><span class="line">  attributes: [[<span class="string">'name'</span>, <span class="string">'username'</span>], <span class="string">'age'</span>, <span class="string">'score'</span>]</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// [&#123;"username":"guodada0","age":15,"score":60&#125;,&#123;"username":"guodada1","age":16,"score":80&#125; ...]</span></span><br><span class="line">ctx.body = results</span><br><span class="line"></span><br><span class="line"><span class="comment">// 访问查询结果 通过 instance.get('xxx')</span></span><br><span class="line"><span class="built_in">console</span>.log(results[<span class="number">0</span>][<span class="string">'username'</span>], results[<span class="number">0</span>].get(<span class="string">'username'</span>)) <span class="comment">// undefind, 'guodada0'</span></span><br></pre></td></tr></table></figure>
+<h3 id="指定筛选条件-where"><a href="#指定筛选条件-where" class="headerlink" title="指定筛选条件 (where)"></a>指定筛选条件 (where)</h3><p>在模型的 <code>find/finAll</code> 或 <code>updates/destroys</code> 操作中，可以指定一个 <code>where</code> 选项以指定筛选条件，</p>
+<p><code>where</code> 是一个包含属性/值对对象，sequelize 会根据此对象生产查询语句的筛选条件。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> results = <span class="keyword">await</span> UserModel.findAll(&#123;</span><br><span class="line">  where: &#123;</span><br><span class="line">    age: <span class="number">18</span>,</span><br><span class="line">    name: <span class="string">'guodada3'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;) <span class="comment">//  SELECT * FROM `users` AS `user` WHERE `user`.`age` = 18 AND `user`.`name` = 'guodada3';</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">await</span> UserModel.destroy(&#123;</span><br><span class="line">  where: &#123; <span class="attr">name</span>: <span class="string">'guodada3'</span> &#125;</span><br><span class="line">&#125;) <span class="comment">// DELETE FROM `users` WHERE name = 'guodada3'</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+<h4 id="复合过滤-OR-NOT-查询"><a href="#复合过滤-OR-NOT-查询" class="headerlink" title="复合过滤 / OR / NOT 查询"></a>复合过滤 / OR / NOT 查询</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">$and: &#123;<span class="attr">a</span>: <span class="number">5</span>&#125;           <span class="comment">// AND (a = 5)</span></span><br><span class="line">$or: [&#123;<span class="attr">a</span>: <span class="number">5</span>&#125;, &#123;<span class="attr">a</span>: <span class="number">6</span>&#125;]  <span class="comment">// (a = 5 OR a = 6)</span></span><br><span class="line">$gt: <span class="number">6</span>,                <span class="comment">// &gt; 6</span></span><br><span class="line">$gte: <span class="number">6</span>,               <span class="comment">// &gt;= 6</span></span><br><span class="line">$lt: <span class="number">10</span>,               <span class="comment">// &lt; 10</span></span><br><span class="line">$lte: <span class="number">10</span>,              <span class="comment">// &lt;= 10</span></span><br><span class="line">$ne: <span class="number">20</span>,               <span class="comment">// != 20</span></span><br><span class="line">$not: <span class="literal">true</span>,            <span class="comment">// IS NOT TRUE</span></span><br><span class="line">$between: [<span class="number">6</span>, <span class="number">10</span>],     <span class="comment">// BETWEEN 6 AND 10</span></span><br><span class="line">$notBetween: [<span class="number">11</span>, <span class="number">15</span>], <span class="comment">// NOT BETWEEN 11 AND 15</span></span><br><span class="line">$<span class="keyword">in</span>: [<span class="number">1</span>, <span class="number">2</span>],           <span class="comment">// IN [1, 2]</span></span><br><span class="line">$notIn: [<span class="number">1</span>, <span class="number">2</span>],        <span class="comment">// NOT IN [1, 2]</span></span><br><span class="line">$like: <span class="string">'%hat'</span>,         <span class="comment">// LIKE '%hat'</span></span><br><span class="line">$notLike: <span class="string">'%hat'</span>       <span class="comment">// NOT LIKE '%hat'</span></span><br><span class="line">$iLike: <span class="string">'%hat'</span>         <span class="comment">// ILIKE '%hat' (case insensitive) (PG only)</span></span><br><span class="line">$notILike: <span class="string">'%hat'</span>      <span class="comment">// NOT ILIKE '%hat'  (PG only)</span></span><br><span class="line">$like: &#123; <span class="attr">$any</span>: [<span class="string">'cat'</span>, <span class="string">'hat'</span>]&#125;</span><br><span class="line">                       <span class="comment">// LIKE ANY ARRAY['cat', 'hat'] - also works for iLike and notLike</span></span><br><span class="line">$overlap: [<span class="number">1</span>, <span class="number">2</span>]       <span class="comment">// &amp;&amp; [1, 2] (PG array overlap operator)</span></span><br><span class="line">$contains: [<span class="number">1</span>, <span class="number">2</span>]      <span class="comment">// @&gt; [1, 2] (PG array contains operator)</span></span><br><span class="line">$contained: [<span class="number">1</span>, <span class="number">2</span>]     <span class="comment">// &lt;@ [1, 2] (PG array contained by operator)</span></span><br><span class="line">$any: [<span class="number">2</span>,<span class="number">3</span>]            <span class="comment">// ANY ARRAY[2, 3]::INTEGER (PG only)</span></span><br><span class="line"></span><br><span class="line">$col: <span class="string">'user.organization_id'</span> <span class="comment">// = "user"."organization_id", with dialect specific column identifiers, PG in this example</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>$like</code>: 模糊查询 <code>%锅</code> 以 <code>锅</code> 结尾的。 <code>%锅%</code> 包含 <code>锅</code> 的</li>
+<li><code>$in: [10, 11]</code> - 值为 10 或 11</li>
+</ul>
+<h4 id="demo"><a href="#demo" class="headerlink" title="demo"></a>demo</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SELECT * FROM `users` AS `user` WHERE `user`.`age` &gt; 18 AND `user`.`name` LIKE '%5';</span></span><br><span class="line"><span class="keyword">const</span> results = <span class="keyword">await</span> UserModel.findAll(&#123;</span><br><span class="line">  where: &#123;</span><br><span class="line">    age: &#123; <span class="attr">$gt</span>: <span class="number">18</span> &#125;,</span><br><span class="line">    name: &#123; <span class="attr">$like</span>: <span class="string">'%5'</span> &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// SELECT * FROM `users` AS `user` WHERE (`user`.`age` &lt; 1000 OR `user`.`age` IS NULL) AND `user`.`name` LIKE '%5';</span></span><br><span class="line"><span class="keyword">const</span> results = <span class="keyword">await</span> UserModel.findAll(&#123;</span><br><span class="line">  where: &#123;</span><br><span class="line">    age: &#123;</span><br><span class="line">      $<span class="keyword">in</span>: [<span class="number">15</span>, <span class="number">20</span>],</span><br><span class="line">      $or: &#123; <span class="attr">$lt</span>: <span class="number">1000</span>, <span class="attr">$eq</span>: <span class="literal">null</span> &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    name: &#123; <span class="attr">$like</span>: <span class="string">'%5'</span> &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="分页与限制返回结果数"><a href="#分页与限制返回结果数" class="headerlink" title="分页与限制返回结果数"></a>分页与限制返回结果数</h3><p>查询进，我们可以使用 <code>limit</code> 限制返回结果条数，并可以通过 <code>offset</code> 来设置查询偏移（跳过）量，通过这两个属性我们可以实现分页查询的功能：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取 10 条数据（实例）</span></span><br><span class="line">UserModel.findAll(&#123; <span class="attr">limit</span>: <span class="number">10</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 跳过 8 条数据（实例）</span></span><br><span class="line">UserModel.findAll(&#123; <span class="attr">offset</span>: <span class="number">8</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 跳过 5 条数据并获取其后的 5 条数据（实例）</span></span><br><span class="line">UserModel.findAll(&#123; <span class="attr">offset</span>: <span class="number">5</span>, <span class="attr">limit</span>: <span class="number">5</span> &#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h3><p><code>order</code> 选项用于查询结果的排序数据。排序时应该传入一个包含属性-排序方向的元组/数组，以保证正确的转义：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> result = <span class="keyword">await</span> UserModel.findAll(&#123;</span><br><span class="line">  order: sequelize.literal(<span class="string">'name DESC'</span>) <span class="comment">// 降序</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// demo2</span></span><br><span class="line"><span class="keyword">const</span> result = <span class="keyword">await</span> UserModel.findAll(&#123;</span><br><span class="line">  order: [sequelize.literal(<span class="string">'score DESC'</span>), sequelize.literal(<span class="string">'name DESC'</span>)]</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 按 max(age) DESC 排序</span></span><br><span class="line">[sequelize.fn(<span class="string">'max'</span>, sequelize.col(<span class="string">'age'</span>)), <span class="string">'DESC'</span>],</span><br><span class="line"></span><br><span class="line"><span class="comment">// 按相关联的User 模型的 name 属性排序</span></span><br><span class="line">[ArticleModel, <span class="string">'name'</span>, <span class="string">'DESC'</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+<h2 id="查询单项"><a href="#查询单项" class="headerlink" title="查询单项"></a>查询单项</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// find</span></span><br><span class="line"><span class="keyword">const</span> result = <span class="keyword">await</span> UserModel.find(&#123;</span><br><span class="line">  where: &#123; <span class="attr">id</span>: <span class="number">1</span> &#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(result.name, result.get(<span class="string">'name'</span>)) <span class="comment">// guodada0 guodada0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// findOne</span></span><br><span class="line"><span class="keyword">const</span> result = <span class="keyword">await</span> UserModel.findOne(&#123;</span><br><span class="line">  where: &#123; <span class="attr">id</span>: <span class="number">1</span> &#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(result.name, result.get(<span class="string">'name'</span>)) <span class="comment">// guodada0 guodada0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// findById</span></span><br><span class="line"><span class="keyword">const</span> result = <span class="keyword">await</span> UserModel.findById(<span class="number">1</span>)</span><br><span class="line"><span class="built_in">console</span>.log(result.name, result.get(<span class="string">'name'</span>)) <span class="comment">// guodada0 guodada0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// findByPk</span></span><br><span class="line"><span class="keyword">const</span> result = <span class="keyword">await</span> UserModel.findByPk(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//...</span></span><br></pre></td></tr></table></figure>
+<h2 id="查找并创建-findOrCreate"><a href="#查找并创建-findOrCreate" class="headerlink" title="查找并创建 (findOrCreate)"></a>查找并创建 (findOrCreate)</h2><p><code>findOrCreate</code> 可用于检测一个不确定是否存在的元素，如果存在则返回记录，不存在时会使用提供的默认值新建记录。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">UserModel.findOrCreate(&#123;</span><br><span class="line">  where: &#123; <span class="attr">name</span>: <span class="string">'guodada'</span> &#125;,</span><br><span class="line">  defaults: &#123;</span><br><span class="line">    age: <span class="number">23</span>,</span><br><span class="line">    sex: <span class="number">1</span>,</span><br><span class="line">    score: <span class="number">99</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;).spread(<span class="function">(<span class="params">user, created</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(user.get(<span class="string">'name'</span>)) <span class="comment">// guodada</span></span><br><span class="line">  <span class="built_in">console</span>.log(created) <span class="comment">// 是否创建</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// INSERT INTO `users` (`id`,`name`,`age`,`sex`,`score`)</span></span><br><span class="line"><span class="comment">// VALUES (DEFAULT,'guodada',23,1,99);</span></span><br></pre></td></tr></table></figure>
+<h2 id="分页查询-findAndCountAll"><a href="#分页查询-findAndCountAll" class="headerlink" title="分页查询 (findAndCountAll)"></a>分页查询 (findAndCountAll)</h2><p><code>findAndCountAll</code> - 结合了 <code>findAll</code> 和 <code>count</code></p>
+<p>处理程序成功将始终接收具有两个属性的对象：</p>
+<ul>
+<li><code>count</code> - 一个整数，总数记录匹配 <code>where</code> 语句和关联的其它过滤器</li>
+<li><code>rows</code> - 一个数组对象，记录在 <code>limit</code> 和 <code>offset</code> 范围内匹配 <code>where</code> 语句和关联的其它过滤器</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> result = <span class="keyword">await</span> UserModel.findAndCountAll(&#123;</span><br><span class="line">  where: &#123;</span><br><span class="line">    age: &#123;</span><br><span class="line">      $gte: <span class="number">18</span> <span class="comment">// 大于等于18</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  offset: <span class="number">1</span>, <span class="comment">// 偏移量，可以理解为当前页数</span></span><br><span class="line">  limit: <span class="number">15</span> <span class="comment">// 可以理解为 pageSize , 一页有多少数据</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// count 记录数 | row 记录</span></span><br><span class="line"><span class="built_in">console</span>.log(result.count, result.rows[<span class="number">0</span>].get())</span><br><span class="line"></span><br><span class="line"><span class="comment">// SELECT * FROM `users` AS `user` WHERE `user`.`age` &gt;= 18 LIMIT 1, 15;</span></span><br></pre></td></tr></table></figure>
+<h3 id="支持-include"><a href="#支持-include" class="headerlink" title="支持 include"></a>支持 include</h3><p>它支持 <code>include</code>。 只有标记为 <code>required</code> 的 <code>include</code> 将被添加到计数部分：</p>
+<p>假设你想找 <code>User</code> 中 发布过 <code>article</code> 的记录</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> UserModel = sequelize.define(</span><br><span class="line">  <span class="string">'user'</span>,</span><br><span class="line">  &#123;</span><br><span class="line">    name: Sequelize.STRING,</span><br><span class="line">    age: Sequelize.INTEGER,</span><br><span class="line">    sex: Sequelize.INTEGER,</span><br><span class="line">    score: Sequelize.INTEGER</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123; <span class="attr">timestamps</span>: <span class="literal">false</span> &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> ArticleModel = sequelize.define(<span class="string">'article'</span>, &#123;</span><br><span class="line">  title: Sequelize.STRING,</span><br><span class="line">  content: Sequelize.STRING</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">UserModel.hasMany(ArticleModel) <span class="comment">// 关联模型</span></span><br><span class="line">ArticleModel.belongsTo(UserModel, &#123;</span><br><span class="line">  constraints: <span class="literal">false</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> result = <span class="keyword">await</span> UserModel.findAndCountAll(&#123;</span><br><span class="line">  include: [&#123; <span class="attr">model</span>: ArticleModel, <span class="attr">required</span>: <span class="literal">true</span> &#125;],</span><br><span class="line">  offset: <span class="number">1</span>,</span><br><span class="line">  limit: <span class="number">5</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(result.count) <span class="comment">// 3</span></span><br></pre></td></tr></table></figure>
+<p><code>result.row</code>:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"count"</span>: <span class="number">3</span>,</span><br><span class="line">  <span class="attr">"rows"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"id"</span>: <span class="number">1</span>,</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"guodada0"</span>,</span><br><span class="line">      <span class="attr">"age"</span>: <span class="number">15</span>,</span><br><span class="line">      <span class="attr">"sex"</span>: <span class="number">0</span>,</span><br><span class="line">      <span class="attr">"score"</span>: <span class="number">60</span>,</span><br><span class="line">      <span class="attr">"article"</span>: &#123;</span><br><span class="line">        <span class="attr">"id"</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="attr">"title"</span>: <span class="string">"title1"</span>,</span><br><span class="line">        <span class="attr">"content"</span>: <span class="string">"aaa"</span>,</span><br><span class="line">        <span class="attr">"userId"</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="attr">"createdAt"</span>: <span class="string">"2019-01-07T08:51:13.000Z"</span>,</span><br><span class="line">        <span class="attr">"updatedAt"</span>: <span class="string">"2019-01-07T08:51:13.000Z"</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //...</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为 <code>ArticleModel</code> 的 <code>include</code> 有 <code>required</code> 设置，这将导致内部连接，并且只有具有 <code>ArticleModel</code> 的用户将被计数。<br>如果我们从 <code>include</code> 中删除 <code>required</code>，那么有和没有 <code>ArticleModel</code> 的用户都将被计数。<br>在 <code>include</code> 中添加一个 <code>where</code> 语句会自动使它成为 required：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> result = <span class="keyword">await</span> UserModel.findAndCountAll(&#123;</span><br><span class="line">  include: [&#123; <span class="attr">model</span>: ArticleModel &#125;]</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(result.count) <span class="comment">// 7</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> result = <span class="keyword">await</span> UserModel.findAndCountAll(&#123;</span><br><span class="line">  include: [&#123; <span class="attr">model</span>: ArticleModel, <span class="attr">where</span>: &#123; <span class="attr">userId</span>: <span class="number">2</span> &#125; &#125;]</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(result.count) <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+<h2 id="聚合查询"><a href="#聚合查询" class="headerlink" title="聚合查询"></a>聚合查询</h2><h3 id="SQL-中的分组查询"><a href="#SQL-中的分组查询" class="headerlink" title="SQL 中的分组查询"></a>SQL 中的分组查询</h3><p><a href="https://gershonv.github.io/2018/12/31/mysql-聚合函数/">mysql-聚合函数</a></p>
+<p><code>SQL</code> 查询中，通 <code>GROUP BY</code> 语名实现分组查询。GROUP BY 子句要和聚合函数配合使用才能完成分组查询，在 <code>SELECT</code> 查询的字段中，如果没有使用聚合函数就必须出现在 ORDER BY 子句中。分组查询后，查询结果为一个或多个列分组后的结果集。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">SELECT 列名, 聚合函数(列名)</span><br><span class="line">FROM 表名</span><br><span class="line">WHERE 列名 operator value</span><br><span class="line">GROUP BY 列名</span><br><span class="line">[HAVING 条件表达式] [WITH ROLLUP]</span><br></pre></td></tr></table></figure>
+<p>在以上语句中：</p>
+<ul>
+<li>聚合函数 - 分组查询通常要与聚合函数一起使用，聚合函数包括：<ul>
+<li><code>COUNT()</code>-用于统计记录条数</li>
+<li><code>SUM()</code>-用于计算字段的值的总和</li>
+<li><code>AVG()</code>-用于计算字段的值的平均值</li>
+<li><code>MAX</code>-用于查找查询字段的最大值</li>
+<li><code>MIX</code>-用于查找查询字段的最小值</li>
+</ul>
+</li>
+<li><code>GROUP BY</code> 子名-用于指定分组的字段</li>
+<li><code>HAVING</code> 子名-用于过滤分组结果，符合条件表达式的结果将会被显示</li>
+<li><code>WITH ROLLUP</code> 子名-用于指定追加一条记录，用于汇总前面的数据</li>
+</ul>
+<h3 id="sum-field-options"><a href="#sum-field-options" class="headerlink" title="sum(field, [options])"></a>sum(field, [options])</h3><p><code>Sequelize</code> 提供了聚合函数，可以直接对模型进行聚合查询：</p>
+<ul>
+<li><code>aggregate(field, aggregateFunction, [options])</code>-通过指定的聚合函数进行查询</li>
+<li><code>sum(field, [options])</code>-求和</li>
+<li><code>count(options: Object)</code>-统计查询结果数</li>
+<li><code>max(field, [options])</code>-查询最大值</li>
+<li><code>min(field, [options])</code>-查询最小值</li>
+</ul>
+<p>以上这些聚合函数中，可以通过 <code>options.attributes</code>、<code>options.attributes</code> 属性指定分组相关字段，并可以通过 <code>options.having</code> 指定过滤条件，但没有直接指定 <code>WITH ROLLUP</code> 子句的参数。</p>
+<p>使用<code>.sum()</code>查询订单数量大于 1 的用户订单额：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> result = <span class="keyword">await</span> OrderModel.sum(<span class="string">'price'</span>, &#123;</span><br><span class="line">  attributes: [<span class="string">'name'</span>, [sequelize.fn(<span class="string">'COUNT'</span>, sequelize.col(<span class="string">'price'</span>)), <span class="string">'sum'</span>]],</span><br><span class="line">  group: <span class="string">'name'</span>,</span><br><span class="line">  plain: <span class="literal">false</span>, <span class="comment">// 执行的查询类型，sequelize会根据这个类型对返回结果格式化。</span></span><br><span class="line">  having: &#123;</span><br><span class="line">    $and: [sequelize.literal(<span class="string">'COUNT(name) &gt; 1'</span>)]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// SELECT `name`, SUM(`price`) AS `sum` FROM `orders` AS `order` GROUP BY `name` HAVING (COUNT(name) &gt; 1);</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// [ &#123; name: 'guo', sum: '44' &#125;, &#123; name: 'guo2', sum: '22' &#125; ]</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://itbilu.com/nodejs/npm/VkYIaRPz-.html#api-instance-fn" target="_blank" rel="noopener">plain</a>:执行的查询类型，<code>sequelize</code> 会根据这个类型对返回结果格式化</li>
+<li><a href="https://itbilu.com/nodejs/npm/N1pPjUdMf.html#multi" target="_blank" rel="noopener">sequelize.literal</a>: 创建一个字面量对象，该值不会转义</li>
+</ul>
+<p>除直接使用聚合函数外，也可以在 <code>findAll()</code>等方法中，指定聚合查询相关参数实现聚合查询。<br>查询时，同样可以通过通过 <code>options.attributes</code>、<code>options.attributes</code> 属性指定分组相关字段，并可以通过 options.having 指定过滤条件。与直接使用聚合函数查询不一样，通过参数构建聚合查询时，<br>要以数组或对象形式设置 <code>options.attributes</code> 参数中的聚合字段，并需要通过 <code>sequelize.fn()</code>方法传入聚合函数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> result = <span class="keyword">await</span> OrderModel.findAll(&#123;</span><br><span class="line">  attributes: [<span class="string">'name'</span>, [sequelize.fn(<span class="string">'SUM'</span>, sequelize.col(<span class="string">'price'</span>)), <span class="string">'sum'</span>]],</span><br><span class="line">  group: <span class="string">'name'</span>,</span><br><span class="line">  having: &#123;</span><br><span class="line">    $and: [sequelize.literal(<span class="string">'COUNT(name) &gt; 1'</span>)]</span><br><span class="line">  &#125;,</span><br><span class="line">  raw: <span class="literal">true</span> <span class="comment">// row 对查询结果进行格式化， false 返回 instance</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><code>sequelize.fn()</code> - 函数调用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sequelize.fn(fn, args) -&gt; Sequelize.fn</span><br></pre></td></tr></table></figure>
+<p>创建于一个相当于数据库函数的对象。该函数可用于搜索查询的 <code>where</code> 和 <code>order</code> 部分，以及做为列定义的默认值。如果想在列中引用你定义的函数，就要使用 <code>sequelize.col</code>，这样列就能正确的解析，而不是解析为字符串。<br>如，将 <code>username</code> 字段值解析为大写形式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">instance.updateAttributes(&#123;</span><br><span class="line">  username: self.sequelize.fn(<span class="string">'upper'</span>, self.sequelize.col(<span class="string">'username'</span>))</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><code>sequelize.col()</code> - 列对象</p>
+<p>创建一个相当于数据库列的对象。这个方法经常结合 sequelize.fn 使用，它可以保证将列名正确的传递给该方法，而不是经过转义。</p>
+<h3 id="count-options-Object"><a href="#count-options-Object" class="headerlink" title="count(options: Object)"></a>count(options: Object)</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> result = <span class="keyword">await</span> OrderModel.count(&#123;</span><br><span class="line">  where: &#123; <span class="attr">price</span>: <span class="number">24</span> &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="max-min"><a href="#max-min" class="headerlink" title="max/min"></a>max/min</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> result = <span class="keyword">await</span> OrderModel.max(<span class="string">'price'</span>, &#123;</span><br><span class="line">  where: &#123;</span><br><span class="line">    price: &#123; <span class="attr">$lt</span>: <span class="number">23</span> &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="原始查询"><a href="#原始查询" class="headerlink" title="原始查询"></a>原始查询</h2><p><a href="https://itbilu.com/nodejs/npm/VJIR1CjMb.html#raw-query" target="_blank" rel="noopener">原始查询</a></p>
+<p>有时会使用原始查询或执行已准备好的 SQL 语句，这时可以用 <code>Sequlize</code> 提供的工具函数 <code>sequelize.query</code> 来实现。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> result = <span class="keyword">await</span> sequelize.query(<span class="string">'SELECT * FROM users'</span>, &#123; <span class="attr">model</span>: UserModel &#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="查询参数替换"><a href="#查询参数替换" class="headerlink" title="查询参数替换"></a>查询参数替换</h3><p>原始查询中有两种替换查询参数的方法，以:开头的参数的形式替换或以不命名以?替换。在选项对象中传递参数：</p>
+<ul>
+<li>如果传递一个数组，? 会按数组的顺序被依次替换</li>
+<li>巢传递一个对象，:key 将会用对象的键替换。如果对象中未找到指定键，则会引发异常（反之亦然）</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">sequelize</span><br><span class="line">  .query(<span class="string">'SELECT * FROM projects WHERE status = ?'</span>, &#123; <span class="attr">replacements</span>: [<span class="string">'active'</span>], <span class="attr">type</span>: sequelize.QueryTypes.SELECT &#125;)</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span>(<span class="params">projects</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(projects)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">sequelize</span><br><span class="line">  .query(<span class="string">'SELECT * FROM projects WHERE status = :status '</span>, &#123;</span><br><span class="line">    replacements: &#123; <span class="attr">status</span>: <span class="string">'active'</span> &#125;,</span><br><span class="line">    type: sequelize.QueryTypes.SELECT</span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span>(<span class="params">projects</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(projects)</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="参数绑定"><a href="#参数绑定" class="headerlink" title="参数绑定"></a>参数绑定</h3><p>参数绑定类似于参数替换。尤其是参数替换会在发送到数据库前被 sequelize 转义和替换，而参数绑定会被发送到 SQL 查询文本外。</p>
+<p>只有 <code>SQLite</code> 和 <code>PostgreSQL</code> 支持参数绑定，其它类型数据库都会将其插入到 <code>SQL</code> 查询，并以相同的方式进行参数替换。参数绑定可以使用$1、$2……或\$key 的形式：</p>
+<ul>
+<li>如果传入的是数组，\$1 会绑定到数组听第 1 个参数 (bind[0])</li>
+<li>如果传入一个对象，$key 会绑定到 <code>object[&#39;key&#39;]</code>。每个 key 必须以非数字的字符开始。$1 不是个有效的 key，尽管 object[‘1’] 是存在的。</li>
+<li>在使用\$$时，不会被转义而是将$做为一个字面量使用。</li>
+</ul>
+<p>传入的数组或对象必须包含所有绑定值，否则 <code>Sequelize</code> 会抛出异常。这同样适用于数据库可能会忽略绑定参数的情况下。</p>
+<p>数据库可能会做进一步限制，绑定参数不能使用数据库关键字，也不能是表或列名，它在引用文本或数据时也可能被忽略。在 PostgreSQL 中，如果不能从上下文\$1::varchar 中推断类型，那么也需要进行类型转换</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">sequelize</span><br><span class="line">  .query(<span class="string">'SELECT *, "text with literal $$1 and literal $$status" as t FROM projects WHERE status = $1'</span>, &#123;</span><br><span class="line">    bind: [<span class="string">'active'</span>],</span><br><span class="line">    type: sequelize.QueryTypes.SELECT</span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span>(<span class="params">projects</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(projects)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">sequelize</span><br><span class="line">  .query(<span class="string">'SELECT *, "text with literal $$1 and literal $$status" as t FROM projects WHERE status = $status'</span>, &#123;</span><br><span class="line">    bind: &#123; <span class="attr">status</span>: <span class="string">'active'</span> &#125;,</span><br><span class="line">    type: sequelize.QueryTypes.SELECT</span><br><span class="line">  &#125;)</span><br><span class="line">  .then(<span class="function"><span class="keyword">function</span>(<span class="params">projects</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(projects)</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Sequelize/" rel="tag"># Sequelize</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/03/sequelize-associations/" rel="next" title="Sequelize - associations">
+                <i class="fa fa-chevron-left"></i> Sequelize - associations
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/10/sequelize-curd/" rel="prev" title="Sequelize - 单表 CURD">
+                Sequelize - 单表 CURD <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div id="gitalk-container"></div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="gershonv" />
+            
+              <p class="site-author-name" itemprop="name">gershonv</p>
+              <p class="site-description motion-element" itemprop="description">前端开发爱好者</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">76</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/gershonv" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://juejin.im/user/5acac6c4f265da2378408f92/posts" target="_blank" title="Juejin">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Juejin</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#查询多项-findAll"><span class="nav-number">1.</span> <span class="nav-text">查询多项 (findAll)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#限制字段"><span class="nav-number">1.1.</span> <span class="nav-text">限制字段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字段重命名"><span class="nav-number">1.2.</span> <span class="nav-text">字段重命名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指定筛选条件-where"><span class="nav-number">1.3.</span> <span class="nav-text">指定筛选条件 (where)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#复合过滤-OR-NOT-查询"><span class="nav-number">1.3.1.</span> <span class="nav-text">复合过滤 / OR / NOT 查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#demo"><span class="nav-number">1.3.2.</span> <span class="nav-text">demo</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分页与限制返回结果数"><span class="nav-number">1.4.</span> <span class="nav-text">分页与限制返回结果数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排序"><span class="nav-number">1.5.</span> <span class="nav-text">排序</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查询单项"><span class="nav-number">2.</span> <span class="nav-text">查询单项</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查找并创建-findOrCreate"><span class="nav-number">3.</span> <span class="nav-text">查找并创建 (findOrCreate)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分页查询-findAndCountAll"><span class="nav-number">4.</span> <span class="nav-text">分页查询 (findAndCountAll)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#支持-include"><span class="nav-number">4.1.</span> <span class="nav-text">支持 include</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#聚合查询"><span class="nav-number">5.</span> <span class="nav-text">聚合查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SQL-中的分组查询"><span class="nav-number">5.1.</span> <span class="nav-text">SQL 中的分组查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sum-field-options"><span class="nav-number">5.2.</span> <span class="nav-text">sum(field, [options])</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#count-options-Object"><span class="nav-number">5.3.</span> <span class="nav-text">count(options: Object)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#max-min"><span class="nav-number">5.4.</span> <span class="nav-text">max/min</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原始查询"><span class="nav-number">6.</span> <span class="nav-text">原始查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查询参数替换"><span class="nav-number">6.1.</span> <span class="nav-text">查询参数替换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数绑定"><span class="nav-number">6.2.</span> <span class="nav-text">参数绑定</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">gershonv</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: 'ece10fea60fa925783ab',
+          clientSecret: 'c28aa931a2204c3ae59ab2e17aaa3ddd6b5ce8e6',
+          repo: 'gershonv.github.io',
+          owner: 'gershonv',
+          admin: ['gershonv'],
+          id: location.pathname,
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')           
+       </script>
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
