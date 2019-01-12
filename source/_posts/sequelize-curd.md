@@ -1,5 +1,5 @@
 ---
-title: Sequelize - CURD
+title: Sequelize - 单表 CURD
 date: 2019-01-10 22:45:06
 categories: Sequelize
 tags: Sequelize
@@ -21,6 +21,7 @@ const user = await UserModel.create({
   score: 99
 })
 ```
+<!-- more -->
 
 | 名称                         | 类型          | 说明                                        |
 | ---------------------------- | ------------- | ------------------------------------------- |
@@ -111,9 +112,9 @@ const deleteRowsCount = await UserModel.destroy({
 console.log(deleteRowsCount) // 执行成功后返回被删除的行数
 ```
 
-名称 | 类型 | 说明
-| options                         | Object        |
+| 名称                            | 类型          | 说明                                                                    |
 | ------------------------------- | ------------- | ----------------------------------------------------------------------- |
+| options                         | Object        |
 | [options.where]                 | `Object`      | 筛选条件                                                                |
 | [options.hooks=true]            | `Boolean`     | 在执行前/后创建钩子                                                     |
 | [options.individualHooks=false] | `Boolean`     | 在执行前/后为每个实例创建钩子                                           |
@@ -122,7 +123,6 @@ console.log(deleteRowsCount) // 执行成功后返回被删除的行数
 | [options.truncate=false]        | `Boolean`     | 设置为true时，会使用TRUNCATE代替DELETE FROM，这时会忽略where和limit选项 |
 | [options.cascade=false]         | `Boolean`     | 仅适用于连接查询时的TRUNCATE操作，截断所有外键匹配的表                  |
 | [options.transaction]           | `Transaction` | 在事务中执行查询                                                        |
-
 
 ## findOrCreate - 查找或创建
 
