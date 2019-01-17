@@ -5,30 +5,85 @@ categories: React
 tags: React
 ---
 
-## 什么时候使用 Refs
+在 `react` 典型的数据流中，`props` 传递是父子组件交互的唯一方式；要修改子组件，你需要使用新的 props 重新渲染它。
+但是，某些情况下你需要在典型数据流外强制修改子组件。某些情况下（例如和第三方的 dom 库整合，或者某个 dom 元素 focus 等）为了修改子组件我们可能需要另一种方式，这就是 `ref` 方式。
 
-下面是几个使用 `Refs` 的示例：
+<!-- more -->
 
-- 管理焦点状态(focus)、文本选择(text selection)、或者是媒体播放(media)
-- 强制触发动画
-- 与第三方的 DOM 库集成
+## ref 简介
 
-在任何能够通过直接声明完成的事情中应当避免使用 `Refs`。
-例如，对于一个 `Dialog` 组件，应当提供一个 `isOpen` 的 `prop` 来控制它，而不是暴露`open()`和 `close()`两个方法去操作。
+`React` 提供的这个 `ref` 属性，表示为对组件真正实例的引用，其实就是 `ReactDOM.render()`返回的组件实例；需要区分一下，`ReactDOM.render()`渲染组件时返回的是组件实例；而渲染 `dom` 元素时，返回是具体的 `dom` 节点。
 
-使用方法：
-
-`Refs` 是使用 `React.createRef()` 创建的，并通过 `ref` 属性附加到 `React` 元素。在构造组件时，通常将 `Refs` 分配给实例属性，以便可以在整个组件中引用它们。
-
-<!--more-->
-
-## 在 DOM 元素中使用
-
-> 当在 `refHTML` 元素上使用该属性时，`ref` 在构造函数中创建的属性将 `React.createRef()`接收底层 `DOM` 元素作为其 `current` 属性。
+> 那么我们可以知道 `ref` 挂载到普通 `dom` 节点时代表这个 `dom` 元素，相当于 `document.querySelect()`, 而挂载到组件时返回的是这个组件的实例（我们可以直接访问组件的 `state` 和方法）
 
 ```js
-import React, { Component } from 'react'
+class Demo extends Component {
+  state = { name: 'demo' }
+  render() {
+    return null
+  }
+}
 
+class App extends Component {
+  componentDidMount() {
+    this.input.focus() // 控制 input 元素的聚焦
+    console.log(this.demo.state) // { name: 'demo' }
+  }
+
+  render() {
+    return (
+      <div>
+        <input type="text" ref={el => (this.input = el)} />
+        <Demo ref={el => (this.demo = el)} />
+      </div>
+    )
+  }
+}
+```
+
+## 通过回调方式设置 ref（推荐）
+
+ref 属性可以设置为一个回调函数，这也是官方强烈推荐的用法；这个函数执行的时机为：
+
+- 组件被挂载后，回调函数被立即执行，回调函数的参数为该组件的具体实例。
+- 组件被卸载或者原有的 `ref` 属性本身发生变化时，回调也会被立即执行，此时回调函数参数为 `null`，以确保内存泄露。
+
+```js
+class Demo extends Component {
+  render() {
+    return <span>demo</span>
+  }
+}
+
+class App extends Component {
+  state = { visible: true }
+
+  toggleVisible = () => {
+    this.setState({ visible: !this.state.visible })
+  }
+
+  refCb = instance => {
+    console.log(instance)
+  }
+
+  render() {
+    return (
+      <div>
+        <button onClick={this.toggleVisible}>toggle</button>
+        {this.state.visible && <Demo ref={this.refCb} />}
+      </div>
+    )
+  }
+}
+// demo mounted => run refCb 返回 Demo 组件实例对象
+// demo destory => run refCb 返回 null
+```
+
+## 其他方式设置 ref
+
+### createRef
+
+```js
 class App extends Component {
   constructor(props) {
     super(props)
@@ -43,155 +98,129 @@ class App extends Component {
     return <input type="text" ref={this.inputRef} />
   }
 }
-
-export default App
 ```
 
-## 在类组件中使用
-
-> 在 `ref` 自定义类组件上使用该属性时，该 `ref` 对象将接收组件的已安装实例作为其 `current`。
+### ref='xxx'（不推荐）
 
 ```jsx
-import React, { Component } from 'react'
+<input ref="inputRef" />
 
-class MyComponent extends Component {
-  state = { name: 'guodada' }
-
-  render() {
-    return null
-  }
-}
-
-class App extends Component {
-  constructor(props) {
-    super(props)
-    this.myRef = React.createRef()
-  }
-
-  componentDidMount() {
-    const MyComponent = this.myRef.current // MyComponent 实例 : MyComponent.state = { name: 'guodada' }
-  }
-
-  render() {
-    return <MyComponent ref={this.myRef} />
-  }
-}
-
-export default App
+// this.refs.inputRef 访问这个 dom 元素
 ```
 
-## 在函数组件中使用
+## 在函数组件中使用 ref
 
-> 您可能无法 `ref` 在函数组件上使用该属性，因为它们没有实例。
+函数组件，即无状态组件`stateless component`在创建时是不会被实例化的。
+无状态组件内部其实是可以使用 ref 功能的，虽然不能通过 this.refs 访问到，但是可以通过将 ref 内容保存到无状态组件内部的一个本地变量中获取到。
 
 ```jsx
 import React from 'react'
 
-function MyFunctionComponent() {
-  return <input />
-}
-
-class Parent extends React.Component {
-  constructor(props) {
-    super(props)
-    this.textInput = React.createRef()
-  }
-  render() {
-    // This will *not* work!
-    return <MyFunctionComponent ref={this.textInput} />
-  }
-}
-
-export default Parent
-```
-
-但是，只要引用 `DOM` 元素或类组件，就可以在函数组件中使用该 `ref` 属性：
-
-```jsx
-import React, { Component } from 'react'
-
-function MyFunctionComponent() {
-  let textInput = React.createRef()
-
+const App = () => {
+  let inputRef
   function handleClick() {
-    textInput.current.focus()
+    inputRef.focus()
   }
-
   return (
     <div>
-      <input ref={textInput} />
       <button onClick={handleClick}>focus</button>
+      <input type="text" ref={el => (inputRef = el)} />
     </div>
   )
 }
 
-export default MyFunctionComponent
-```
-## Callback Refs （推荐使用）
-
-> `React` 还支持另一种设置名为 `callback refs` 的引用的方法，它可以在设置和取消设置引用时提供更细粒度的控制。
-
-```jsx
-import React, { Component } from 'react'
-
-class MyComponent extends Component {
-  state = { name: 'guodada' }
-
-  render() {
-    return null
-  }
-}
-
-class App extends Component {
-  componentDidMount() {
-    this.inputRef.focus() // 注意 这里没使用 current
-    console.log(this.myRef.state) // 同理这里也不使用 current
-  }
-
-  render() {
-    return (
-      <div>
-        <input type="text" ref={el => this.inputRef = el} />
-        <MyComponent ref={el => this.myRef = el} />
-      </div>
-    )
-  }
-}
-
 export default App
 ```
 
-## Ref forwarding（转发 ref）
+## React.forwardRef
 
-> `Ref forwarding` 是一种自动将 `ref` 通过组件传递给其子节点的技术。对于应用程序中的大多数组件，这通常不是必需的。但是，它对某些类型的组件很有用，特别是在可重用的组件库中。
+> `Ref forwarding` 是一种自动将 `ref` 通过组件传递给其子节点的技术。
 
-```jsx
-import React from 'react'
+Ref 转发使组件可以像暴露自己的 ref 一样暴露子组件的 ref。也就是说我们不想控制子组件，我们想具体控制到子组件某个组件的实例。
 
+```js
 const FancyButton = React.forwardRef((props, ref) => (
   <button ref={ref} className="FancyButton">
     {props.children}
   </button>
 ))
 
-class App extends React.Component {
-  constructor(props) {
-    super(props)
-    this.buttonRef = React.createRef()
-  }
-
+class App extends Component {
   componentDidMount() {
-    const FancyButton = this.buttonRef.current // 访问到 button 的 dom
+    console.log(this.fButton) //  <button className="FancyButton">click</button>
   }
 
   render() {
-    return <FancyButton ref={this.buttonRef}>click</FancyButton>
+    return <FancyButton ref={node => (this.fButton = node)}>click</FancyButton>
+  }
+}
+```
+
+举例个应用场景，我们自封装一个 `Input` 组件，那我们的 `ref` 是要具体控制到原生的 `input`。以下是具体得代码：
+
+```js
+class Input extends Component {
+  render() {
+    const { forwardedRef, ...rest } = this.props
+    return <input {...rest} ref={forwardedRef} type="text" />
   }
 }
 
-export default App
+const MyInput = React.forwardRef((props, ref) => <Input {...props} forwardedRef={ref} />)
+
+class App extends Component {
+  componentDidMount() {
+    this.input.focus()
+  }
+
+  render() {
+    return <MyInput defaultValue="guodada" ref={el => (this.input = el)} />
+  }
+}
 ```
 
-> 第二个 `ref` 参数仅在使用 `React.forwardRef` 调用定义组件时才存在。常规函数或类组件不接收 `ref` 参数，并且在 `props` 中也不提供 `ref`。
-> `Ref` 转发不仅限于 `DOM` 组件。您也可以将 `refs` 转发给类组件实例。
+## ref 在 HOC 中存在的问题
 
+`react` 的 HOC 是高阶组件，简单理解就是包装了一个低阶的组件，最后返回一个高阶的组件；高阶组件其实是在低阶组件基础上做了一些事情。
+
+既然 `HOC` 会基于低阶组件生成一个新的高阶组件，若用 `ref` 就不能访问到我们真正需要的低阶组件实例，我们访问到的其实是高阶组件实例。所以:
+
+```js
+const Hoc = WrappedComponent =>
+  class extends Component {
+    render() {
+      return <WrappedComponent {...this.props} />
+    }
+  }
+
+class Demo extends Component {
+  state = { name: 'guodada' }
+  render() {
+    return null
+  }
+}
+
+const Test = Hoc(Demo)
+
+class App extends Component {
+  componentDidMount() {
+    console.log(this.demoRef.state) // null, this.demoRef 不是 Demo 组件的实例
+  }
+
+  render() {
+    return <Test ref={node => (this.demoRef = node)} />
+  }
+}
+```
+
+## 总结
+
+`ref` 提供了一种对于 `react` 标准的数据流不太适用的情况下组件间交互的方式，例如管理 dom 元素 focus、text selection 以及与第三方的 dom 库整合等等。 但是在大多数情况下应该使用 react 响应数据流那种方式，不要过度使用 ref。
+
+另外，在使用 ref 时，不用担心会导致内存泄露的问题，react 会自动帮你管理好，在组件卸载时 ref 值也会被销毁。
+
+最后补充一点：
+
+> 不要在组件的 `render` 方法中访问 `ref` 引用，`render` 方法只是返回一个虚拟 dom，这时组件不一定挂载到 `dom` 中或者 `render` 返回的虚拟 dom 不一定会更新到 dom 中。
+
+参考 [React 之 ref 详细用法](https://segmentfault.com/a/1190000008665915)
