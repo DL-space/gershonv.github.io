@@ -4,6 +4,46 @@
 
     
   <url>
+    <loc>https://gershonv.github.io/2018/11/26/react-ref/</loc>
+    <lastmod>2019-01-18T16:02:45.025Z</lastmod>
+    <data>
+        <display>
+        <title>react - Ref</title>
+        <pubTime>2018-11-26T05:36:56.000Z</pubTime>
+        
+        <tag>React</tag>
+         
+         
+           
+             
+              <breadCrumb title="React" url="https://gershonv.github.io/categories/React/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://gershonv.github.io/2018/09/28/react-hoc/</loc>
+    <lastmod>2019-01-18T16:02:45.020Z</lastmod>
+    <data>
+        <display>
+        <title>react - 高阶组件</title>
+        <pubTime>2018-09-28T14:58:45.000Z</pubTime>
+        
+        <tag>React</tag>
+         
+         
+           
+             
+              <breadCrumb title="React" url="https://gershonv.github.io/categories/React/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://gershonv.github.io/2019/01/12/sequelize-curd2/</loc>
     <lastmod>2019-01-12T07:26:43.136Z</lastmod>
     <data>
@@ -1179,26 +1219,6 @@
 
     
   <url>
-    <loc>https://gershonv.github.io/2018/11/26/react-ref/</loc>
-    <lastmod>2019-01-03T15:07:07.248Z</lastmod>
-    <data>
-        <display>
-        <title>react - Ref</title>
-        <pubTime>2018-11-26T05:36:56.000Z</pubTime>
-        
-        <tag>React</tag>
-         
-         
-           
-             
-              <breadCrumb title="React" url="https://gershonv.github.io/categories/React/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>https://gershonv.github.io/2018/08/07/react-redux/</loc>
     <lastmod>2019-01-03T15:06:58.344Z</lastmod>
     <data>
@@ -1285,26 +1305,6 @@
         <display>
         <title>react - lazy(v16.6)</title>
         <pubTime>2018-11-26T09:31:09.000Z</pubTime>
-        
-        <tag>React</tag>
-         
-         
-           
-             
-              <breadCrumb title="React" url="https://gershonv.github.io/categories/React/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://gershonv.github.io/2018/09/28/react-hoc/</loc>
-    <lastmod>2019-01-03T15:05:37.169Z</lastmod>
-    <data>
-        <display>
-        <title>react - 高阶组件</title>
-        <pubTime>2018-09-28T14:58:45.000Z</pubTime>
         
         <tag>React</tag>
          

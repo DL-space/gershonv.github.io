@@ -2655,15 +2655,7 @@
 
       
         
-          <h2 id="什么时候使用-Refs"><a href="#什么时候使用-Refs" class="headerlink" title="什么时候使用 Refs"></a>什么时候使用 Refs</h2><p>下面是几个使用 <code>Refs</code> 的示例：</p>
-<ul>
-<li>管理焦点状态(focus)、文本选择(text selection)、或者是媒体播放(media)</li>
-<li>强制触发动画</li>
-<li>与第三方的 DOM 库集成</li>
-</ul>
-<p>在任何能够通过直接声明完成的事情中应当避免使用 <code>Refs</code>。<br>例如，对于一个 <code>Dialog</code> 组件，应当提供一个 <code>isOpen</code> 的 <code>prop</code> 来控制它，而不是暴露<code>open()</code>和 <code>close()</code>两个方法去操作。</p>
-<p>使用方法：</p>
-<p><code>Refs</code> 是使用 <code>React.createRef()</code> 创建的，并通过 <code>ref</code> 属性附加到 <code>React</code> 元素。在构造组件时，通常将 <code>Refs</code> 分配给实例属性，以便可以在整个组件中引用它们。</p>
+          <p>在 <code>react</code> 典型的数据流中，<code>props</code> 传递是父子组件交互的唯一方式；要修改子组件，你需要使用新的 props 重新渲染它。<br>但是，某些情况下你需要在典型数据流外强制修改子组件。某些情况下（例如和第三方的 dom 库整合，或者某个 dom 元素 focus 等）为了修改子组件我们可能需要另一种方式，这就是 <code>ref</code> 方式。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2018/11/26/react-ref/#more" rel="contents">
